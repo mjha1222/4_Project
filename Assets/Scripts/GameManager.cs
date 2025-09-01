@@ -9,8 +9,10 @@ public class GameManager : MonoBehaviour
 
     private string filePath = Application.dataPath + "/Save/userdata.json";
 
+
     private void Awake()
     {
+        NewUserSetting();
         if (instance == null)
         {
             instance = this;

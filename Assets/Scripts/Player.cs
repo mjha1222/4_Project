@@ -7,13 +7,13 @@ public class Player
     public int playerAtt { get; private set; }
     public int playerCri {  get; private set; }
     public int playerCriDamaged { get; private set; }
-    public int playerGoldBonus { get; private set; }
+    public float playerGoldBonus { get; private set; }
 
     //Equip 
 
     //Upgrade
 
-    public Player(int playermainstage, int playersubstage, int playergold, int playeratt, int playercri, int playercridamaged, int playergoldbouns)
+    public Player(int playermainstage, int playersubstage, int playergold, int playeratt, int playercri, int playercridamaged, float playergoldbouns)
     {
         playerMainStage = playermainstage;
         playerSubStage = playersubstage;
@@ -24,5 +24,4 @@ public class Player
         playerGoldBonus = playergoldbouns;  
     }
 
-    
 }
