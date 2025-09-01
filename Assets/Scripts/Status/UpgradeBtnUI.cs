@@ -5,6 +5,8 @@ public class UpgradeBtnUI : MonoBehaviour
 {
     public UpgradeStats stats;
     public GoldWallet wallet;
+    public Player player;
+
     public Button buyButton;
     public Text titleText, levelText, descText, costText;
 
@@ -25,7 +27,7 @@ public class UpgradeBtnUI : MonoBehaviour
 
     void OnClickBuy()
     {
-        if (stats != null && stats.TryBuy()) Refresh();
+        if (stats != null && stats.TryBuy(player)) Refresh();
     }
 
     void OnGoldChanged(double _) => Refresh();
@@ -47,7 +49,6 @@ public class UpgradeBtnUI : MonoBehaviour
     {
         if (buyButton == null || wallet == null || stats == null || stats.dataTable == null) return;
         var data = stats.Current;
-        if (data == null) { buyButton.interactable = false; return; }
-        buyButton.interactable = wallet.Current >= data.cost;
+        buyButton.interactable = data != null && wallet.Current >= data.cost;
     }
 }

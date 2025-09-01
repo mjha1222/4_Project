@@ -4,12 +4,11 @@ public class UpgradeStats : MonoBehaviour
 {
     public GoldWallet wallet;
     public UpgradeDataTable dataTable;
-
     public int currentLevel = 1;
 
     public UpgradeLevelData Current => dataTable != null ? dataTable.GetLevelData(currentLevel) : null;
 
-    public bool TryBuy()
+    public bool TryBuy(Player player)
     {
         if (dataTable == null) return false;
         var data = Current;
@@ -17,6 +16,14 @@ public class UpgradeStats : MonoBehaviour
         if (!wallet.TrySpend(data.cost)) return false;
 
         currentLevel++;
+
+        if (player != null)
+        {
+            player.UpgradeCritDamage(data.critMultiplier);
+            player.UpgradeAutoAttack(Mathf.RoundToInt((float)data.autoDps));
+            player.UpgradeGoldBonus(data.goldMultiplier);
+        }
+
         return true;
     }
 }
