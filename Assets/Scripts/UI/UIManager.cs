@@ -51,6 +51,7 @@ public class UIManager : MonoBehaviour
     }
 
 
+
     public void NewData()
     {
         GameManager.instance.NewUserSetting();
@@ -72,6 +73,8 @@ public class UIManager : MonoBehaviour
     public void LoadData()
     {
         GameManager.instance.player = GameManager.instance.LoadData();
+        mains.SetActive(false);
+        inGame.SetActive(true);
     }
 
     public void DeleteData()

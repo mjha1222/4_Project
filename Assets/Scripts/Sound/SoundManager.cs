@@ -27,9 +27,9 @@ public class SoundManager : MonoBehaviour
     [SerializeField] AudioSource bgmSource;
     [SerializeField] AudioSource effectSource;
 
-    [Range(0f, 1f)] float masterVolume;
-    [Range(0f, 1f)] float bgmVolume;
-    [Range(0f, 1f)] float effectVolume;
+    [Range(0f, 1f)] public float masterVolume;
+    [Range(0f, 1f)] public float bgmVolume;
+    [Range(0f, 1f)] public float effectVolume;
 
     string musicPath = "Sounds/";
 
@@ -73,7 +73,7 @@ public class SoundManager : MonoBehaviour
     public void Start()
     {
         UpdateVolume();
-        PlayBGM(bgm.Main);
+        //PlayBGM(bgm.Main);
     }
 
     public void StopAllSounds()
@@ -86,6 +86,12 @@ public class SoundManager : MonoBehaviour
     {
         bgmSource.clip = bgms[(int)bgmIndex];
         bgmSource.Play();
+    }
+
+    public void PlayEffect(effect effectIndex)
+    {
+        effectSource.clip = effects[(int)effectIndex];
+        effectSource.Play();
     }
 
     private void UpdateVolume()
