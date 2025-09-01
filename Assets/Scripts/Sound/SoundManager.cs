@@ -1,4 +1,3 @@
-using System.Data;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -55,6 +54,7 @@ public class SoundManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else if (instance != this)
         {
@@ -64,6 +64,7 @@ public class SoundManager : MonoBehaviour
         bgms = Resources.LoadAll<AudioClip>(musicPath + "BGM");
         effects = Resources.LoadAll<AudioClip>(musicPath + "Effect");
 
+        PlayBGM(bgm.Main);
         //시작시 볼륨값 고정
         masterVolume = 0.7f;
         bgmVolume = 0.5f;
@@ -73,7 +74,7 @@ public class SoundManager : MonoBehaviour
     public void Start()
     {
         UpdateVolume();
-        //PlayBGM(bgm.Main);
+        PlayBGM(bgm.Main);
     }
 
     public void StopAllSounds()
@@ -101,9 +102,10 @@ public class SoundManager : MonoBehaviour
         audioMixer.SetFloat("Effect", LinearToDecibel(effectVolume));
     }
 
-    private float LinearToDecibel(float bgmvalue)
+    private float LinearToDecibel(float bgmValue)
     {
-        return Mathf.Approximately(float.MaxValue, 0f) ? -80f : Mathf.Log10(bgmvalue) * 20f;
+        if (bgmValue <= 0.0001f) return -80f;
+        return Mathf.Log10(bgmValue) * 20f;
     }
 
     public void SetMasterVolume(float value)

@@ -12,13 +12,16 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject inGame;
 
-    [Header("Message")]
+    [Header("Message & Change")]
     [SerializeField]
     private GameObject message;
     [SerializeField]
     private TextMeshProUGUI goldText;
+    [SerializeField]
+    private GameObject sceneChange;
 
-    private bool clickSavebutton;
+
+    private bool isPlay;
 
     public static UIManager Instance
     {
@@ -51,22 +54,24 @@ public class UIManager : MonoBehaviour
     }
 
 
-
     public void NewData()
     {
+        SoundManager.instance.PlayBGM(SoundManager.bgm.InGame);
         GameManager.instance.NewUserSetting();
         mains.SetActive(false);
         inGame.SetActive(true);
+        sceneChange.SetActive(true);
+        StartCoroutine(WaitForAnimationEnd(sceneChange, "completeRotation"));
     }
 
     public void SaveData()
     {
-        if (!clickSavebutton)
+        if (!isPlay)
         {
             GameManager.instance.SaveData();
 
             message.SetActive(true);
-            StartCoroutine(WaitForAnimationEnd("MainMessage", "Complete Save Data"));
+            StartCoroutine(WaitForAnimationEnd(message,"MainMessage", "Complete Save Data"));
         }
     }
 
@@ -90,35 +95,38 @@ public class UIManager : MonoBehaviour
 
     private void GoldWarringMessage()
     {
-        message.SetActive(true);
-        StartCoroutine(WaitForAnimationEnd("EnoughMessage", "Not enough gold"));
+        if (!isPlay)
+        {
+            message.SetActive(true);
+            StartCoroutine(WaitForAnimationEnd(message,"EnoughMessage", "Not enough gold"));
+        }
     }
 
     public void GoldCheck(int needGold)
     {
         if (GameManager.instance.player.playerGold < needGold)
         {
+            //È®ÀÎ¿ë
             GoldWarringMessage();
         }
     }
 
-    IEnumerator WaitForAnimationEnd(string animatorName,string UGUItext)
+    IEnumerator WaitForAnimationEnd(GameObject gameobj,string animatorName, string UGUItext = null)
     {
         TextMeshProUGUI textMeshProugui = message.GetComponent<TextMeshProUGUI>();
-        textMeshProugui.text = UGUItext;
-        clickSavebutton = true;
+        Animator animator = gameobj.GetComponent<Animator>();
 
-        Animator animator = message.GetComponent<Animator>();
         animator.Play(animatorName);
+        textMeshProugui.text = UGUItext;
+        isPlay = true;
 
         yield return null;
 
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-
-        float animationLength = stateInfo.length;
+        float animationLength = animator.GetCurrentAnimatorStateInfo(0).length;
         yield return new WaitForSeconds(animationLength);
 
         message.SetActive(false);
-        clickSavebutton = false;
+        sceneChange.SetActive(false);
+        isPlay = false;
     }
 }
