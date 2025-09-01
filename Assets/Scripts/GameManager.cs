@@ -9,14 +9,34 @@ public class GameManager : MonoBehaviour
 
     private string filePath = Application.dataPath + "/Save/userdata.json";
 
+    public static GameManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindAnyObjectByType<GameManager>();
+
+                if (instance == null)
+                {
+                    instance = new GameObject("GameManager").AddComponent<GameManager>();
+                }
+            }
+            return instance;
+        }
+    }
 
     private void Awake()
     {
-        NewUserSetting();
         if (instance == null)
         {
             instance = this;
         }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+
     }
 
     public void SaveData()

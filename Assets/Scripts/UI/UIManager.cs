@@ -1,21 +1,55 @@
 using System.Collections;
-using System.Numerics;
 using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager instance;
+
+    [Header("GameObject")]
     [SerializeField]
     private GameObject mains;
     [SerializeField]
     private GameObject inGame;
 
+    [Header("Message")]
     [SerializeField]
     private GameObject message;
     [SerializeField]
     private TextMeshProUGUI goldText;
 
     private bool clickSavebutton;
+
+    public static UIManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindAnyObjectByType<UIManager>();
+
+                if (instance == null)
+                {
+                    instance = new GameObject("UIManager").AddComponent<UIManager>();
+                }
+            }
+            return instance;
+        }
+    }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+    }
+
 
     public void NewData()
     {
@@ -44,6 +78,7 @@ public class UIManager : MonoBehaviour
     {
         GameManager.instance.DeleteAllData();
     }
+
 
     public void GoldViewText()
     {
