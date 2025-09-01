@@ -1,7 +1,8 @@
 
 public class Player 
 {
-    public int playerStageNum { get; private set; }
+    public int playerMainStage { get; private set; }
+    public int playerSubStage { get; private set; }
     public int playerGold { get; private set; }
     public int playerAtt { get; private set; }
     public int playerCri {  get; private set; }
@@ -12,9 +13,10 @@ public class Player
 
     //Upgrade
 
-    public Player(int playerstageNum, int playergold, int playeratt, int playercri, int playercridamaged, int playergoldbouns)
+    public Player(int playermainstage, int playersubstage, int playergold, int playeratt, int playercri, int playercridamaged, int playergoldbouns)
     {
-        playerStageNum = playerstageNum;
+        playerMainStage = playermainstage;
+        playerSubStage = playersubstage;
         playerGold = playergold;
         playerAtt = playeratt;
         playerCri = playercri;
@@ -22,5 +24,5 @@ public class Player
         playerGoldBonus = playergoldbouns;  
     }
 
-
+    
 }
