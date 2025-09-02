@@ -66,6 +66,6 @@ public class GameManager : MonoBehaviour
 
     public void NewUserSetting()
     {
-        player = new Player(1, 1,0, 1, 0, 1, 1);
+        player = new Player(1, 1,0, 1, 0);
     }
 }
