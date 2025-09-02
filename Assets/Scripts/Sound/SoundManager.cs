@@ -12,7 +12,7 @@ public class SoundManager : MonoBehaviour
     public enum effect
     {
         click,
-        bomb
+        cri
     }
 
     public static SoundManager instance;
@@ -89,9 +89,9 @@ public class SoundManager : MonoBehaviour
         bgmSource.Play();
     }
 
-    public void PlayEffect(effect effectIndex)
+    public void PlayEffect(effect effectIndexe)
     {
-        effectSource.clip = effects[(int)effectIndex];
+        effectSource.clip = effects[(int)effectIndexe];
         effectSource.Play();
     }
 
