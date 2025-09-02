@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class UpgradeStats : MonoBehaviour
 {
-    public Gold wallet;
+    public GoldWallet wallet;
     public UpgradeDataTable dataTable;
     public int currentLevel = 1;
 

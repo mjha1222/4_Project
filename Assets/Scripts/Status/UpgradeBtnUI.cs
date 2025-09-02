@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class UpgradeBtnUI : MonoBehaviour
 {
     public UpgradeStats stats;
-    public Gold wallet;
+    public GoldWallet wallet;
     public Player player;
 
     public Button buyButton;
