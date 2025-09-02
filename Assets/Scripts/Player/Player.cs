@@ -1,13 +1,14 @@
 
+[System.Serializable]
 public class Player 
 {
-    public int playerMainStage { get; private set; }
-    public int playerSubStage { get; private set; }
-    public int playerGold { get; private set; }
-    public int playerAtt { get; private set; }
-    public int playerCri {  get; private set; }
-    public int playerCriDamaged { get; private set; }
-    public float playerGoldBonus { get; private set; }
+    public int playerMainStage;
+    public int playerSubStage;
+    public int playerGold;
+    public int playerAtt;
+    public int playerCri;
+    public int playerCriDamaged;
+    public float playerGoldBonus;
 
     //Equip 
 

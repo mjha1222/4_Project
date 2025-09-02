@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void SaveData()
+    public void SaveData(Player player)
     {
         string saveJson = JsonUtility.ToJson(player);
 
