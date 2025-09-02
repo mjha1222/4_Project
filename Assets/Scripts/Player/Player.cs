@@ -1,3 +1,4 @@
+using UnityEngine;
 
 [System.Serializable]
 public class Player
@@ -40,6 +41,31 @@ public class Player
         playerCriDamaged = 1.0f;
         playerGoldBonus = 1.0f;
         playerAutoAtt = 0f;
+    }
+
+    public void UpgradeCritDamage(float newMultiplier)
+    {
+        playerCriDamaged = Mathf.RoundToInt(newMultiplier * 100f);
+    }
+
+    public void UpgradeAutoAttack(int newAttack)
+    {
+        playerAtt = newAttack;
+    }
+
+    public void UpgradeGoldBonus(float newBonus)
+    {
+        playerGoldBonus = newBonus;
+    }
+
+    public void SpendGold(int amount)
+    {
+        playerGold = Mathf.Max(0, playerGold - amount);
+    }
+
+    public void AddGold(int amount)
+    {
+        playerGold += amount;
     }
 
     //장비 장착 생성되고 생각
