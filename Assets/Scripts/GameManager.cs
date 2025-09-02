@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
 
     public Player player;
 
+    //test
+    public Transform gameobj; 
+
     private string filePath = Application.dataPath + "/Save/userdata.json";
 
     public static GameManager Instance
