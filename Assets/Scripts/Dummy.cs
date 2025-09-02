@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Dummy : MonoBehaviour
 {
     private Animator anim;
 
-    private const string DummyAnim = "Dummy";
+    private const string HitTrigger = "Hit";
 
     private void Awake()
     {
@@ -26,7 +24,8 @@ public class Dummy : MonoBehaviour
 
     public void TakeDamage(int  damage)
     {
-        anim.Play(DummyAnim, 0, 0f);
-        Debug.Log("Dummy hit");
+        anim.ResetTrigger(HitTrigger);
+        anim.SetTrigger(HitTrigger);
+        Debug.Log("Hit");
     }
 }

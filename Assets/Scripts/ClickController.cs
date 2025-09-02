@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class ClickController : MonoBehaviour
 {
+    public Dummy dummy;
     public bool isPaused = false;
     
 
@@ -22,7 +21,16 @@ public class ClickController : MonoBehaviour
             {
                 return;
             }
-            Debug.Log("Attack!");
+            
+            if(dummy != null)
+            {
+                dummy.TakeDamage(1);
+            }
+            else
+            {
+                Debug.LogWarning("Not Founded Dummy");
+            }
+            
         }
     }
 }

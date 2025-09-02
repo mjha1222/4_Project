@@ -220,6 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c959ded9c508750478fda756806a642b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dummy: {fileID: 1124235471}
   isPaused: 0
 --- !u!4 &70517225
 Transform:
