@@ -3,7 +3,6 @@ using UnityEngine.EventSystems;
 
 public class ClickController : MonoBehaviour
 {
-    public Dummy dummy;
     public bool isPaused = false;
     
 
@@ -22,9 +21,9 @@ public class ClickController : MonoBehaviour
                 return;
             }
             
-            if(dummy != null)
+            if(EnemyManager.Instance.nowEnemy != null)
             {
-                dummy.TakeDamage(1);
+                EnemyManager.Instance.nowEnemy.TakeDamage(5);
             }
             else
             {

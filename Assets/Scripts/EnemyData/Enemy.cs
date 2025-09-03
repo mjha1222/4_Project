@@ -5,16 +5,27 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public EnemyData Data;
+    private Animator anim;
+    public int nowHP;
+    private const string HitTrigger = "Hit";
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
+        anim = GetComponent<Animator>();
+    }
+    public void Start()
+    {
+        nowHP = Data.HP;
+        EnemyManager.Instance.nowEnemy = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TakeDamage(int damage)
     {
-        
+        nowHP -= damage;
+        anim.ResetTrigger(HitTrigger);
+        anim.SetTrigger(HitTrigger);
+        Debug.Log("Hit");
+        EnemyManager.Instance.RefreshHPbar();
     }
+    
 }
