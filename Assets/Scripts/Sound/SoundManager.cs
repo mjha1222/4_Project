@@ -93,6 +93,7 @@ public class SoundManager : MonoBehaviour
     {
         effectSource.clip = effects[(int)effectIndexe];
         effectSource.Play();
+        
     }
 
     private void UpdateVolume()

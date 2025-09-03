@@ -22,7 +22,6 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject sceneChange;
 
-    [SerializeField]
     private bool isPlay;
 
     public static UIManager Instance
@@ -55,6 +54,7 @@ public class UIManager : MonoBehaviour
 
     }
 
+
     public void NewData()
     {
         SoundManager.instance.PlayBGM(SoundManager.bgm.InGame);
@@ -64,7 +64,7 @@ public class UIManager : MonoBehaviour
         sceneChange.SetActive(true);
 
         Image image = sceneChange.GetComponent<Image>();
-        image.DOFillAmount(0, 2);
+        image.DOFillAmount(0, 2).SetEase(Ease.OutQuad);
 
     }
 
