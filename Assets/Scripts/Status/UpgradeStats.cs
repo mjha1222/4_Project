@@ -11,19 +11,19 @@ public class UpgradeStats : MonoBehaviour
     public bool TryBuy(Player player)
     {
         if (dataTable == null) return false;
-        var data = Current;
-        if (data == null) return false;
-        if (!wallet.TrySpend(data.cost)) return false;
+        var cur = Current;
+        if (cur == null) return false;
+        if (!wallet.TrySpend(cur.cost)) return false;
 
         currentLevel++;
 
-        if (player != null)
+        var next = Current;
+        if (player != null && next != null)
         {
-            player.UpgradeCritDamage(data.critMultiplier);
-            player.UpgradeAutoAttack(Mathf.RoundToInt((float)data.autoDps));
-            player.UpgradeGoldBonus(data.goldMultiplier);
+            player.UpgradeCritDamage(next.critMultiplier);
+            player.UpgradeAutoAttack(Mathf.RoundToInt((float)next.autoDps));
+            player.UpgradeGoldBonus(next.goldMultiplier);
         }
-
         return true;
     }
 }
