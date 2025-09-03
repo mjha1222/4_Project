@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe00973b77a278d42a2b419d7ad71fa1, type: 3}
+  m_Name: GoldDataTable
+  m_EditorClassIdentifier: 
+  kind: 2
+  startCost: 10
+  costStep: 5
+  critStartPercent: 0
+  critStepPercent: 1
+  autoBaseInterval: 10
+  autoIntervalStep: 0.1
+  goldStartPercent: 0
+  goldStepPercent: 0.5
+  levels:
+  - level: 0
+    critMultiplier: 1
+    autoDps: 0
+    goldMultiplier: 1.015
+    cost: 25

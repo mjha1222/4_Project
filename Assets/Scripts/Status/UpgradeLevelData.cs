@@ -7,5 +7,5 @@ public class UpgradeLevelData
     public float critMultiplier;
     public double autoDps;
     public float goldMultiplier;
-    public double cost;
+    [HideInInspector] public double cost;
 }
