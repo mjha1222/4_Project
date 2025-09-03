@@ -24,6 +24,7 @@ public class ClickController : MonoBehaviour
             
             if(dummy != null)
             {
+                SoundManager.instance.PlayEffect(SoundManager.effect.click);
                 dummy.TakeDamage(1);
             }
             else

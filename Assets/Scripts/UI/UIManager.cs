@@ -1,6 +1,8 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -19,7 +21,6 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI goldText;
     [SerializeField]
     private GameObject sceneChange;
-
 
     private bool isPlay;
 
@@ -61,7 +62,10 @@ public class UIManager : MonoBehaviour
         mains.SetActive(false);
         inGame.SetActive(true);
         sceneChange.SetActive(true);
-        StartCoroutine(WaitForAnimationEnd(sceneChange, "completeRotation"));
+
+        Image image = sceneChange.GetComponent<Image>();
+        image.DOFillAmount(0, 2).SetEase(Ease.OutQuad);
+
     }
 
     public void SaveData()
@@ -71,7 +75,7 @@ public class UIManager : MonoBehaviour
             GameManager.instance.SaveData(GameManager.instance.player);
 
             message.SetActive(true);
-            StartCoroutine(WaitForAnimationEnd(message,"MainMessage", "Complete Save Data"));
+            StartCoroutine(WaitForAnimationEnd(message, "Complete Save Data"));
         }
     }
 
@@ -98,7 +102,7 @@ public class UIManager : MonoBehaviour
         if (!isPlay)
         {
             message.SetActive(true);
-            StartCoroutine(WaitForAnimationEnd(message,"EnoughMessage", "Not enough gold"));
+            StartCoroutine(WaitForAnimationEnd(message, "Not enough gold"));
         }
     }
 
@@ -111,19 +115,21 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    IEnumerator WaitForAnimationEnd(GameObject gameobj,string animatorName, string UGUItext = null)
+    IEnumerator WaitForAnimationEnd(GameObject gameobj, string UGUItext = null)
     {
         TextMeshProUGUI textMeshProugui = message.GetComponent<TextMeshProUGUI>();
         Animator animator = gameobj.GetComponent<Animator>();
 
-        animator.Play(animatorName);
         textMeshProugui.text = UGUItext;
+
         isPlay = true;
 
-        yield return null;
+        Color randomcolor = Random.ColorHSV();
+        textMeshProugui.color = new Color(0, 0, 0, 1);
+        textMeshProugui.DOColor(randomcolor, 2f);
+        textMeshProugui.DOFade(0,2f);
 
-        float animationLength = animator.GetCurrentAnimatorStateInfo(0).length;
-        yield return new WaitForSeconds(animationLength);
+        yield return new WaitForSeconds(2);
 
         message.SetActive(false);
         sceneChange.SetActive(false);
