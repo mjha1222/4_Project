@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterHP : ScriptableObject
+public class Enemy : MonoBehaviour
 {
-    public float initValue;
+    public EnemyData Data;
+
     // Start is called before the first frame update
     void Start()
     {

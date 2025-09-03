@@ -651,6 +651,7 @@ GameObject:
   m_Component:
   - component: {fileID: 152851785}
   - component: {fileID: 152851786}
+  - component: {fileID: 152851787}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -725,6 +726,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &152851787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152851784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 670c36781dfee38419a6bcb6fec4f1ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: {fileID: 11400000, guid: 37cf6190e0c5aa84e990b894545020c1, type: 2}
 --- !u!1 &167669478
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,11 +772,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1218496237}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0.00001808449, y: -35.00003}
   m_SizeDelta: {x: 400, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &167669480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1619,7 +1633,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: " \uAD34\uBB3C 0"
+  m_Text: "\uB3D9\uADF8\uB77C\uBBF8 \uAD34\uBB3C 0"
 --- !u!222 &402044387
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3208,11 +3222,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1218496237}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0.00001808449, y: -35.00003}
   m_SizeDelta: {x: 400, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &949747989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4282,6 +4296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1177324024}
   - component: {fileID: 1177324025}
+  - component: {fileID: 1177324026}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -4356,6 +4371,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1177324026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177324023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 670c36781dfee38419a6bcb6fec4f1ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: {fileID: 11400000, guid: 6e98ae1e713b5c843945481327605a68, type: 2}
 --- !u!1 &1218496236
 GameObject:
   m_ObjectHideFlags: 0
@@ -4855,6 +4883,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1391221310}
   - component: {fileID: 1391221311}
+  - component: {fileID: 1391221312}
   m_Layer: 0
   m_Name: Triangle
   m_TagString: Untagged
@@ -4872,7 +4901,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.50006104, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4929,6 +4958,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1391221312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391221309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 670c36781dfee38419a6bcb6fec4f1ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: {fileID: 11400000, guid: 036fd01c6acb3d34babb5fbd041683b2, type: 2}
 --- !u!1 &1411140933
 GameObject:
   m_ObjectHideFlags: 0
@@ -6671,7 +6713,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: " \uAD34\uBB3C 0\uC758 \uC232"
+  m_Text: "\uB3D9\uADF8\uB77C\uBBF8 \uAD34\uBB3C 0\uC758 \uC232"
 --- !u!222 &1805047379
 CanvasRenderer:
   m_ObjectHideFlags: 0
