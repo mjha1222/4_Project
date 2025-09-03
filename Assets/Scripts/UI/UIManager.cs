@@ -68,7 +68,7 @@ public class UIManager : MonoBehaviour
     {
         if (!isPlay)
         {
-            GameManager.instance.SaveData();
+            GameManager.instance.SaveData(GameManager.instance.player);
 
             message.SetActive(true);
             StartCoroutine(WaitForAnimationEnd(message,"MainMessage", "Complete Save Data"));
