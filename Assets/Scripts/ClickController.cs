@@ -48,11 +48,15 @@ public class ClickController : MonoBehaviour
                 int damage = GameManager.Instance.player.playerAtt;
                 dummy.TakeDamage(damage);
                 Debug.Log($"damage: {damage}");
+
+                SoundManager.instance.PlayEffect(SoundManager.effect.click);
+                dummy.TakeDamage(1);
             }
             else
             {
                 Debug.LogWarning("Not Founded Dummy");
             }
+
             
         }
     }
