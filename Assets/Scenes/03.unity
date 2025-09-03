@@ -651,6 +651,7 @@ GameObject:
   m_Component:
   - component: {fileID: 152851785}
   - component: {fileID: 152851786}
+  - component: {fileID: 152851787}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -725,6 +726,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &152851787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152851784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 670c36781dfee38419a6bcb6fec4f1ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: {fileID: 11400000, guid: 37cf6190e0c5aa84e990b894545020c1, type: 2}
 --- !u!1 &167669478
 GameObject:
   m_ObjectHideFlags: 0
@@ -3187,8 +3201,6 @@ GameObject:
   - component: {fileID: 949747988}
   - component: {fileID: 949747990}
   - component: {fileID: 949747989}
-  - component: {fileID: 949747992}
-  - component: {fileID: 949747991}
   m_Layer: 5
   m_Name: MainHp
   m_TagString: Untagged
@@ -3253,36 +3265,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949747987}
   m_CullTransparentMesh: 1
---- !u!114 &949747991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 949747987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7c81af07194375499b8b6a0983d9df0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 1069f6bfab18f3449b6ca0c289b3b4d9, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - {m_Target: {fileID: 949747992}, m_TargetAssemblyTypeName: HPBar, Assembly-CSharp, m_MethodName: HPChanged, m_Mode: 1, m_Arguments: {m_ObjectArgument: {fileID: 0}, m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, m_IntArgument: 0, m_FloatArgument: 0, m_StringArgument: , m_BoolArgument: 0}, m_CallState: 2}
-    m_CallsDirty: 1
---- !u!114 &949747992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 949747987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36536c909b5ea2146a87c1581fa15d80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &969098958
 GameObject:
   m_ObjectHideFlags: 0
@@ -4314,6 +4296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1177324024}
   - component: {fileID: 1177324025}
+  - component: {fileID: 1177324026}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -4388,6 +4371,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1177324026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177324023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 670c36781dfee38419a6bcb6fec4f1ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: {fileID: 11400000, guid: 6e98ae1e713b5c843945481327605a68, type: 2}
 --- !u!1 &1218496236
 GameObject:
   m_ObjectHideFlags: 0
@@ -4887,6 +4883,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1391221310}
   - component: {fileID: 1391221311}
+  - component: {fileID: 1391221312}
   m_Layer: 0
   m_Name: Triangle
   m_TagString: Untagged
@@ -4961,6 +4958,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1391221312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391221309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 670c36781dfee38419a6bcb6fec4f1ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: {fileID: 11400000, guid: 036fd01c6acb3d34babb5fbd041683b2, type: 2}
 --- !u!1 &1411140933
 GameObject:
   m_ObjectHideFlags: 0
