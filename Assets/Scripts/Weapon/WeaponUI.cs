@@ -23,10 +23,10 @@ public class WeaponUI : MonoBehaviour
 
     public void UpdateUI()
     {
-        if (weaponManager.weapon == null) return;
+        if (weaponManager.currentWeapon == null) return;
 
-        weaponImg.sprite = weaponManager.weapon.weaponIcon;
-        nameText.text = weaponManager.weapon.weaponName;
+        weaponImg.sprite = weaponManager.currentWeapon.weaponIcon;
+        nameText.text = weaponManager.currentWeapon.weaponName;
         levelText.text = $"+{weaponManager.level}";
 
         // 스탯 정보 표시
