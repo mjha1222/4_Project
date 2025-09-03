@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     private GameObject mains;
     [SerializeField]
     private GameObject inGame;
+    [SerializeField]
+    private GameObject bagPanel;   //무기가방 추가했습니다.
 
     [Header("Message & Change")]
     [SerializeField]
@@ -19,7 +21,6 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI goldText;
     [SerializeField]
     private GameObject sceneChange;
-
 
     private bool isPlay;
 
@@ -128,5 +129,18 @@ public class UIManager : MonoBehaviour
         message.SetActive(false);
         sceneChange.SetActive(false);
         isPlay = false;
+    }
+
+    //가방 열고 닫기 기능
+    public void OpenBag()
+    {
+        inGame.SetActive(false);
+        bagPanel.SetActive(true);
+    }
+
+    public void BackToGame()
+    {
+        bagPanel.SetActive(false);
+        inGame.SetActive(true);
     }
 }

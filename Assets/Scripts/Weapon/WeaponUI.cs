@@ -8,9 +8,9 @@ public class WeaponUI : MonoBehaviour
 
     [Header("Weapon UI")]
     public Image weaponImg;
-    public TextMeshProUGUI nameText;
-    public TextMeshProUGUI levelText;
-    public TextMeshProUGUI statsText;
+    public Text nameText;
+    //public Text levelText;
+    public Text statsText;
     public Button upgradeBtn;
 
     void Start()
@@ -27,7 +27,7 @@ public class WeaponUI : MonoBehaviour
 
         weaponImg.sprite = weaponManager.currentWeapon.weaponIcon;
         nameText.text = weaponManager.currentWeapon.weaponName;
-        levelText.text = $"+{weaponManager.level}";
+        //levelText.text = $"+{weaponManager.level}";
 
         // 스탯 정보 표시
         float critRate = weaponManager.GetCritRate();

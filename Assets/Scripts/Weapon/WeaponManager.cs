@@ -1,21 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
-    public static WeaponManager Instance;   // 싱글톤
+    public static WeaponManager instance;   // 싱글턴 인스턴스
 
-    [Header("현재 장착 무기")]
-    public WeaponData currentWeapon;        // 현재 장착된 무기
-    public int level = 0;                   // 현재 강화 단계
+    public WeaponData currentWeapon; // 현재 장착 무기
+    public int level = 0;
 
-    private void Awake()
+    void Awake()
     {
-        if (Instance == null)
+        if (instance == null)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            instance = this;
+            DontDestroyOnLoad(gameObject); // 씬이 바뀌어도 유지할거면
         }
         else
         {
@@ -23,69 +20,53 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    // 무기 장착 (외부에서 무기를 선택해서 교체 가능)
     public void EquipWeapon(WeaponData newWeapon)
     {
         currentWeapon = newWeapon;
-        level = 0; // 새 무기 장착하면 강화 단계 초기화
-        Debug.Log($"{currentWeapon.weaponName} 장착!");
+        level = 0; // 새 무기는 초기 레벨로 시작
+        Debug.Log($"장착 완료: {newWeapon.weaponName}");
     }
 
-    // 공격력 계산 (누적 보너스 방식)
     public int GetAttackPower()
     {
-        if (currentWeapon == null) return 0;
+        int bonus = 0;
+        if (level < currentWeapon.damagePerLevel.Length)
+            bonus = currentWeapon.damagePerLevel[level];
 
-        int totalBonus = 0;
-        for (int i = 0; i <= level && i < currentWeapon.damagePerLevel.Length; i++)
-        {
-            totalBonus += currentWeapon.damagePerLevel[i];
-        }
-
-        return currentWeapon.baseDamage + totalBonus;
+        return currentWeapon.baseDamage + bonus;
     }
 
-    // 치명타 확률 계산 (누적 보너스 방식)
     public float GetCritRate()
     {
-        if (currentWeapon == null) return 0f;
+        float bonusCrit = 0f;
+        if (level < currentWeapon.critPerLevel.Length)
+            bonusCrit = currentWeapon.critPerLevel[level];
 
-        float totalCrit = 0f;
-        for (int i = 0; i <= level && i < currentWeapon.critPerLevel.Length; i++)
-        {
-            totalCrit += currentWeapon.critPerLevel[i];
-        }
-
-        return currentWeapon.baseCritChance + totalCrit;
+        return currentWeapon.baseCritChance + bonusCrit;
     }
 
-    // 골드 보너스 (단계별 적용 가능)
-    public int GetGoldBonus()
-    {
-        if (currentWeapon == null) return 0;
-
-        int totalGoldBonus = currentWeapon.baseGoldBonus;
-
-        for (int i = 0; i <= level && i < currentWeapon.goldPerLevel.Length; i++)
-        {
-            totalGoldBonus += currentWeapon.goldPerLevel[i];
-        }
-
-        return totalGoldBonus;
-    }
-
-    // 무기 강화
     public void LevelUp()
     {
         if (currentWeapon == null) return;
 
+        // 강화 가능한지 체크
         if (level >= currentWeapon.damagePerLevel.Length - 1)
         {
-            Debug.Log("더 이상 강화할 수 없습니다!");
+            Debug.Log("더 이상 강화할 수 없습니다");
             return;
         }
 
         level++;
-        Debug.Log($"{currentWeapon.weaponName} +{level} 업그레이드 성공!");
+        Debug.Log($"{currentWeapon.weaponName} +{level} 강화 성공!");
+    }
+
+    public int GetGoldBonus()
+    {
+        if (currentWeapon == null) return 0;
+
+        if (currentWeapon.goldPerLevel == null || level >= currentWeapon.goldPerLevel.Length)
+            return currentWeapon.baseGoldBonus;
+
+        return currentWeapon.baseGoldBonus + currentWeapon.goldPerLevel[level];
     }
 }
