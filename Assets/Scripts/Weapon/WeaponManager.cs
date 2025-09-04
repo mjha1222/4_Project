@@ -10,6 +10,10 @@ public class WeaponManager : MonoBehaviour
     [Header("UI")]
     public WeaponUI weaponUI;
 
+    [Header("UI Panels")]
+    public GameObject bagPanel; // 무기 가방
+    public GameObject inGamePanel; // 인게임 화면
+
     private void Awake()
     {
         if (Instance == null)
@@ -21,6 +25,22 @@ public class WeaponManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    public void OpenBag()
+    {
+        if (bagPanel != null)
+            bagPanel.SetActive(true);
+
+        Debug.Log("무기 가방 오픈");
+    }
+
+    public void CloseBag()
+    {
+        if (bagPanel != null)
+            bagPanel.SetActive(false);
+
+        Debug.Log("무기 가방 닫기");
+    }
+
 
     public void EquipWeapon(WeaponData newWeapon)
     {
@@ -83,11 +103,7 @@ public class WeaponManager : MonoBehaviour
     }
     void Start()
     {
-        //if (weapon == null)
-        //{
-        //    // 기본 무기 지정
-        //    weapon = Resources.Load<WeaponData>("WeaponScriptableObject/WSword");
-        //}
-        //EquipWeapon(weapon);
+        if (bagPanel == null)
+            bagPanel = GameObject.Find("BagPanel");
     }
 }
