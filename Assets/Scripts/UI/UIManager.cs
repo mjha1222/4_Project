@@ -8,7 +8,6 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
-    [SerializeField] private GameObject bagPanel;
     [SerializeField] private GameObject message;
     [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private GameObject sceneChange;

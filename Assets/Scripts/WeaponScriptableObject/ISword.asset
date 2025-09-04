@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: "\uCCA0 \uAC80"
   weaponIcon: {fileID: 21300000, guid: ddd10825923f2c24d8cbfd5cbc7ace40, type: 3}
-  buyPrice: 5
+  buyPrice: 777
   baseDamage: 20
   baseCritChance: 20
   baseGoldBonus: 3
