@@ -53,7 +53,6 @@ public class PlayerUpgrades : MonoBehaviour
         P.playerAutoAtt = table.GetValue(UpgradeStatType.AutoAttack, autoLevel);
         P.playerAtt = table.GetAttackBonusFromAutoLevel(autoLevel);
         P.playerGoldBonus = table.GetValue(UpgradeStatType.GoldBonus, goldLevel);
-
     }
 
     public int GetLevel(UpgradeStatType stat)
@@ -91,7 +90,7 @@ public class PlayerUpgrades : MonoBehaviour
 
         }
 
-        GameManager.instance.player.AddUpgrade(critLevel,autoLevel,goldLevel);
+        GameManager.instance.player.SetUpgrade(critLevel,autoLevel,goldLevel);
 
         if (critLevel < 0) critLevel = 0;
         if (autoLevel < 0) autoLevel = 0;
