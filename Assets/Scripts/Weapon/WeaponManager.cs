@@ -4,7 +4,7 @@ public class WeaponManager : MonoBehaviour
 {
     public static WeaponManager Instance;
     public WeaponData currentWeapon;
-    //public WeaponData weapon;
+    public WeaponData weapon;
     public int level = 0;
 
     [Header("UI")]
@@ -16,14 +16,8 @@ public class WeaponManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
     public void OpenBag()
     {
@@ -40,23 +34,32 @@ public class WeaponManager : MonoBehaviour
         Debug.Log("무기 가방 닫기");
     }
 
-    public void EquipWeapon(WeaponData newWeapon, int newLevel = 0)
+    public void EquipWeapon(WeaponData newWeapon, int newLevel = -1)
     {
         if (newWeapon == null) return;
 
         currentWeapon = newWeapon;
-        level = newLevel; // 슬롯에서 넘어온 레벨 저장
 
-        Debug.Log($"{newWeapon.weaponName} 장착 완료!");
+        if (newLevel >= 0)
+            level = newLevel;
+
+        int atk = GetAttackPower();
+        float crit = GetCritRate();
+
+        Debug.Log($"{newWeapon.weaponName} 장착 완료! (Lv.{level}, 공격력 {atk}, 치명타 {crit}%)");
 
         if (weaponUI != null)
-            weaponUI.UpdateUI(newWeapon, level);
+        {
+            weaponUI.UpdateUI(currentWeapon, level, atk, crit);
+        }
     }
 
     public int GetAttackPower()
     {
+        if (currentWeapon == null) return 0;
+
         int bonus = 0;
-        if (level < currentWeapon.damagePerLevel.Length)
+        if (currentWeapon.damagePerLevel != null && level < currentWeapon.damagePerLevel.Length)
             bonus = currentWeapon.damagePerLevel[level];
 
         return currentWeapon.baseDamage + bonus;
@@ -64,11 +67,13 @@ public class WeaponManager : MonoBehaviour
 
     public float GetCritRate()
     {
-        float bonusCrit = 0f;
-        if (level < currentWeapon.critPerLevel.Length)
-            bonusCrit = currentWeapon.critPerLevel[level];
+        if (currentWeapon == null) return 0f;
 
-        return currentWeapon.baseCritChance + bonusCrit;
+        float bonus = 0f;
+        if (currentWeapon.critPerLevel != null && level < currentWeapon.critPerLevel.Length)
+            bonus = currentWeapon.critPerLevel[level];
+
+        return currentWeapon.baseCritChance + bonus;
     }
 
     public void LevelUp()
@@ -97,11 +102,6 @@ public class WeaponManager : MonoBehaviour
     }
     void Start()
     {
-        //if (weapon == null)
-        //{
-        //    // 기본 무기 지정
-        //    weapon = Resources.Load<WeaponData>("WeaponScriptableObject/WSword");
-        //}
-        //EquipWeapon(weapon);
+    
     }
 }

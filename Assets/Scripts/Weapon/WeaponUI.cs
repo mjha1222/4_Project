@@ -15,39 +15,31 @@ public class WeaponUI : MonoBehaviour
 
     public void UpdateUI()
     {
-        if (weaponManager != null)
-        {
-            UpdateUI(weaponManager.currentWeapon, weaponManager.level);
-        }
+        if (weaponManager == null || weaponManager.currentWeapon == null) return;
+
+        WeaponData weaponData = weaponManager.currentWeapon;
+        int level = weaponManager.level;
+
+        if (weaponImg != null) weaponImg.sprite = weaponData.weaponIcon;
+        if (nameText != null) nameText.text = $"{weaponData.weaponName} Lv.{level}";
+
+        // WeaponManager에서 직접 최종 수치 불러오기
+        int atk = weaponManager.GetAttackPower();
+        float crit = weaponManager.GetCritRate();
+
+        if (statsText != null)
+            statsText.text = $"공격력: {atk}\n치명타 확률: {crit}%";
     }
 
 
-    public void UpdateUI(WeaponData weaponData, int level)
+    public void UpdateUI(WeaponData weaponData, int level,int atk, float crit)
     {
         if (weaponData == null) return;
 
         if (weaponImg != null) weaponImg.sprite = weaponData.weaponIcon;
         if (nameText != null) nameText.text = $"{weaponData.weaponName} Lv.{level}";
 
-        int atk = 0;
-        float crit = 0f;
-
-        if (weaponManager != null && weaponManager.currentWeapon == weaponData)
-        {
-            atk = weaponManager.GetAttackPower();
-            crit = weaponManager.GetCritRate();
-        }
-        else
-        {
-            // 아직 장착 전 미리보기 용
-            atk = weaponData.baseDamage;
-            if (weaponData.damagePerLevel != null && level < weaponData.damagePerLevel.Length)
-                atk += weaponData.damagePerLevel[level];
-
-            crit = weaponData.baseCritChance;
-            if (weaponData.critPerLevel != null && level < weaponData.critPerLevel.Length)
-                crit += weaponData.critPerLevel[level];
-        }
+        if (weaponManager != null)
 
         if (statsText != null)
             statsText.text = $"공격력: {atk}\n치명타 확률: {crit}%";
