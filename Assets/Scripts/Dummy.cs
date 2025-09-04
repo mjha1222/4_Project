@@ -22,10 +22,9 @@ public class Dummy : MonoBehaviour
         
     }
 
-    public void TakeDamage(int  damage)
+    public void TakeDamage(int damage)
     {
         anim.ResetTrigger(HitTrigger);
         anim.SetTrigger(HitTrigger);
-        Debug.Log("Hit");
     }
 }
