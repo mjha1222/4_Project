@@ -4,8 +4,7 @@ using UnityEngine.EventSystems;
 
 public class ClickController : MonoBehaviour
 {
-    [SerializeField] private Dummy dummy;
-    public bool isPaused = false;
+    [SerializeField] private EnemyManager enemyManager;
 
     // 자동공격 기능 구매시 true로 전환
     [SerializeField] private bool autoAttackEnable = false;
@@ -43,14 +42,11 @@ public class ClickController : MonoBehaviour
                 return;
             }
             
-            if(dummy != null)
+            if(enemyManager != null)
             {
                 int damage = GameManager.Instance.player.playerAtt;
-                dummy.TakeDamage(damage);
+                enemyManager.nowEnemy.TakeDamage(damage);
                 Debug.Log($"damage: {damage}");
-
-                SoundManager.instance.PlayEffect(SoundManager.effect.click);
-                dummy.TakeDamage(1);
             }
             else
             {
@@ -98,10 +94,10 @@ public class ClickController : MonoBehaviour
         var wait = new WaitForSeconds(1f / attackPerSecond);
         while(autoAttackEnable && attackPerSecond > 0f)
         {
-            if(!isPaused && dummy != null)
+            if(enemyManager.nowEnemy != null)
             {
                 int damage = GameManager.Instance.player.playerAtt;
-                dummy.TakeDamage(damage);
+                enemyManager.nowEnemy.TakeDamage(damage);
                 Debug.Log($"damage: {damage}");
             }
             yield return wait;
