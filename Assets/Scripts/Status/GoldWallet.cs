@@ -1,36 +1,73 @@
-using System;
 using UnityEngine;
+using TMPro;
 
 public class GoldWallet : MonoBehaviour
 {
-    [SerializeField] double gold = 0;
-    public event Action<double> onGoldChanged;
+    static GoldWallet _inst;
+    public static GoldWallet Get() => _inst;
 
-    public double Current => gold;
+    public Player player;
+    public TMP_Text goldText;
+    public bool useThousandsSeparator = true;
+    public int debugGold = 0;
 
-    public void SetGold(double value)
+    string goldHex = "#FFD900";
+    string valueHex = "#FFFFFF";
+
+    void Awake()
     {
-        double v = Math.Max(0, value);
-        if (Math.Abs(v - gold) < 1e-9) return;
-        gold = v;
-        onGoldChanged?.Invoke(gold);
+        if (_inst != null && _inst != this) { Destroy(gameObject); return; }
+        _inst = this;
     }
 
-    public void AddGold(double amount)
+    void Start()
     {
-        if (amount <= 0) return;
-        gold += amount;
-        onGoldChanged?.Invoke(gold);
+        if (player != null) player.playerGold = debugGold;
+        Broadcast();
     }
 
-    public bool TrySpend(double amount)
+    void Update()
     {
-        if (amount < 0) return false;
-        if (gold + 1e-9 < amount) return false;
-        gold -= amount;
-        onGoldChanged?.Invoke(gold);
+        if (player != null && player.playerGold != debugGold)
+        {
+            player.playerGold = debugGold;
+            Broadcast();
+        }
+    }
+
+    void Broadcast()
+    {
+        if (!goldText) return;
+        int g = GetGold();
+        string s = useThousandsSeparator ? g.ToString("N0") : g.ToString();
+        goldText.text = $"<color={goldHex}>Gold</color> <color={valueHex}>{s}</color>";
+    }
+
+    public int GetGold() => player != null ? player.playerGold : 0;
+
+    public void SetGold(int amount)
+    {
+        if (player == null) return;
+        player.playerGold = Mathf.Max(0, amount);
+        debugGold = player.playerGold;
+        Broadcast();
+    }
+
+    public void AddGold(int amount) => SetGold(GetGold() + amount);
+
+    public bool TrySpend(int amount)
+    {
+        if (GetGold() < amount) return false;
+        SetGold(GetGold() - amount);
         return true;
     }
 
-    public bool CanAfford(double amount) => gold + 1e-9 >= amount;
+    void OnValidate()
+    {
+        if (player != null)
+        {
+            player.playerGold = debugGold;
+            Broadcast();
+        }
+    }
 }

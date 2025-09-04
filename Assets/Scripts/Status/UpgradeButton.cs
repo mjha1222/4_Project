@@ -1,0 +1,169 @@
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Collections;
+
+public class UpgradeButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
+{
+    public UpgradeStatType stat;
+    public UpgradeDataTable table;
+    public Text titleText;
+    public Text descText;
+    public Text costText;
+    public Button levelUpButton;
+    public Color costEnoughColor = Color.black;
+    public Color costLackColor = Color.red;
+    public float holdInterval = 0.2f;
+    public ClickController clickController;
+
+    int level = 0;
+    Coroutine holdCo;
+    GoldWallet W => GoldWallet.Get();
+    Player P => W != null ? W.player : null;
+
+    void Awake()
+    {
+        if (levelUpButton) levelUpButton.onClick.AddListener(TryLevelUpOnce);
+        if (clickController == null) clickController = FindAnyObjectByType<ClickController>();
+    }
+
+    void OnEnable()
+    {
+        ApplyToPlayer();
+        RefreshUI();
+        SyncClickController();
+    }
+
+    void Update()
+    {
+        RefreshInteractableAndCostColor();
+    }
+
+    int CurrentCost() => table != null ? Mathf.Max(0, table.baseCost + level * table.costStep) : 0;
+
+    void TryLevelUpOnce()
+    {
+        if (table == null || W == null || P == null) return;
+        int cost = CurrentCost();
+        if (!W.TrySpend(cost)) return;
+        level++;
+        ApplyToPlayer();
+        RefreshUI();
+        SyncClickController();
+    }
+
+    void ApplyToPlayer()
+    {
+        if (table == null || P == null) return;
+        switch (stat)
+        {
+            case UpgradeStatType.CritDamage:
+                P.playerCriDamaged = table.GetValue(UpgradeStatType.CritDamage, level);
+                break;
+            case UpgradeStatType.AutoAttack:
+                P.playerAutoAtt = table.GetValue(UpgradeStatType.AutoAttack, level);
+                P.playerAtt = table.GetAttackBonusFromAutoLevel(level);
+                break;
+            case UpgradeStatType.GoldBonus:
+                P.playerGoldBonus = table.GetValue(UpgradeStatType.GoldBonus, level);
+                break;
+        }
+    }
+
+    void SyncClickController()
+    {
+        if (clickController == null || P == null) return;
+        if (stat != UpgradeStatType.AutoAttack) return;
+        bool enable = level > 0 && P.playerAutoAtt > 0f;
+        clickController.SetAutoAttackEnabled(enable);
+        clickController.SetAutoAttackRate(enable ? P.playerAutoAtt : 0f);
+    }
+
+    void RefreshUI()
+    {
+        if (table == null) return;
+
+        if (titleText)
+        {
+            switch (stat)
+            {
+                case UpgradeStatType.CritDamage: titleText.text = "Ä¡¸íÅ¸ " + level; break;
+                case UpgradeStatType.AutoAttack: titleText.text = "ÀÚµ¿ °ø°Ý " + level; break;
+                case UpgradeStatType.GoldBonus: titleText.text = "°ñµå È¹µæ " + level; break;
+            }
+        }
+
+        if (descText && P != null)
+        {
+            switch (stat)
+            {
+                case UpgradeStatType.CritDamage:
+                    descText.text = "Ä¡¸íÅ¸ µ¥¹ÌÁö +" + P.playerCriDamaged.ToString("0.0") + "%";
+                    break;
+                case UpgradeStatType.AutoAttack:
+                    descText.text = P.playerAutoAtt.ToString("0.0") + " È¸/ÃÊ, °ø°Ý·Â " + P.playerAtt;
+                    break;
+                case UpgradeStatType.GoldBonus:
+                    descText.text = "°ñµå È¹µæ·® +" + P.playerGoldBonus.ToString("0.0") + "%";
+                    break;
+            }
+        }
+
+        if (costText)
+        {
+            int cost = CurrentCost();
+            costText.text = cost.ToString("N0");
+        }
+
+        RefreshInteractableAndCostColor();
+    }
+
+    void RefreshInteractableAndCostColor()
+    {
+        if (levelUpButton == null || W == null || table == null) return;
+        int cost = CurrentCost();
+        bool enough = W.GetGold() >= cost;
+        levelUpButton.interactable = enough;
+        if (costText) costText.color = enough ? costEnoughColor : costLackColor;
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (holdCo == null) holdCo = StartCoroutine(HoldRoutine());
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        StopHold();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        StopHold();
+    }
+
+    void StopHold()
+    {
+        if (holdCo != null)
+        {
+            StopCoroutine(holdCo);
+            holdCo = null;
+        }
+    }
+
+    IEnumerator HoldRoutine()
+    {
+        TryLevelUpOnce();
+        yield return new WaitForSeconds(holdInterval);
+        while (true)
+        {
+            if (W == null || !levelUpButton || !levelUpButton.interactable || W.GetGold() < CurrentCost())
+            {
+                StopHold();
+                yield break;
+            }
+            TryLevelUpOnce();
+            yield return new WaitForSeconds(holdInterval);
+        }
+    }
+}
