@@ -1,53 +1,71 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
-    public WeaponData weapon;
+    public static WeaponManager Instance;
+
+    public WeaponData currentWeapon;
     public int level = 0;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void EquipWeapon(WeaponData newWeapon)
+    {
+        currentWeapon = newWeapon;
+        level = 0; // 새 무기는 초기 레벨로 시작
+        //Debug.Log($"장착 완료: {newWeapon.weaponName}");
+    }
 
     public int GetAttackPower()
     {
         int bonus = 0;
-        if (level < weapon.damagePerLevel.Length)
-        {
-            bonus = weapon.damagePerLevel[level];
-        }
+        if (level < currentWeapon.damagePerLevel.Length)
+            bonus = currentWeapon.damagePerLevel[level];
 
-        return weapon.baseDamage + bonus;
+        return currentWeapon.baseDamage + bonus;
     }
 
     public float GetCritRate()
     {
         float bonusCrit = 0f;
-        if (level < weapon.critPerLevel.Length)
-        {
-            bonusCrit = weapon.critPerLevel[level];
-        }
+        if (level < currentWeapon.critPerLevel.Length)
+            bonusCrit = currentWeapon.critPerLevel[level];
 
-        return weapon.baseCritChance + bonusCrit;
+        return currentWeapon.baseCritChance + bonusCrit;
     }
 
     public void LevelUp()
     {
+        if (currentWeapon == null) return;
+
         // 강화 가능한지 체크
-        if (level >= weapon.damagePerLevel.Length - 1)
+        if (level >= currentWeapon.damagePerLevel.Length - 1)
         {
-            Debug.Log("더 이상 강화할 수 없습니다");
+            //Debug.Log("더 이상 강화할 수 없습니다");
             return;
         }
 
         level++;
-        Debug.Log($"{weapon.weaponName} +{level} 강화 성공!");
+        //Debug.Log($"{currentWeapon.weaponName} +{level} 강화 성공!");
     }
 
-    // 골드 보너스도 추가
     public int GetGoldBonus()
     {
-        if (weapon.goldPerLevel == null || level >= weapon.goldPerLevel.Length)
-            return weapon.baseGoldBonus;
+        if (currentWeapon == null) return 0;
 
-        return weapon.baseGoldBonus + weapon.goldPerLevel[level];
+        if (currentWeapon.goldPerLevel == null || level >= currentWeapon.goldPerLevel.Length)
+            return currentWeapon.baseGoldBonus;
+
+        return currentWeapon.baseGoldBonus + currentWeapon.goldPerLevel[level];
     }
 }

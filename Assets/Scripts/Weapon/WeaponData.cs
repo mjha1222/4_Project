@@ -23,4 +23,4 @@ public class WeaponData : ScriptableObject
 
     [Header("치명타 배율")]
     public float critMultiplier = 2.0f;  // 치명타 배율
-}
+}   
