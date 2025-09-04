@@ -17,6 +17,8 @@ public class SoundManager : MonoBehaviour
 
     public static SoundManager instance;
 
+    private static bool checkedSceneLoad = false;
+
     [Header("Audio Mixer")]
     [SerializeField] private AudioMixer audioMixer;
 
@@ -61,14 +63,19 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        bgms = Resources.LoadAll<AudioClip>(musicPath + "BGM");
-        effects = Resources.LoadAll<AudioClip>(musicPath + "Effect");
+        if (!checkedSceneLoad)
+        {
+            bgms = Resources.LoadAll<AudioClip>(musicPath + "BGM");
+            effects = Resources.LoadAll<AudioClip>(musicPath + "Effect");
 
-        PlayBGM(bgm.Main);
-        //시작시 볼륨값 고정
-        masterVolume = 0.7f;
-        bgmVolume = 0.5f;
-        effectVolume = 0.5f;
+            PlayBGM(bgm.Main);
+            //시작시 볼륨값 고정
+            masterVolume = 0.7f;
+            bgmVolume = 0.5f;
+            effectVolume = 0.5f;
+
+            checkedSceneLoad = true;
+        }
     }
 
     public void Start()

@@ -2,20 +2,21 @@ using UnityEngine;
 
 public class PlayerUpgrades : MonoBehaviour
 {
-    public Player player;
     public UpgradeDataTable table;
 
     public int critLevel = 0;
     public int autoLevel = 0;
     public int goldLevel = 0;
 
+    Player P => GameManager.Instance != null ? GameManager.Instance.player : null;
+
     public void ApplyAllToPlayer()
     {
-        if (player == null || table == null) return;
-        player.playerCriDamaged = table.GetValue(UpgradeStatType.CritDamage, critLevel);
-        player.playerAutoAtt = table.GetValue(UpgradeStatType.AutoAttack, autoLevel);
-        player.playerAtt = table.GetAttackBonusFromAutoLevel(autoLevel);
-        player.playerGoldBonus = table.GetValue(UpgradeStatType.GoldBonus, goldLevel);
+        if (P == null || table == null) return;
+        P.playerCriDamaged = table.GetValue(UpgradeStatType.CritDamage, critLevel);
+        P.playerAutoAtt = table.GetValue(UpgradeStatType.AutoAttack, autoLevel);
+        P.playerAtt = table.GetAttackBonusFromAutoLevel(autoLevel);
+        P.playerGoldBonus = table.GetValue(UpgradeStatType.GoldBonus, goldLevel);
     }
 
     public int GetLevel(UpgradeStatType stat)
@@ -40,6 +41,14 @@ public class PlayerUpgrades : MonoBehaviour
         if (critLevel < 0) critLevel = 0;
         if (autoLevel < 0) autoLevel = 0;
         if (goldLevel < 0) goldLevel = 0;
+        ApplyAllToPlayer();
+    }
+
+    public void ResetLevels()
+    {
+        critLevel = 0;
+        autoLevel = 0;
+        goldLevel = 0;
         ApplyAllToPlayer();
     }
 }
