@@ -2316,6 +2316,9 @@ MonoBehaviour:
     playerCriDamaged: 0
     playerGoldBonus: 0
     playerAutoAtt: 0
+    levelCri: 0
+    levelAuto: 0
+    levelGold: 0
 --- !u!4 &283256129
 Transform:
   m_ObjectHideFlags: 0
@@ -4875,7 +4878,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0900a05160452843a49e97e520966ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bagPanel: {fileID: 48215086}
   message: {fileID: 339664772}
   goldText: {fileID: 188095007}
   sceneChange: {fileID: 961050732}
@@ -7903,6 +7905,9 @@ MonoBehaviour:
   nameText: {fileID: 941603097}
   statText: {fileID: 2052288998}
   equipButton: {fileID: 966936946}
+  buyButton: {fileID: 0}
+  lockedUI: {fileID: 0}
+  unlockedUI: {fileID: 0}
 --- !u!1 &1031254253
 GameObject:
   m_ObjectHideFlags: 0
@@ -8040,6 +8045,9 @@ MonoBehaviour:
   nameText: {fileID: 1208490677}
   statText: {fileID: 2052601939}
   equipButton: {fileID: 1872547101}
+  buyButton: {fileID: 0}
+  lockedUI: {fileID: 0}
+  unlockedUI: {fileID: 0}
 --- !u!1 &1053611161
 GameObject:
   m_ObjectHideFlags: 0
@@ -9868,6 +9876,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentWeapon: {fileID: 11400000, guid: 8659f2a59801341448432dbfac332458, type: 2}
   level: 1
+  weaponUI: {fileID: 0}
+  bagPanel: {fileID: 0}
+  inGamePanel: {fileID: 0}
 --- !u!4 &1258886616
 Transform:
   m_ObjectHideFlags: 0
@@ -10224,6 +10235,9 @@ MonoBehaviour:
   nameText: {fileID: 1407320682}
   statText: {fileID: 18838446}
   equipButton: {fileID: 0}
+  buyButton: {fileID: 0}
+  lockedUI: {fileID: 0}
+  unlockedUI: {fileID: 0}
 --- !u!1 &1345746317
 GameObject:
   m_ObjectHideFlags: 0
@@ -10588,6 +10602,9 @@ MonoBehaviour:
   nameText: {fileID: 760914442}
   statText: {fileID: 896899639}
   equipButton: {fileID: 1872547101}
+  buyButton: {fileID: 0}
+  lockedUI: {fileID: 0}
+  unlockedUI: {fileID: 0}
 --- !u!1 &1390891707
 GameObject:
   m_ObjectHideFlags: 0
@@ -11998,6 +12015,9 @@ MonoBehaviour:
     playerCriDamaged: 0
     playerGoldBonus: 0
     playerAutoAtt: 0
+    levelCri: 0
+    levelAuto: 0
+    levelGold: 0
   goldText: {fileID: 188095007}
   useThousandsSeparator: 1
   debugGold: 50000

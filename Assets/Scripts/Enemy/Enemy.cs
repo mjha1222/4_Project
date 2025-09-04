@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     private Animator anim;
     public int nowHP;
     private const string HitTrigger = "Hit";
-    public int rewardGold;
+    public int Gold;
 
     private bool isDead = false;
 
@@ -45,6 +45,8 @@ public class Enemy : MonoBehaviour
 
         if (isDead) return;
         isDead = true;
+
+        EnemyManager.Instance.OnEnemyDead();
         Destroy(gameObject);   //ÆÄ±«
     }
 
