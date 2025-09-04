@@ -6,29 +6,32 @@ using System.Collections;
 public class UpgradeButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
     public UpgradeStatType stat;
-    public PlayerUpgrades upgrades;
     public UpgradeDataTable table;
-
     public Text titleText;
     public Text descText;
     public Text costText;
     public Button levelUpButton;
-
     public Color costEnoughColor = Color.black;
     public Color costLackColor = Color.red;
     public float holdInterval = 0.2f;
+    public ClickController clickController;
 
+    int level = 0;
     Coroutine holdCo;
-    GoldWallet Wallet => GoldWallet.Get();
+    GoldWallet W => GoldWallet.Get();
+    Player P => W != null ? W.player : null;
 
     void Awake()
     {
         if (levelUpButton) levelUpButton.onClick.AddListener(TryLevelUpOnce);
+        if (clickController == null) clickController = FindAnyObjectByType<ClickController>();
     }
 
-    void Start()
+    void OnEnable()
     {
+        ApplyToPlayer();
         RefreshUI();
+        SyncClickController();
     }
 
     void Update()
@@ -36,52 +39,79 @@ public class UpgradeButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         RefreshInteractableAndCostColor();
     }
 
+    int CurrentCost() => table != null ? Mathf.Max(0, table.baseCost + level * table.costStep) : 0;
+
     void TryLevelUpOnce()
     {
-        if (upgrades == null || table == null || Wallet == null) return;
-        int curLv = upgrades.GetLevel(stat);
-        int cost = table.GetCost(curLv);
-        if (!Wallet.TrySpend(cost)) return;
-        upgrades.AddLevel(stat, 1);
+        if (table == null || W == null || P == null) return;
+        int cost = CurrentCost();
+        if (!W.TrySpend(cost)) return;
+        level++;
+        ApplyToPlayer();
         RefreshUI();
+        SyncClickController();
+    }
+
+    void ApplyToPlayer()
+    {
+        if (table == null || P == null) return;
+        switch (stat)
+        {
+            case UpgradeStatType.CritDamage:
+                P.playerCriDamaged = table.GetValue(UpgradeStatType.CritDamage, level);
+                break;
+            case UpgradeStatType.AutoAttack:
+                P.playerAutoAtt = table.GetValue(UpgradeStatType.AutoAttack, level);
+                P.playerAtt = table.GetAttackBonusFromAutoLevel(level);
+                break;
+            case UpgradeStatType.GoldBonus:
+                P.playerGoldBonus = table.GetValue(UpgradeStatType.GoldBonus, level);
+                break;
+        }
+    }
+
+    void SyncClickController()
+    {
+        if (clickController == null || P == null) return;
+        if (stat != UpgradeStatType.AutoAttack) return;
+        bool enable = level > 0 && P.playerAutoAtt > 0f;
+        clickController.SetAutoAttackEnabled(enable);
+        clickController.SetAutoAttackRate(enable ? P.playerAutoAtt : 0f);
     }
 
     void RefreshUI()
     {
-        if (upgrades == null || table == null) return;
-        int lv = upgrades.GetLevel(stat);
+        if (table == null) return;
 
         if (titleText)
         {
             switch (stat)
             {
-                case UpgradeStatType.CritDamage: titleText.text = "Ä¡¸íÅ¸ " + lv; break;
-                case UpgradeStatType.AutoAttack: titleText.text = "ÀÚµ¿ °ø°Ý " + lv; break;
-                case UpgradeStatType.GoldBonus: titleText.text = "°ñµå È¹µæ " + lv; break;
+                case UpgradeStatType.CritDamage: titleText.text = "Ä¡¸íÅ¸ " + level; break;
+                case UpgradeStatType.AutoAttack: titleText.text = "ÀÚµ¿ °ø°Ý " + level; break;
+                case UpgradeStatType.GoldBonus: titleText.text = "°ñµå È¹µæ " + level; break;
             }
         }
 
-        if (descText)
+        if (descText && P != null)
         {
             switch (stat)
             {
                 case UpgradeStatType.CritDamage:
-                    descText.text = "Ä¡¸íÅ¸ µ¥¹ÌÁö +" + table.GetValue(UpgradeStatType.CritDamage, lv).ToString("0.0") + "%";
+                    descText.text = "Ä¡¸íÅ¸ µ¥¹ÌÁö +" + P.playerCriDamaged.ToString("0.0") + "%";
                     break;
                 case UpgradeStatType.AutoAttack:
-                    float rate = table.GetValue(UpgradeStatType.AutoAttack, lv);
-                    int atk = table.GetAttackBonusFromAutoLevel(lv);
-                    descText.text = rate.ToString("0.0") + " È¸/ÃÊ, °ø°Ý·Â " + atk;
+                    descText.text = P.playerAutoAtt.ToString("0.0") + " È¸/ÃÊ, °ø°Ý·Â " + P.playerAtt;
                     break;
                 case UpgradeStatType.GoldBonus:
-                    descText.text = "°ñµå È¹µæ·® +" + table.GetValue(UpgradeStatType.GoldBonus, lv).ToString("0.0") + "%";
+                    descText.text = "°ñµå È¹µæ·® +" + P.playerGoldBonus.ToString("0.0") + "%";
                     break;
             }
         }
 
         if (costText)
         {
-            int cost = table.GetCost(lv);
+            int cost = CurrentCost();
             costText.text = cost.ToString("N0");
         }
 
@@ -90,10 +120,9 @@ public class UpgradeButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     void RefreshInteractableAndCostColor()
     {
-        if (levelUpButton == null || Wallet == null || table == null || upgrades == null) return;
-        int lv = upgrades.GetLevel(stat);
-        int cost = table.GetCost(lv);
-        bool enough = Wallet.GetGold() >= cost;
+        if (levelUpButton == null || W == null || table == null) return;
+        int cost = CurrentCost();
+        bool enough = W.GetGold() >= cost;
         levelUpButton.interactable = enough;
         if (costText) costText.color = enough ? costEnoughColor : costLackColor;
     }
@@ -128,11 +157,9 @@ public class UpgradeButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         yield return new WaitForSeconds(holdInterval);
         while (true)
         {
-            int lv = upgrades.GetLevel(stat);
-            int cost = table.GetCost(lv);
-            if (Wallet == null || !levelUpButton.interactable || Wallet.GetGold() < cost)
+            if (W == null || !levelUpButton || !levelUpButton.interactable || W.GetGold() < CurrentCost())
             {
-                holdCo = null;
+                StopHold();
                 yield break;
             }
             TryLevelUpOnce();
