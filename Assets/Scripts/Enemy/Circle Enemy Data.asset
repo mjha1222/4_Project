@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Circle Enemy Data
   m_EditorClassIdentifier: 
   EnemyName: Circle
-  HP: 0
+  HP: 10
