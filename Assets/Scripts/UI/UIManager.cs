@@ -134,7 +134,7 @@ public class UIManager : MonoBehaviour
     //가방 열고 닫기 기능
     public void OpenBag()
     {
-        inGame.SetActive(false);
+        inGame.SetActive(true);
         bagPanel.SetActive(true);
     }
 
