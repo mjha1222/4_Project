@@ -70,7 +70,7 @@ public class UIManager : MonoBehaviour
         sceneChange.SetActive(true);
 
         Image image = sceneChange.GetComponent<Image>();
-        image.DOFillAmount(0, 2);
+        image.DOFillAmount(0, 2).SetEase(Ease.OutQuart);
     }
 
     public void SaveData()

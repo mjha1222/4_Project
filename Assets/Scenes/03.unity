@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 20093792}
   - component: {fileID: 20093796}
-  - component: {fileID: 20093795}
+  - component: {fileID: 20093797}
   - component: {fileID: 20093794}
   m_Layer: 0
   m_Name: Triangle
@@ -178,20 +178,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &20093795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 20093791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 670c36781dfee38419a6bcb6fec4f1ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Data: {fileID: 11400000, guid: 036fd01c6acb3d34babb5fbd041683b2, type: 2}
-  nowHP: 0
 --- !u!212 &20093796
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -244,6 +230,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &20093797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20093791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02637e203b69f774b8dd8f55fd148015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: {fileID: 11400000, guid: 1a3d2390612dd5e45a29e14a995dc7f2, type: 2}
+  nowHP: 0
+  rewardGold: 30
 --- !u!1 &36243566
 GameObject:
   m_ObjectHideFlags: 0
@@ -3447,7 +3448,7 @@ GameObject:
   m_Component:
   - component: {fileID: 969586004}
   - component: {fileID: 969586008}
-  - component: {fileID: 969586007}
+  - component: {fileID: 969586009}
   - component: {fileID: 969586006}
   m_Layer: 0
   m_Name: Circle
@@ -3492,20 +3493,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &969586007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 969586003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 670c36781dfee38419a6bcb6fec4f1ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Data: {fileID: 11400000, guid: 37cf6190e0c5aa84e990b894545020c1, type: 2}
-  nowHP: 0
 --- !u!212 &969586008
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3558,6 +3545,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &969586009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969586003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02637e203b69f774b8dd8f55fd148015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: {fileID: 11400000, guid: d56010ca8d335a2438007bdccb638994, type: 2}
+  nowHP: 0
+  rewardGold: 10
 --- !u!1 &1025640707
 GameObject:
   m_ObjectHideFlags: 0
@@ -6010,11 +6012,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1654271204}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 670c36781dfee38419a6bcb6fec4f1ef, type: 3}
+  m_Script: {fileID: 11500000, guid: 02637e203b69f774b8dd8f55fd148015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Data: {fileID: 11400000, guid: 6e98ae1e713b5c843945481327605a68, type: 2}
+  Data: {fileID: 11400000, guid: ff0af2564dd2a8641a68666e86354d71, type: 2}
   nowHP: 0
+  rewardGold: 20
 --- !u!1 &1658972815
 GameObject:
   m_ObjectHideFlags: 0
@@ -6662,7 +6665,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c959ded9c508750478fda756806a642b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPaused: 0
+  enemyManager: {fileID: 1025640708}
+  autoAttackEnable: 0
+  attackPerSecond: 0
 --- !u!1 &1798113474
 GameObject:
   m_ObjectHideFlags: 0
