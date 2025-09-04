@@ -244,6 +244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: 1a3d2390612dd5e45a29e14a995dc7f2, type: 2}
   nowHP: 0
+  rewardGold: 30
 --- !u!1 &36243566
 GameObject:
   m_ObjectHideFlags: 0
@@ -3558,6 +3559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: d56010ca8d335a2438007bdccb638994, type: 2}
   nowHP: 0
+  rewardGold: 10
 --- !u!1 &1025640707
 GameObject:
   m_ObjectHideFlags: 0
@@ -6015,6 +6017,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: ff0af2564dd2a8641a68666e86354d71, type: 2}
   nowHP: 0
+  rewardGold: 20
 --- !u!1 &1658972815
 GameObject:
   m_ObjectHideFlags: 0
@@ -6664,7 +6667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyManager: {fileID: 1025640708}
   autoAttackEnable: 0
-  attackPerSecond: 1
+  attackPerSecond: 0
 --- !u!1 &1798113474
 GameObject:
   m_ObjectHideFlags: 0
