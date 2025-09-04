@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "UpgradeDataTable", menuName = "Game/Upgrade Data Table")]
+[CreateAssetMenu(fileName = "UpgradeDataTable", menuName = "Upgrades/Data Table")]
 public class UpgradeDataTable : ScriptableObject
 {
     public int baseCost = 5;
@@ -11,15 +11,15 @@ public class UpgradeDataTable : ScriptableObject
 
     public float autoBase = 0f;
     public float autoPerLevel = 0.1f;
+
     public int attackPerLevel = 2;
 
     public float goldBase = 0f;
     public float goldPerLevel = 0.5f;
 
-    public int GetCost(int currentLevel) => Mathf.Max(0, baseCost + currentLevel * costStep);
-
     public float GetValue(UpgradeStatType stat, int level)
     {
+        if (level < 0) level = 0;
         switch (stat)
         {
             case UpgradeStatType.CritDamage: return critBase + critPerLevel * level;
@@ -29,5 +29,20 @@ public class UpgradeDataTable : ScriptableObject
         return 0f;
     }
 
-    public int GetAttackBonusFromAutoLevel(int level) => attackPerLevel * level;
+    public int GetAttackBonusFromAutoLevel(int autoLevel)
+    {
+        if (autoLevel < 0) autoLevel = 0;
+        return attackPerLevel * autoLevel;
+    }
+
+    public int GetMaxLevel(UpgradeStatType stat)
+    {
+        return -1;
+    }
+
+    public int GetCost(UpgradeStatType stat, int currentLevel)
+    {
+        if (currentLevel < 0) currentLevel = 0;
+        return baseCost + costStep * currentLevel;
+    }
 }
