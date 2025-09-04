@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     private Animator anim;
     public int nowHP;
     private const string HitTrigger = "Hit";
-    public int rewardGold = 10;
+    public int rewardGold;
 
     private bool isDead = false;
 
