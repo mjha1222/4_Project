@@ -1,3 +1,5 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -8,7 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject inGame;
     [SerializeField] private GameObject bagPanel;
     [SerializeField] private GameObject message;
-    [SerializeField] private TMPro.TextMeshProUGUI goldText;
+    [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private GameObject sceneChange;
 
     bool isPlay;
@@ -61,4 +63,47 @@ public class UIManager : MonoBehaviour
     {
         goldText.text = $"<color=yellow>Gold</color> <align=left>{GameManager.instance.player.playerGold}";
     }
+
+    public void SaveData()
+    {
+        if (!isPlay)
+        {
+            GameManager.instance.SaveData(GameManager.instance.player);
+
+            message.SetActive(true);
+            StartCoroutine(WaitForAnimationEnd(message, "MainMessage", "Complete Save Data"));
+        }
+    }
+
+    public void LoadData()
+    {
+        GameManager.instance.player = GameManager.instance.LoadData();
+        mains.SetActive(false);
+        inGame.SetActive(true);
+    }
+
+    public void DeleteData()
+    {
+        GameManager.instance.DeleteAllData();
+    }
+    
+    IEnumerator WaitForAnimationEnd(GameObject gameobj, string animatorName, string UGUItext = null)
+    {
+        TextMeshProUGUI textMeshProugui = message.GetComponent<TextMeshProUGUI>();
+        Animator animator = gameobj.GetComponent<Animator>();
+
+        animator.Play(animatorName);
+        textMeshProugui.text = UGUItext;
+        isPlay = true;
+
+        yield return null;
+
+        float animationLength = animator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(animationLength);
+
+        message.SetActive(false);
+        sceneChange.SetActive(false);
+        isPlay = false;
+    }
+    
 }
