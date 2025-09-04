@@ -2008,7 +2008,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "0.0 \uD68C / \uCD08"
+  m_Text: "0.0 \uD68C / \uACF5\uACA9\uB825 5"
 --- !u!222 &394319049
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2387,7 +2387,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee9e57b1d5125d14787789df572bcc98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gold: 1000
+  Gold: 10000
+  loadFromSave: 1
+  saveKey: gold
+  textUI: {fileID: 638635100}
+  onGoldChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  prefix: Gold
+  prefixColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  valueColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &554506161
 GameObject:
   m_ObjectHideFlags: 0
@@ -3677,8 +3686,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af081d2089707014d8c42912c8e755f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kind: 0
   wallet: {fileID: 546864621}
-  dataTable: {fileID: 11400000, guid: f549d6cfb01426645b15f21e591b613a, type: 2}
+  dataTable: {fileID: 11400000, guid: 38e46f6b6d99a914eb77353fdc788520, type: 2}
   currentLevel: 1
 --- !u!1 &854395111
 GameObject:
@@ -6567,8 +6577,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af081d2089707014d8c42912c8e755f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kind: 0
   wallet: {fileID: 546864621}
-  dataTable: {fileID: 11400000, guid: c9d94f821dd1bd24e8595bbf224b04f2, type: 2}
+  dataTable: {fileID: 11400000, guid: 78f7c773b9d947f4c88a1bcb16c87073, type: 2}
   currentLevel: 1
 --- !u!1 &1411140933
 GameObject:
@@ -8021,8 +8032,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af081d2089707014d8c42912c8e755f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kind: 0
   wallet: {fileID: 546864621}
-  dataTable: {fileID: 11400000, guid: 6c32823f21812924481dd2bf1ed44ac7, type: 2}
+  dataTable: {fileID: 11400000, guid: 4baf9e2b560bee0419ec6df6559e1a02, type: 2}
   currentLevel: 1
 --- !u!1 &1619351130
 GameObject:
