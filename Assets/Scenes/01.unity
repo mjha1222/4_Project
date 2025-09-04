@@ -602,6 +602,9 @@ MonoBehaviour:
   nameText: {fileID: 941603097}
   statText: {fileID: 2052288998}
   equipButton: {fileID: 966936946}
+  buyButton: {fileID: 0}
+  lockedUI: {fileID: 0}
+  unlockedUI: {fileID: 0}
 --- !u!1 &74484165
 GameObject:
   m_ObjectHideFlags: 0
@@ -5640,8 +5643,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0900a05160452843a49e97e520966ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mains: {fileID: 1367037768}
-  inGame: {fileID: 325005804}
   bagPanel: {fileID: 48215086}
   message: {fileID: 339664772}
   goldText: {fileID: 188095007}
@@ -5673,8 +5674,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f880fef1b140169478d6adb46842b6e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menu: {fileID: 2033866028}
-  inMenu: {fileID: 2134301016}
 --- !u!1 &628828344
 GameObject:
   m_ObjectHideFlags: 0
@@ -9596,6 +9595,9 @@ MonoBehaviour:
   nameText: {fileID: 941603097}
   statText: {fileID: 2052288998}
   equipButton: {fileID: 966936946}
+  buyButton: {fileID: 0}
+  lockedUI: {fileID: 0}
+  unlockedUI: {fileID: 0}
 --- !u!1 &1032891526
 GameObject:
   m_ObjectHideFlags: 0
@@ -9654,6 +9656,9 @@ MonoBehaviour:
   nameText: {fileID: 1208490677}
   statText: {fileID: 2052601939}
   equipButton: {fileID: 1872547101}
+  buyButton: {fileID: 648549907}
+  lockedUI: {fileID: 823366969}
+  unlockedUI: {fileID: 2068532519}
 --- !u!1 &1043770594
 GameObject:
   m_ObjectHideFlags: 0
@@ -11744,7 +11749,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWeapon: {fileID: 11400000, guid: 8659f2a59801341448432dbfac332458, type: 2}
-  weapon: {fileID: 0}
   level: 0
   weaponUI: {fileID: 326912622}
 --- !u!4 &1258886616
@@ -12102,7 +12106,10 @@ MonoBehaviour:
   icon: {fileID: 2118307646}
   nameText: {fileID: 1407320682}
   statText: {fileID: 18838446}
-  equipButton: {fileID: 0}
+  equipButton: {fileID: 669329949}
+  buyButton: {fileID: 119390630}
+  lockedUI: {fileID: 1510250078}
+  unlockedUI: {fileID: 793410582}
 --- !u!1 &1345746317
 GameObject:
   m_ObjectHideFlags: 0
@@ -12467,6 +12474,9 @@ MonoBehaviour:
   nameText: {fileID: 760914442}
   statText: {fileID: 896899639}
   equipButton: {fileID: 1872547101}
+  buyButton: {fileID: 642895462}
+  lockedUI: {fileID: 702519867}
+  unlockedUI: {fileID: 1201906638}
 --- !u!1 &1405692097
 GameObject:
   m_ObjectHideFlags: 0
