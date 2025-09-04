@@ -775,7 +775,7 @@ GameObject:
   - component: {fileID: 133094474}
   - component: {fileID: 133094477}
   - component: {fileID: 133094476}
-  - component: {fileID: 133094475}
+  - component: {fileID: 133094478}
   m_Layer: 5
   m_Name: Gold
   m_TagString: Untagged
@@ -806,40 +806,6 @@ RectTransform:
   m_AnchoredPosition: {x: 156, y: -568.8}
   m_SizeDelta: {x: 425, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &133094475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 133094473}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c294d6033de07e42a50ea4d2daf4f5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stats: {fileID: 1407020465}
-  wallet: {fileID: 546864621}
-  player:
-    playerMainStage: 0
-    playerSubStage: 0
-    playerGold: 0
-    playerAtt: 0
-    playerCri: 0
-    playerCriDamaged: 0
-    playerGoldBonus: 0
-    playerAutoAtt: 0
-  buyButton: {fileID: 1909030361}
-  titleText: {fileID: 216398800}
-  levelText: {fileID: 0}
-  descText: {fileID: 1390891709}
-  costText: {fileID: 1948972267}
-  titleTMP: {fileID: 0}
-  levelTMP: {fileID: 0}
-  descTMP: {fileID: 0}
-  costTMPTxt: {fileID: 0}
-  affordableColor: {r: 0, g: 0, b: 0, a: 1}
-  unaffordableColor: {r: 0.9, g: 0.2, b: 0.2, a: 1}
 --- !u!114 &133094476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -878,6 +844,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 133094473}
   m_CullTransparentMesh: 1
+--- !u!114 &133094478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133094473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46df75f058fb8dd4a9cc896ebc32983e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stat: 2
+  upgrades: {fileID: 1589839779}
+  table: {fileID: 11400000, guid: ed1853782dc69ee4e8aa839f7671920d, type: 2}
+  titleText: {fileID: 216398800}
+  descText: {fileID: 1390891709}
+  costText: {fileID: 1948972267}
+  levelUpButton: {fileID: 1909030361}
+  costEnoughColor: {r: 0, g: 0, b: 0, a: 1}
+  costLackColor: {r: 1, g: 0, b: 0, a: 1}
+  holdInterval: 0.2
 --- !u!1 &152851784
 GameObject:
   m_ObjectHideFlags: 0
@@ -1978,8 +1966,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -25.137897, y: -26}
-  m_SizeDelta: {x: 127.7243, y: 30}
+  m_AnchoredPosition: {x: -10, y: -26}
+  m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &394319048
 MonoBehaviour:
@@ -2014,7 +2002,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "0.0 \uD68C / \uCD08"
+  m_Text: "0.0 \uD68C / \uCD08, \uACF5\uACA9\uB825 5"
 --- !u!222 &394319049
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2393,12 +2381,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee9e57b1d5125d14787789df572bcc98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gold: 1000
-  legacyText: {fileID: 0}
-  tmpText: {fileID: 638635100}
-  label: Gold
-  labelColor: {r: 1, g: 0.83, b: 0, a: 1}
-  amountColor: {r: 1, g: 1, b: 1, a: 1}
+  player:
+    playerMainStage: 0
+    playerSubStage: 0
+    playerGold: 0
+    playerAtt: 0
+    playerCri: 0
+    playerCriDamaged: 0
+    playerGoldBonus: 0
+    playerAutoAtt: 0
+  goldText: {fileID: 638635100}
+  useThousandsSeparator: 1
+  debugGold: 0
 --- !u!1 &554506161
 GameObject:
   m_ObjectHideFlags: 0
@@ -2767,7 +2761,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <color=yellow>Gold</color> <align=left>0
+  m_text: <color=#FFD900>Gold</color> <color=#FFFFFF>0</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2776,8 +2770,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278512639
+  m_fontColor: {r: 1, g: 0.92, b: 0.016, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3644,53 +3638,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &840041221
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 840041222}
-  - component: {fileID: 840041223}
-  m_Layer: 0
-  m_Name: Cri
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &840041222
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 840041221}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1589839778}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &840041223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 840041221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af081d2089707014d8c42912c8e755f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wallet: {fileID: 546864621}
-  dataTable: {fileID: 11400000, guid: f549d6cfb01426645b15f21e591b613a, type: 2}
-  currentLevel: 1
 --- !u!1 &854395111
 GameObject:
   m_ObjectHideFlags: 0
@@ -5576,7 +5523,7 @@ GameObject:
   - component: {fileID: 1211414764}
   - component: {fileID: 1211414767}
   - component: {fileID: 1211414766}
-  - component: {fileID: 1211414765}
+  - component: {fileID: 1211414768}
   m_Layer: 5
   m_Name: Auto
   m_TagString: Untagged
@@ -5607,40 +5554,6 @@ RectTransform:
   m_AnchoredPosition: {x: 156, y: -439.6}
   m_SizeDelta: {x: 425, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1211414765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1211414763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c294d6033de07e42a50ea4d2daf4f5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stats: {fileID: 1610093709}
-  wallet: {fileID: 546864621}
-  player:
-    playerMainStage: 0
-    playerSubStage: 0
-    playerGold: 0
-    playerAtt: 0
-    playerCri: 0
-    playerCriDamaged: 0
-    playerGoldBonus: 0
-    playerAutoAtt: 0
-  buyButton: {fileID: 8794581}
-  titleText: {fileID: 1154791570}
-  levelText: {fileID: 0}
-  descText: {fileID: 394319048}
-  costText: {fileID: 620133619}
-  titleTMP: {fileID: 0}
-  levelTMP: {fileID: 0}
-  descTMP: {fileID: 0}
-  costTMPTxt: {fileID: 0}
-  affordableColor: {r: 0, g: 0, b: 0, a: 1}
-  unaffordableColor: {r: 0.9, g: 0.2, b: 0.2, a: 1}
 --- !u!114 &1211414766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5679,6 +5592,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211414763}
   m_CullTransparentMesh: 1
+--- !u!114 &1211414768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211414763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46df75f058fb8dd4a9cc896ebc32983e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stat: 1
+  upgrades: {fileID: 1589839779}
+  table: {fileID: 11400000, guid: ed1853782dc69ee4e8aa839f7671920d, type: 2}
+  titleText: {fileID: 1154791570}
+  descText: {fileID: 394319048}
+  costText: {fileID: 620133619}
+  levelUpButton: {fileID: 8794581}
+  costEnoughColor: {r: 0, g: 0, b: 0, a: 1}
+  costLackColor: {r: 1, g: 0, b: 0, a: 1}
+  holdInterval: 0.2
 --- !u!1 &1218496236
 GameObject:
   m_ObjectHideFlags: 0
@@ -6540,53 +6475,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1398888085}
   m_CullTransparentMesh: 1
---- !u!1 &1407020463
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1407020464}
-  - component: {fileID: 1407020465}
-  m_Layer: 0
-  m_Name: Gold
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1407020464
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1407020463}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1589839778}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1407020465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1407020463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af081d2089707014d8c42912c8e755f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wallet: {fileID: 546864621}
-  dataTable: {fileID: 11400000, guid: c9d94f821dd1bd24e8595bbf224b04f2, type: 2}
-  currentLevel: 1
 --- !u!1 &1411140933
 GameObject:
   m_ObjectHideFlags: 0
@@ -7863,7 +7751,7 @@ GameObject:
   - component: {fileID: 1587996941}
   - component: {fileID: 1587996944}
   - component: {fileID: 1587996943}
-  - component: {fileID: 1587996942}
+  - component: {fileID: 1587996945}
   m_Layer: 5
   m_Name: Cri
   m_TagString: Untagged
@@ -7894,40 +7782,6 @@ RectTransform:
   m_AnchoredPosition: {x: 156, y: -311}
   m_SizeDelta: {x: 425, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1587996942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1587996940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c294d6033de07e42a50ea4d2daf4f5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stats: {fileID: 840041223}
-  wallet: {fileID: 546864621}
-  player:
-    playerMainStage: 0
-    playerSubStage: 0
-    playerGold: 0
-    playerAtt: 0
-    playerCri: 0
-    playerCriDamaged: 0
-    playerGoldBonus: 0
-    playerAutoAtt: 0
-  buyButton: {fileID: 956111128}
-  titleText: {fileID: 1134076370}
-  levelText: {fileID: 0}
-  descText: {fileID: 1031254255}
-  costText: {fileID: 692422983}
-  titleTMP: {fileID: 0}
-  levelTMP: {fileID: 0}
-  descTMP: {fileID: 0}
-  costTMPTxt: {fileID: 0}
-  affordableColor: {r: 0, g: 0, b: 0, a: 1}
-  unaffordableColor: {r: 0.9, g: 0.2, b: 0.2, a: 1}
 --- !u!114 &1587996943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7966,6 +7820,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1587996940}
   m_CullTransparentMesh: 1
+--- !u!114 &1587996945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1587996940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46df75f058fb8dd4a9cc896ebc32983e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stat: 0
+  upgrades: {fileID: 1589839779}
+  table: {fileID: 11400000, guid: ed1853782dc69ee4e8aa839f7671920d, type: 2}
+  titleText: {fileID: 1134076370}
+  descText: {fileID: 1031254255}
+  costText: {fileID: 692422983}
+  levelUpButton: {fileID: 956111128}
+  costEnoughColor: {r: 0, g: 0, b: 0, a: 1}
+  costLackColor: {r: 1, g: 0, b: 0, a: 1}
+  holdInterval: 0.2
 --- !u!1 &1589839777
 GameObject:
   m_ObjectHideFlags: 0
@@ -7975,6 +7851,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1589839778}
+  - component: {fileID: 1589839779}
   m_Layer: 0
   m_Name: Status
   m_TagString: Untagged
@@ -7994,59 +7871,34 @@ Transform:
   m_LocalPosition: {x: 408.80814, y: 185.5339, z: -2.9064996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 840041222}
-  - {fileID: 1610093708}
-  - {fileID: 1407020464}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1610093707
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1610093708}
-  - component: {fileID: 1610093709}
-  m_Layer: 0
-  m_Name: Auto
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1610093708
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610093707}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1589839778}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1610093709
+--- !u!114 &1589839779
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610093707}
+  m_GameObject: {fileID: 1589839777}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af081d2089707014d8c42912c8e755f1, type: 3}
+  m_Script: {fileID: 11500000, guid: 20c99951c266b84459bce60f680e73cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallet: {fileID: 546864621}
-  dataTable: {fileID: 11400000, guid: 6c32823f21812924481dd2bf1ed44ac7, type: 2}
-  currentLevel: 1
+  player:
+    playerMainStage: 0
+    playerSubStage: 0
+    playerGold: 0
+    playerAtt: 0
+    playerCri: 0
+    playerCriDamaged: 0
+    playerGoldBonus: 0
+    playerAutoAtt: 0
+  table: {fileID: 0}
+  critLevel: 0
+  autoLevel: 0
+  goldLevel: 0
 --- !u!1 &1619351130
 GameObject:
   m_ObjectHideFlags: 0
