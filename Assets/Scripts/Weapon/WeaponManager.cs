@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
@@ -11,8 +11,8 @@ public class WeaponManager : MonoBehaviour
     public WeaponUI weaponUI;
 
     [Header("UI Panels")]
-    public GameObject bagPanel; // ¹«±â °¡¹æ
-    public GameObject inGamePanel; // ÀÎ°ÔÀÓ È­¸é
+    public GameObject bagPanel; // ë¬´ê¸° ê°€ë°©
+    public GameObject inGamePanel; // ì¸ê²Œì„ í™”ë©´
 
     private void Awake()
     {
@@ -30,33 +30,27 @@ public class WeaponManager : MonoBehaviour
         if (bagPanel != null)
             bagPanel.SetActive(true);
 
-        Debug.Log("¹«±â °¡¹æ ¿ÀÇÂ");
+        Debug.Log("ë¬´ê¸° ê°€ë°© ì˜¤í”ˆ");
     }
 
     public void CloseBag()
     {
         if (bagPanel != null)
             bagPanel.SetActive(false);
-
-        Debug.Log("¹«±â °¡¹æ ´İ±â");
+        Debug.Log("ë¬´ê¸° ê°€ë°© ë‹«ê¸°");
     }
 
-
-    public void EquipWeapon(WeaponData newWeapon)
+    public void EquipWeapon(WeaponData newWeapon, int newLevel = 0)
     {
-        if (newWeapon == null)
-        {
-            //Debug.LogWarning("ÀåÂøÇÒ ¹«±â°¡ ¾ø½À´Ï´Ù!");
-            return;
-        }
+        if (newWeapon == null) return;
 
         currentWeapon = newWeapon;
-        Debug.Log($"{newWeapon.weaponName} ÀåÂø ¿Ï·á!");
+        level = newLevel; // ìŠ¬ë¡¯ì—ì„œ ë„˜ì–´ì˜¨ ë ˆë²¨ ì €ì¥
+
+        Debug.Log($"{newWeapon.weaponName} ì¥ì°© ì™„ë£Œ!");
 
         if (weaponUI != null)
-            weaponUI.UpdateUI();
-        return;
-            //Debug.LogWarning("WeaponUI ¿¬°áÀÌ ¾ÈµÊ!");
+            weaponUI.UpdateUI(newWeapon, level);
     }
 
     public int GetAttackPower()
@@ -81,15 +75,15 @@ public class WeaponManager : MonoBehaviour
     {
         if (currentWeapon == null) return;
 
-        // °­È­ °¡´ÉÇÑÁö Ã¼Å©
+        // ê°•í™” ê°€ëŠ¥í•œì§€ ì²´í¬
         if (level >= currentWeapon.damagePerLevel.Length - 1)
         {
-            //Debug.Log("´õ ÀÌ»ó °­È­ÇÒ ¼ö ¾ø½À´Ï´Ù");
+            //Debug.Log("ë” ì´ìƒ ê°•í™”í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤");
             return;
         }
 
         level++;
-        //Debug.Log($"{currentWeapon.weaponName} +{level} °­È­ ¼º°ø!");
+        //Debug.Log($"{currentWeapon.weaponName} +{level} ê°•í™” ì„±ê³µ!");
     }
 
     public int GetGoldBonus()
@@ -103,7 +97,11 @@ public class WeaponManager : MonoBehaviour
     }
     void Start()
     {
-        if (bagPanel == null)
-            bagPanel = GameObject.Find("BagPanel");
+        //if (weapon == null)
+        //{
+        //    // ê¸°ë³¸ ë¬´ê¸° ì§€ì •
+        //    weapon = Resources.Load<WeaponData>("WeaponScriptableObject/WSword");
+        //}
+        //EquipWeapon(weapon);
     }
 }

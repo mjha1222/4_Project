@@ -8,7 +8,6 @@ public class WeaponData : ScriptableObject
     [Header("무기 기본 정보")]
     public string weaponName;
     public Sprite weaponIcon;
-    public int buyPrice;  // 구매 가격
     public bool isDefaultWeapon = false; // 기본 무기
 
     [Header("기본 능력치")]
@@ -24,4 +23,9 @@ public class WeaponData : ScriptableObject
 
     [Header("치명타 배율")]
     public float critMultiplier = 2.0f;  // 치명타 배율
+
+    [Header("구매 & 강화 비용")]
+    public int buyPrice; // 구매 비용
+    public int baseUpgradeCost; // 첫 번째 강화 비용
+    public int maxUpgradeLevel = 10; // 최대 강화 레벨 (예: 10)
 }   

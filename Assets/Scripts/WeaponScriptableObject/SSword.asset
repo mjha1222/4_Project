@@ -14,13 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: "\uB3CC \uAC80"
   weaponIcon: {fileID: 21300000, guid: afdf88a103456e64692db68b99d546ca, type: 3}
-  buyPrice: 333
+  isDefaultWeapon: 0
   baseDamage: 10
   baseCritChance: 15
-  baseGoldBonus: 2
-  damagePerLevel: 01000000
+  baseGoldBonus: 3
+  damagePerLevel: 02000000
   critPerLevel:
-  - 1
-  goldPerLevel: 01000000
+  - 2
+  goldPerLevel: 02000000
   upgradeCosts: 02000000
   critMultiplier: 2
+  buyPrice: 333
+  baseUpgradeCost: 33
+  maxUpgradeLevel: 10

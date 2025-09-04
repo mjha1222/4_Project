@@ -1,6 +1,5 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class WeaponSlot : MonoBehaviour
 {
@@ -10,32 +9,33 @@ public class WeaponSlot : MonoBehaviour
     public Image icon;
     public Text nameText;
     public Text statText;
-    public Button equipButton;
     public Button buyButton;
-
+    public Button upgradeButton;
 
     [Header("Lock/Unlock")]
-    public GameObject lockedUI; // ??? »óÅÂ UI
-    public GameObject unlockedUI; // ¹«±â Á¤º¸ UI
+    public GameObject lockedUI;
+    public GameObject unlockedUI;
 
-    private bool isUnlocked = false; // ±¸¸Å ¿©ºÎ
+    private bool isUnlocked = false;
+    private int level = 0;
 
-    void Start()
+    public void Start()
     {
-        // ¹öÆ° ÀÌº¥Æ® ¿¬°á
-        if (equipButton != null)
-        {
-            equipButton.onClick.RemoveAllListeners();
-            equipButton.onClick.AddListener(Equip);
-        }
-
+        // ë²„íŠ¼ ì´ë²¤íŠ¸ ì—°ê²°
         if (buyButton != null)
         {
             buyButton.onClick.RemoveAllListeners();
             buyButton.onClick.AddListener(Buy);
         }
 
-        // ±âº» ¹«±â´Â ¹«Á¶°Ç ÇØ±İ
+        if (upgradeButton != null)
+        {
+            upgradeButton.onClick.RemoveAllListeners();
+            upgradeButton.onClick.AddListener(Upgrade);
+            upgradeButton.gameObject.SetActive(false); // ì‹œì‘ì‹œ ë¹„í™œì„±í™”
+        }
+
+        // ê¸°ë³¸ ë¬´ê¸° ì²˜ë¦¬
         if (weaponData != null && weaponData.isDefaultWeapon)
         {
             isUnlocked = true;
@@ -43,69 +43,119 @@ public class WeaponSlot : MonoBehaviour
         }
         else
         {
-            if (isUnlocked)
-                ShowUnlocked();
-            else
-                ShowLocked();
+            ShowLocked();
         }
     }
-    // ±¸¸Å Àü »óÅÂ UI
-    void ShowLocked()
+
+    public void ShowLocked()
     {
         if (lockedUI != null) lockedUI.SetActive(true);
         if (unlockedUI != null) unlockedUI.SetActive(false);
+
+        if (buyButton != null) buyButton.gameObject.SetActive(true);
+        if (upgradeButton != null) upgradeButton.gameObject.SetActive(false);
     }
 
-    // ±¸¸Å ÈÄ »óÅÂ UI
-    void ShowUnlocked()
+    public void ShowUnlocked()
     {
         if (lockedUI != null) lockedUI.SetActive(false);
         if (unlockedUI != null) unlockedUI.SetActive(true);
 
-        if (weaponData != null)
-        {
-            if (icon != null) icon.sprite = weaponData.weaponIcon;
-            if (nameText != null) nameText.text = $"{weaponData.weaponName} Lv.0";
-            if (statText != null) statText.text =
-                $"°ø°İ·Â: {weaponData.baseDamage}\nÄ¡¸íÅ¸ È®·ü: {weaponData.baseCritChance}%";
-        }
-    }
-    // ±¸¸Å ·ÎÁ÷
-    void Buy()
-    {
-        int gold = GameManager.instance.player.playerGold;
+        Refresh();
 
-        if (gold >= weaponData.buyPrice)
+        if (buyButton != null) buyButton.gameObject.SetActive(false);
+        if (upgradeButton != null) upgradeButton.gameObject.SetActive(true);
+    }
+
+    public void Refresh()
+    {
+        if (weaponData == null) return;
+
+        if (icon != null) icon.sprite = weaponData.weaponIcon;
+        if (nameText != null) nameText.text = $"{weaponData.weaponName} Lv.{level}";
+
+        int atk = weaponData.baseDamage + (level * (weaponData.damagePerLevel.Length > 0 ? weaponData.damagePerLevel[0] : 1));
+        float crit = weaponData.baseCritChance + (level * (weaponData.critPerLevel.Length > 0 ? weaponData.critPerLevel[0] : 1));
+
+        if (statText != null)
+            statText.text = $"ê³µê²©ë ¥: {atk}\nì¹˜ëª…íƒ€ í™•ë¥ : {crit}%";
+    }
+
+    public void Buy()
+    {
+        if (weaponData == null) return;
+
+        if (GoldWallet.Get().TrySpend(weaponData.buyPrice))
         {
-            GameManager.instance.player.playerGold -= weaponData.buyPrice;
             isUnlocked = true;
             ShowUnlocked();
 
-            // °ñµå UI °»½Å
-            UIManager.Instance.GoldViewText();
+            if (WeaponManager.Instance != null)
+            {
+                WeaponManager.Instance.currentWeapon = weaponData;
+                WeaponManager.Instance.level = level;
+                WeaponManager.Instance.weaponUI.UpdateUI();
+            }
 
-            Debug.Log($"{weaponData.weaponName} ±¸¸Å ¿Ï·á!");
+            Debug.Log($"{weaponData.weaponName} êµ¬ë§¤ ì™„ë£Œ!");
         }
         else
         {
-            Debug.Log("°ñµå ºÎÁ·!");
+            Debug.Log("ê³¨ë“œ ë¶€ì¡±!");
         }
     }
 
-    // ÀåÂø ·ÎÁ÷
+    public void Upgrade()
+    {
+        if (!isUnlocked)
+        {
+            Debug.Log("êµ¬ë§¤í•˜ì§€ ì•Šì€ ë¬´ê¸°ëŠ” ê°•í™” ë¶ˆê°€!");
+            return;
+        }
+
+        int cost = 10 * (level + 1);
+        if (GoldWallet.Get().TrySpend(cost))
+        {
+            level++;
+
+            Refresh();
+
+            // ë¬´ê¸° ë§¤ë‹ˆì €ë‘ ë™ê¸°í™”
+            if (WeaponManager.Instance != null)
+            {
+                // í˜„ì¬ ì¥ì°© ë¬´ê¸° == ì§€ê¸ˆ ê°•í™” ì¤‘ì¸ ë¬´ê¸°ì¼ ë•Œë§Œ ë™ê¸°í™”
+                if (WeaponManager.Instance.currentWeapon == weaponData)
+                {
+                    WeaponManager.Instance.level = level;
+                    WeaponManager.Instance.weaponUI.UpdateUI(weaponData, level);
+                }
+            }
+
+            Debug.Log($"{weaponData.weaponName} Lv.{level} ê°•í™” ì„±ê³µ!");
+        }
+        else
+        {
+            Debug.Log("ê³¨ë“œ ë¶€ì¡±!");
+        }
+    }
+
     public void Equip()
     {
         if (!isUnlocked)
         {
-            Debug.Log("±¸¸ÅÇÏÁö ¾ÊÀº ¹«±â´Â ÀåÂø ºÒ°¡!");
+            Debug.Log("êµ¬ë§¤í•˜ì§€ ì•Šì€ ë¬´ê¸°ëŠ” ì¥ì°© ë¶ˆê°€!");
             return;
         }
 
         if (weaponData != null)
         {
-            WeaponManager.Instance.EquipWeapon(weaponData);
+            // ë¬´ê¸° ë§¤ë‹ˆì €ì— ë¬´ê¸° ì¥ì°©
+            WeaponManager.Instance.EquipWeapon(weaponData, level);
+
+            if (WeaponManager.Instance.weaponUI != null)
+            {
+                WeaponManager.Instance.weaponUI.UpdateUI(weaponData, level);
+            }
         }
     }
 }
-
-

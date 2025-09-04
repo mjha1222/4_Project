@@ -13,27 +13,43 @@ public class WeaponUI : MonoBehaviour
     //public Button upgradeBtn;
     //public Text levelText;
 
-    void Start()
-    {
-        UpdateUI();
-
-        //if (upgradeBtn != null)
-        //    upgradeBtn.onClick.AddListener(TryUpgrade);
-    }
-
     public void UpdateUI()
     {
-        if (weaponManager.currentWeapon == null) return;
-
-        WeaponData weapon = WeaponManager.Instance.currentWeapon;
-        weaponImg.sprite = weapon.weaponIcon;
-        nameText.text = weapon.weaponName;
-        statsText.text = $"공격력: {weapon.baseDamage}\n치명타: {weapon.baseCritChance}%";
+        if (weaponManager != null)
+        {
+            UpdateUI(weaponManager.currentWeapon, weaponManager.level);
+        }
     }
 
-    void TryUpgrade()
+
+    public void UpdateUI(WeaponData weaponData, int level)
     {
-        weaponManager.LevelUp();
-        UpdateUI();
+        if (weaponData == null) return;
+
+        if (weaponImg != null) weaponImg.sprite = weaponData.weaponIcon;
+        if (nameText != null) nameText.text = $"{weaponData.weaponName} Lv.{level}";
+
+        int atk = 0;
+        float crit = 0f;
+
+        if (weaponManager != null && weaponManager.currentWeapon == weaponData)
+        {
+            atk = weaponManager.GetAttackPower();
+            crit = weaponManager.GetCritRate();
+        }
+        else
+        {
+            // 아직 장착 전 미리보기 용
+            atk = weaponData.baseDamage;
+            if (weaponData.damagePerLevel != null && level < weaponData.damagePerLevel.Length)
+                atk += weaponData.damagePerLevel[level];
+
+            crit = weaponData.baseCritChance;
+            if (weaponData.critPerLevel != null && level < weaponData.critPerLevel.Length)
+                crit += weaponData.critPerLevel[level];
+        }
+
+        if (statsText != null)
+            statsText.text = $"공격력: {atk}\n치명타 확률: {crit}%";
     }
 }
