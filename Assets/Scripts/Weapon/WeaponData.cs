@@ -9,6 +9,7 @@ public class WeaponData : ScriptableObject
     public string weaponName;
     public Sprite weaponIcon;
     public int buyPrice;  // 구매 가격
+    public bool isDefaultWeapon = false; // 기본 무기
 
     [Header("기본 능력치")]
     public int baseDamage;

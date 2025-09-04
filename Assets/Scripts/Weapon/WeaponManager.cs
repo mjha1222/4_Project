@@ -3,9 +3,12 @@ using UnityEngine;
 public class WeaponManager : MonoBehaviour
 {
     public static WeaponManager Instance;
-
     public WeaponData currentWeapon;
+    //public WeaponData weapon;
     public int level = 0;
+
+    [Header("UI")]
+    public WeaponUI weaponUI;
 
     private void Awake()
     {
@@ -21,9 +24,19 @@ public class WeaponManager : MonoBehaviour
 
     public void EquipWeapon(WeaponData newWeapon)
     {
+        if (newWeapon == null)
+        {
+            //Debug.LogWarning("장착할 무기가 없습니다!");
+            return;
+        }
+
         currentWeapon = newWeapon;
-        level = 0; // 새 무기는 초기 레벨로 시작
-        //Debug.Log($"장착 완료: {newWeapon.weaponName}");
+        Debug.Log($"{newWeapon.weaponName} 장착 완료!");
+
+        if (weaponUI != null)
+            weaponUI.UpdateUI();
+        return;
+            //Debug.LogWarning("WeaponUI 연결이 안됨!");
     }
 
     public int GetAttackPower()
@@ -67,5 +80,14 @@ public class WeaponManager : MonoBehaviour
             return currentWeapon.baseGoldBonus;
 
         return currentWeapon.baseGoldBonus + currentWeapon.goldPerLevel[level];
+    }
+    void Start()
+    {
+        //if (weapon == null)
+        //{
+        //    // 기본 무기 지정
+        //    weapon = Resources.Load<WeaponData>("WeaponScriptableObject/WSword");
+        //}
+        //EquipWeapon(weapon);
     }
 }
