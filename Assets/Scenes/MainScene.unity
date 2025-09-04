@@ -281,9 +281,9 @@ RectTransform:
   - {fileID: 1666530916}
   m_Father: {fileID: 1235325391}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 380, y: -1010}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8898278
@@ -2598,6 +2598,9 @@ MonoBehaviour:
     playerCriDamaged: 0
     playerGoldBonus: 0
     playerAutoAtt: 0
+    levelCri: 0
+    levelAuto: 0
+    levelGold: 0
 --- !u!4 &283256129
 Transform:
   m_ObjectHideFlags: 0
@@ -2853,7 +2856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &325005805
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7998,9 +8001,9 @@ RectTransform:
   - {fileID: 175362496}
   m_Father: {fileID: 1235325391}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 380, y: -770}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &889034485
@@ -9560,9 +9563,9 @@ RectTransform:
   - {fileID: 2017702929}
   m_Father: {fileID: 1235325391}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 380, y: -890}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1084180971
@@ -11922,7 +11925,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1367037769
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13612,6 +13615,9 @@ MonoBehaviour:
     playerCriDamaged: 0
     playerGoldBonus: 0
     playerAutoAtt: 0
+    levelCri: 0
+    levelAuto: 0
+    levelGold: 0
   goldText: {fileID: 188095007}
   useThousandsSeparator: 1
   debugGold: 2000

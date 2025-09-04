@@ -12,6 +12,10 @@ public class Player
     public float playerGoldBonus;
     public float playerAutoAtt;
 
+    public int levelCri;
+    public int levelAuto;
+    public int levelGold;
+
     //Equip 
     //public Equip playerEquip;
 
@@ -66,6 +70,14 @@ public class Player
     public void AddGold(int amount)
     {
         playerGold += amount;
+    }
+
+    public void AddUpgrade(int cri, int auto, int gold)
+    {
+        levelCri = cri;
+        levelAuto = auto;
+        levelGold = gold;
+
     }
 
     //장비 장착 생성되고 생각

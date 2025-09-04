@@ -65,9 +65,13 @@ public class UIManager : MonoBehaviour
 
     public void NewData()
     {
+        PlayerUpgrades playerUpgrade = FindObjectOfType<PlayerUpgrades>();
+        
         SoundManager.instance.PlayBGM(SoundManager.bgm.InGame);
         GameManager.instance.NewUserSetting();
+        
         sceneChange.SetActive(true);
+        playerUpgrade.ResetLevels();
 
         Image image = sceneChange.GetComponent<Image>();
         image.DOFillAmount(0, 2).SetEase(Ease.OutQuart);

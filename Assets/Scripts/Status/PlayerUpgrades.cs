@@ -91,6 +91,8 @@ public class PlayerUpgrades : MonoBehaviour
 
         }
 
+        GameManager.instance.player.AddUpgrade(critLevel,autoLevel,goldLevel);
+
         if (critLevel < 0) critLevel = 0;
         if (autoLevel < 0) autoLevel = 0;
         if (goldLevel < 0) goldLevel = 0;
