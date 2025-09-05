@@ -11,6 +11,9 @@ public class Enemy : MonoBehaviour
     public int Gold;
 
     private bool isDead = false;
+    public string enemyName = "Enemy";
+
+
 
 
     private void Awake()
@@ -20,11 +23,12 @@ public class Enemy : MonoBehaviour
     public void Start()
     {
         nowHP = Data.HP;
-        EnemyManager.Instance.nowEnemy = this;
+        EnemyManager.Instance.RefreshHPbar();
     }
 
     public void TakeDamage(int damage)
     {
+        if (isDead) return; 
         nowHP -= damage;
         anim.ResetTrigger(HitTrigger);
         anim.SetTrigger(HitTrigger);
@@ -45,7 +49,6 @@ public class Enemy : MonoBehaviour
 
         if (isDead) return;
         isDead = true;
-
         EnemyManager.Instance.OnEnemyDead();
         Destroy(gameObject);   //ÆÄ±«
     }

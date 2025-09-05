@@ -51,7 +51,7 @@ public class PlayerUpgrades : MonoBehaviour
         ClampToTableMax();
         P.playerCriDamaged = table.GetValue(UpgradeStatType.CritDamage, critLevel);
         P.playerAutoAtt = table.GetValue(UpgradeStatType.AutoAttack, autoLevel);
-        P.playerAtt = table.GetAttackBonusFromAutoLevel(autoLevel);
+        //P.playerAtt = table.GetAttackBonusFromAutoLevel(autoLevel);
         P.playerGoldBonus = table.GetValue(UpgradeStatType.GoldBonus, goldLevel);
     }
 
