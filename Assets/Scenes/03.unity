@@ -3348,7 +3348,7 @@ MonoBehaviour:
   CirclePrefab: {fileID: 7746002148432876226, guid: 4581e1e3799b11a4bb91fc4945bdc416, type: 3}
   spawnPoint: {fileID: 2142572130}
   EnemyNameText: {fileID: 402044386}
-  DungeonNamText: {fileID: 0}
+  DungeonNamText: {fileID: 1805047378}
 --- !u!4 &1025640709
 Transform:
   m_ObjectHideFlags: 0
