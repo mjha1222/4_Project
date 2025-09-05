@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
     public static WeaponManager Instance;
     public WeaponData currentWeapon;
+    public List<WeaponData> weapons;
     public int level = 0;
 
     [Header("UI")]
@@ -18,6 +20,9 @@ public class WeaponManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
+
+
+
 
     public void EquipWeapon(WeaponData newWeapon, int newLevel = 0)
     {
