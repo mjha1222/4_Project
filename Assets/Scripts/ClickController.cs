@@ -23,12 +23,6 @@ public class ClickController : MonoBehaviour
         StopAutoAttack();
     }
 
-    void Start()
-    {
-        //자동공격 테스트
-        GetComponent<ClickController>().SetAutoAttackEnabled(true);
-        GetComponent<ClickController>().SetAutoAttackRate(2f);
-    }
 
     // Update is called once per frame
     void Update()
@@ -44,9 +38,10 @@ public class ClickController : MonoBehaviour
             
             if(enemyManager != null)
             {
-                int damage = GameManager.Instance.player.playerAtt;
+                int damage = GameManager.Instance.player.plTotalAtt;
                 enemyManager.nowEnemy.TakeDamage(damage);
-                Debug.Log($"damage: {damage}");
+                SoundManager.instance.PlayEffect(SoundManager.effect.click);
+                Debug.Log($"damage: {damage}"); 
             }
             else
             {
@@ -96,7 +91,7 @@ public class ClickController : MonoBehaviour
         {
             if(enemyManager.nowEnemy != null)
             {
-                int damage = GameManager.Instance.player.playerAtt;
+                int damage = GameManager.Instance.player.plTotalAtt;
                 enemyManager.nowEnemy.TakeDamage(damage);
                 Debug.Log($"damage: {damage}");
             }
