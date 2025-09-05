@@ -93,7 +93,7 @@ public class EnemyManager : MonoBehaviour
         else
             goldReward = 50; // »ç°¢Çü
 
-        Gold += goldReward;
+        GameManager.instance.player.playerGold += goldReward;
         GoldViewText();
 
 
@@ -108,7 +108,7 @@ public class EnemyManager : MonoBehaviour
     }
     public void GoldViewText()
     {
-        goldText.text = $"<color=yellow>Gold</color> <align=left>{Gold}";
+        goldText.text = $"<color=yellow>Gold</color> <align=left>{GameManager.instance.player.playerGold}";
     }
 }
 
