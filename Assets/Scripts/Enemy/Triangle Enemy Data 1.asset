@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Triangle Enemy Data 1
   m_EditorClassIdentifier: 
   EnemyName: Triangle
-  HP: 30
+  HP: 20

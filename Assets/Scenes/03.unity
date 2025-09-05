@@ -3343,9 +3343,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nowEnemy: {fileID: 0}
   HPbar: {fileID: 949747989}
-  squarePrefab: {fileID: 6051806647411189004, guid: b8cb6215aff55404dbd3a2d03e521422, type: 3}
+  SquarePrefab: {fileID: 6051806647411189004, guid: b8cb6215aff55404dbd3a2d03e521422, type: 3}
   TrianglePrefab: {fileID: 4068959887998940839, guid: 486eaf31a436f1b4babfa2d87a0cca44, type: 3}
-  enemyPrefab: {fileID: 7746002148432876226, guid: 4581e1e3799b11a4bb91fc4945bdc416, type: 3}
+  CirclePrefab: {fileID: 7746002148432876226, guid: 4581e1e3799b11a4bb91fc4945bdc416, type: 3}
   spawnPoint: {fileID: 2142572130}
 --- !u!4 &1025640709
 Transform:

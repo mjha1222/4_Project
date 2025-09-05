@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Square Enemy Data
   m_EditorClassIdentifier: 
   EnemyName: Square
-  HP: 20
+  HP: 30
