@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (isDead) return; 
         nowHP -= damage;
         anim.ResetTrigger(HitTrigger);
         anim.SetTrigger(HitTrigger);
