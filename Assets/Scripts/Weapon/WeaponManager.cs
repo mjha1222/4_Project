@@ -6,7 +6,7 @@ public class WeaponManager : MonoBehaviour
     public static WeaponManager Instance;
     public WeaponData currentWeapon;
     public List<WeaponSlot> weapons;
-    public int level = 0;
+    public int level;
 
     [Header("UI")]
     public WeaponUI weaponUI;
@@ -19,6 +19,8 @@ public class WeaponManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+        level = 0;
+        UpdateCurrentWeaponUI();
     }
 
 
@@ -32,7 +34,7 @@ public class WeaponManager : MonoBehaviour
         level = newLevel;
 
         UpdateCurrentWeaponUI();
-       
+        
     }
 
     public void UpdateCurrentWeaponUI()
@@ -42,6 +44,7 @@ public class WeaponManager : MonoBehaviour
             int atk = GetAttackPower();
             float crit = GetCritRate();
             weaponUI.UpdateUI(currentWeapon, level, atk, crit);
+            
         }
     }
 

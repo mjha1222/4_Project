@@ -23,10 +23,10 @@ public class Player
     public List<SaveWeaponData> saveWeaponData = new List<SaveWeaponData>();
 
 
-    private int plTotalAtt;
-    private int plTotalCri;
-    private float plTotalCriDamaged;
-    private float plTotalGoldBonus;
+    public int plTotalAtt { get; private set; }
+    public float plTotalCri { get; private set; }
+    public float plTotalCriDamaged { get; private set; }
+    public float plTotalGoldBonus { get; private set; }
 
     public Player(int playermainstage, int playersubstage, int playergold, int playeratt, int playercri)
     {
@@ -40,11 +40,19 @@ public class Player
         //장비장착 관련
         playerAtt = playeratt;
         playerCri = playercri;
+    }
 
-        //업그레이드 관련
-        playerCriDamaged = 1.0f;
-        playerGoldBonus = 1.0f;
-        playerAutoAtt = 0f;
+    public void FinalStatusSet()
+    {
+        plTotalAtt = playerAtt + WeaponManager.Instance.GetAttackPower();
+        plTotalCri = playerCri + WeaponManager.Instance.GetCritRate();
+        plTotalCriDamaged = 100 + playerCriDamaged;
+        plTotalGoldBonus = 100 + playerGoldBonus;
+
+        Debug.Log("데미지 : " + plTotalAtt);
+        Debug.Log("크리율 : " + plTotalCri);
+        Debug.Log("크리티컬 : " + plTotalCriDamaged);
+        Debug.Log("골드보너스 : " + plTotalGoldBonus);
     }
 
     public void UpgradeCritDamage(float newMultiplier)

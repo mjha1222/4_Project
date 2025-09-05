@@ -130,6 +130,7 @@ public class WeaponSlot : MonoBehaviour
             }
 
             Debug.Log($"{weaponData.weaponName} Lv.{level} 강화 성공! (비용 {cost})");
+            UIManager.instance.UpdateUpgradeUI();
         }
         else
         {
