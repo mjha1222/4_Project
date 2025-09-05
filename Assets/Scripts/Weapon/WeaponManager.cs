@@ -44,7 +44,6 @@ public class WeaponManager : MonoBehaviour
             int atk = GetAttackPower();
             float crit = GetCritRate();
             weaponUI.UpdateUI(currentWeapon, level, atk, crit);
-            
         }
     }
 

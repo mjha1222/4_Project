@@ -2875,9 +2875,9 @@ RectTransform:
   - {fileID: 264805359}
   - {fileID: 326912618}
   - {fileID: 1488340266}
+  - {fileID: 1280411097}
   - {fileID: 2068570380}
   - {fileID: 2033866029}
-  - {fileID: 1280411097}
   m_Father: {fileID: 85438059}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5084,7 +5084,10 @@ MonoBehaviour:
   message: {fileID: 339664772}
   goldText: {fileID: 188095007}
   sceneChange: {fileID: 961050732}
-  upgrades: []
+  upgrades:
+  - {fileID: 1587996945}
+  - {fileID: 1211414768}
+  - {fileID: 133094478}
 --- !u!4 &597169466
 Transform:
   m_ObjectHideFlags: 0
@@ -5550,7 +5553,7 @@ MonoBehaviour:
   SquarePrefab: {fileID: 6051806647411189004, guid: b8cb6215aff55404dbd3a2d03e521422, type: 3}
   TrianglePrefab: {fileID: 4068959887998940839, guid: 486eaf31a436f1b4babfa2d87a0cca44, type: 3}
   CirclePrefab: {fileID: 7746002148432876226, guid: 4581e1e3799b11a4bb91fc4945bdc416, type: 3}
-  spawnPoint: {fileID: 0}
+  spawnPoint: {fileID: 2142572130}
   EnemyNameText: {fileID: 1258744007}
   DungeonNamText: {fileID: 435055681}
   StageNum: {fileID: 1295549700}
@@ -15398,10 +15401,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Title
+  m_text: "\uD074\uB9AC\uCEE4 \uAC8C\uC784"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 42ef87090da0b2d4494d8ca97d19183d, type: 2}
+  m_sharedMaterial: {fileID: -4277835350092577528, guid: 42ef87090da0b2d4494d8ca97d19183d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -16413,7 +16416,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2033866029
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16646,7 +16649,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2068570380
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17005,6 +17008,37 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 8, y: -8}
   m_UseGraphicAlpha: 1
+--- !u!1 &2142572129
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2142572130}
+  m_Layer: 0
+  m_Name: SpawnEnemypoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2142572130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2142572129}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0184021, y: 0.5021973, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -17019,3 +17053,4 @@ SceneRoots:
   - {fileID: 1589839778}
   - {fileID: 642208655}
   - {fileID: 1790723676}
+  - {fileID: 2142572130}
