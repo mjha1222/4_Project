@@ -12,12 +12,14 @@ public class Player
     public float playerGoldBonus;
     public float playerAutoAtt;
 
+    //업그레이드
+    public int levelCri;
+    public int levelAuto;
+    public int levelGold;
+
     //Equip 
     //public Equip playerEquip;
 
-    //Upgrade
-    //public List<Upgrade> playerUpgrade;
-    //자동공격, 치명타데미지, 골드획득량
 
     private int plTotalAtt;
     private int plTotalCri;
@@ -66,6 +68,14 @@ public class Player
     public void AddGold(int amount)
     {
         playerGold += amount;
+    }
+
+    public void SetUpgrade(int cri, int auto, int gold)
+    {
+        levelCri = cri;
+        levelAuto = auto;
+        levelGold = gold;
+
     }
 
     //장비 장착 생성되고 생각

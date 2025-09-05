@@ -8,37 +8,40 @@ public class WeaponUI : MonoBehaviour
 
     [Header("Weapon UI")]
     public Image weaponImg;
-    public Text nameText;
+    public TextMeshProUGUI nameText;
+    public TextMeshProUGUI statsText;
+    //public Button upgradeBtn;
     //public Text levelText;
-    public Text statsText;
-    public Button upgradeBtn;
-
-    void Start()
-    {
-        UpdateUI();
-
-        if (upgradeBtn != null)
-            upgradeBtn.onClick.AddListener(TryUpgrade);
-    }
 
     public void UpdateUI()
     {
-        if (weaponManager.currentWeapon == null) return;
+        if (weaponManager == null || weaponManager.currentWeapon == null) return;
 
-        weaponImg.sprite = weaponManager.currentWeapon.weaponIcon;
-        nameText.text = weaponManager.currentWeapon.weaponName;
-        //levelText.text = $"+{weaponManager.level}";
+        WeaponData weaponData = weaponManager.currentWeapon;
+        int level = weaponManager.level;
 
-        // 스탯 정보 표시
-        float critRate = weaponManager.GetCritRate();
-        statsText.text = $"공격력: {weaponManager.GetAttackPower()}\n" +
-                         $"치명타: {critRate:F1}%\n" +
-                         $"골드 보너스: +{weaponManager.GetGoldBonus()}";
+        if (weaponImg != null) weaponImg.sprite = weaponData.weaponIcon;
+        if (nameText != null) nameText.text = $"{weaponData.weaponName} Lv.{level}";
+
+        // WeaponManager에서 직접 최종 수치 불러오기
+        int atk = weaponManager.GetAttackPower();
+        float crit = weaponManager.GetCritRate();
+
+        if (statsText != null)
+            statsText.text = $"공격력: {atk}\n치명타 확률: {crit}%";
     }
 
-    void TryUpgrade()
+
+    public void UpdateUI(WeaponData weaponData, int level,int atk, float crit)
     {
-        weaponManager.LevelUp();
-        UpdateUI();
+        if (weaponData == null) return;
+
+        if (weaponImg != null) weaponImg.sprite = weaponData.weaponIcon;
+        if (nameText != null) nameText.text = $"{weaponData.weaponName} Lv.{level}";
+
+        if (weaponManager != null)
+
+        if (statsText != null)
+            statsText.text = $"공격력: {atk}\n치명타 확률: {crit}%";
     }
 }

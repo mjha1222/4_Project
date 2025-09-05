@@ -1,71 +1,75 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
     public static WeaponManager Instance;
-
     public WeaponData currentWeapon;
     public int level = 0;
 
+    [Header("UI")]
+    public WeaponUI weaponUI;
+
+    [Header("UI Panels")]
+    public GameObject bagPanel; // Î¨¥Í∏∞ Í∞ÄÎ∞©
+    public GameObject inGamePanel; // Ïù∏Í≤åÏûÑ ÌôîÎ©¥
+
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
 
-    public void EquipWeapon(WeaponData newWeapon)
+    public void EquipWeapon(WeaponData newWeapon, int newLevel = 0)
     {
+        if (newWeapon == null) return;
+
         currentWeapon = newWeapon;
-        level = 0; // ªı π´±‚¥¬ √ ±‚ ∑π∫ß∑Œ Ω√¿€
-        //Debug.Log($"¿Â¬¯ øœ∑·: {newWeapon.weaponName}");
+        level = newLevel;
+
+        UpdateCurrentWeaponUI();
+    }
+
+    public void UpdateCurrentWeaponUI()
+    {
+        if (weaponUI != null && currentWeapon != null)
+        {
+            int atk = GetAttackPower();
+            float crit = GetCritRate();
+            weaponUI.UpdateUI(currentWeapon, level, atk, crit);
+        }
     }
 
     public int GetAttackPower()
     {
-        int bonus = 0;
-        if (level < currentWeapon.damagePerLevel.Length)
-            bonus = currentWeapon.damagePerLevel[level];
-
-        return currentWeapon.baseDamage + bonus;
+        if (currentWeapon == null) return 0;
+        return currentWeapon.baseDamage + (level * currentWeapon.damagePerUpgrade);
     }
 
     public float GetCritRate()
     {
-        float bonusCrit = 0f;
-        if (level < currentWeapon.critPerLevel.Length)
-            bonusCrit = currentWeapon.critPerLevel[level];
+        if (currentWeapon == null) return 0f;
+        return currentWeapon.baseCritChance + (level * currentWeapon.critPerUpgrade);
+    }
 
-        return currentWeapon.baseCritChance + bonusCrit;
+    public int GetGoldBonus()
+    {
+        if (currentWeapon == null) return 0;
+        return currentWeapon.baseGoldBonus + (level * currentWeapon.goldPerUpgrade);
     }
 
     public void LevelUp()
     {
         if (currentWeapon == null) return;
 
-        // ∞≠»≠ ∞°¥…«—¡ˆ √º≈©
-        if (level >= currentWeapon.damagePerLevel.Length - 1)
-        {
-            //Debug.Log("¥ı ¿ÃªÛ ∞≠»≠«“ ºˆ æ¯Ω¿¥œ¥Ÿ");
-            return;
-        }
-
         level++;
-        //Debug.Log($"{currentWeapon.weaponName} +{level} ∞≠»≠ º∫∞¯!");
+        UpdateCurrentWeaponUI();
     }
 
-    public int GetGoldBonus()
+        public void OpenBag()
     {
-        if (currentWeapon == null) return 0;
+        if (bagPanel != null)
+            bagPanel.SetActive(true);
 
-        if (currentWeapon.goldPerLevel == null || level >= currentWeapon.goldPerLevel.Length)
-            return currentWeapon.baseGoldBonus;
-
-        return currentWeapon.baseGoldBonus + currentWeapon.goldPerLevel[level];
+        Debug.Log("Î¨¥Í∏∞ Í∞ÄÎ∞© Ïò§Ìîà");
     }
 }

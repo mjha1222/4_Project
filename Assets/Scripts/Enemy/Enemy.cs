@@ -8,6 +8,10 @@ public class Enemy : MonoBehaviour
     private Animator anim;
     public int nowHP;
     private const string HitTrigger = "Hit";
+    public int Gold;
+
+    private bool isDead = false;
+
 
     private void Awake()
     {
@@ -26,6 +30,24 @@ public class Enemy : MonoBehaviour
         anim.SetTrigger(HitTrigger);
         Debug.Log("Hit");
         EnemyManager.Instance.RefreshHPbar();
+
+
+        if (nowHP <= 0)
+        {
+            Die();
+            return;
+        }
+
     }
-    
+
+    void Die()
+    {
+
+        if (isDead) return;
+        isDead = true;
+
+        EnemyManager.Instance.OnEnemyDead();
+        Destroy(gameObject);   //ÆÄ±«
+    }
+
 }

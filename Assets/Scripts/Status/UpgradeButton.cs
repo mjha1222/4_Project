@@ -16,20 +16,20 @@ public class UpgradeButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public float holdInterval = 0.2f;
     public ClickController clickController;
 
-    int level = 0;
-    Coroutine holdCo;
+    PlayerUpgrades upgrades;
     GoldWallet W => GoldWallet.Get();
-    Player P => W != null ? W.player : null;
+    Player P => GameManager.Instance != null ? GameManager.Instance.player
+                                             : (W != null ? W.player : null);
 
     void Awake()
     {
         if (levelUpButton) levelUpButton.onClick.AddListener(TryLevelUpOnce);
         if (clickController == null) clickController = FindAnyObjectByType<ClickController>();
+        if (upgrades == null) upgrades = FindAnyObjectByType<PlayerUpgrades>(FindObjectsInactive.Include);
     }
 
     void OnEnable()
     {
-        ApplyToPlayer();
         RefreshUI();
         SyncClickController();
     }
@@ -39,42 +39,33 @@ public class UpgradeButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         RefreshInteractableAndCostColor();
     }
 
-    int CurrentCost() => table != null ? Mathf.Max(0, table.baseCost + level * table.costStep) : 0;
+    int GetLevel() => upgrades != null ? upgrades.GetLevel(stat) : 0;
+
+    int CurrentCost()
+    {
+        if (table == null) return 0;
+        int level = GetLevel();
+        return Mathf.Max(0, table.baseCost + level * table.costStep);
+    }
 
     void TryLevelUpOnce()
     {
-        if (table == null || W == null || P == null) return;
+        if (table == null || W == null) return;
+        if (upgrades == null) upgrades = FindAnyObjectByType<PlayerUpgrades>(FindObjectsInactive.Include);
+        if (upgrades == null) return;
+
         int cost = CurrentCost();
         if (!W.TrySpend(cost)) return;
-        level++;
-        ApplyToPlayer();
+        upgrades.AddLevel(stat, 1);
         RefreshUI();
         SyncClickController();
-    }
-
-    void ApplyToPlayer()
-    {
-        if (table == null || P == null) return;
-        switch (stat)
-        {
-            case UpgradeStatType.CritDamage:
-                P.playerCriDamaged = table.GetValue(UpgradeStatType.CritDamage, level);
-                break;
-            case UpgradeStatType.AutoAttack:
-                P.playerAutoAtt = table.GetValue(UpgradeStatType.AutoAttack, level);
-                P.playerAtt = table.GetAttackBonusFromAutoLevel(level);
-                break;
-            case UpgradeStatType.GoldBonus:
-                P.playerGoldBonus = table.GetValue(UpgradeStatType.GoldBonus, level);
-                break;
-        }
     }
 
     void SyncClickController()
     {
         if (clickController == null || P == null) return;
         if (stat != UpgradeStatType.AutoAttack) return;
-        bool enable = level > 0 && P.playerAutoAtt > 0f;
+        bool enable = P.playerAutoAtt > 0f;
         clickController.SetAutoAttackEnabled(enable);
         clickController.SetAutoAttackRate(enable ? P.playerAutoAtt : 0f);
     }
@@ -82,6 +73,7 @@ public class UpgradeButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     void RefreshUI()
     {
         if (table == null) return;
+        int level = GetLevel();
 
         if (titleText)
         {
@@ -132,15 +124,8 @@ public class UpgradeButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (holdCo == null) holdCo = StartCoroutine(HoldRoutine());
     }
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        StopHold();
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        StopHold();
-    }
+    public void OnPointerUp(PointerEventData eventData) { StopHold(); }
+    public void OnPointerExit(PointerEventData eventData) { StopHold(); }
 
     void StopHold()
     {
@@ -151,6 +136,7 @@ public class UpgradeButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
     }
 
+    Coroutine holdCo;
     IEnumerator HoldRoutine()
     {
         TryLevelUpOnce();
