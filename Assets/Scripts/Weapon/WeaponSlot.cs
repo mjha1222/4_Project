@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class WeaponSlot : MonoBehaviour
@@ -17,7 +18,7 @@ public class WeaponSlot : MonoBehaviour
     public GameObject lockedUI;
     public GameObject unlockedUI;
 
-    private bool isUnlocked = false;
+    public bool isUnlocked = false;
     public int level = 0;
 
     void Start()
@@ -40,7 +41,8 @@ public class WeaponSlot : MonoBehaviour
             isUnlocked = true;
             ShowUnlocked();
         }
-        else
+        
+        if(!isUnlocked)
         {
             ShowLocked();
         }
@@ -152,4 +154,5 @@ public class WeaponSlot : MonoBehaviour
 
         WeaponManager.Instance?.EquipWeapon(weaponData, level);
     }
+
 }

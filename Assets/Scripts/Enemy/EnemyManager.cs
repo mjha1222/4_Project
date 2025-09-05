@@ -20,7 +20,7 @@ public class EnemyManager : MonoBehaviour
     public int Gold = 0;
     public TextMeshProUGUI goldText;
 
-    private int DeathCount = 0;
+    public int DeathCount {get; private set;}
     
 
 
@@ -89,11 +89,12 @@ public class EnemyManager : MonoBehaviour
         else
             goldReward = 50; // 사각형
 
-        Gold += goldReward;
+        GameManager.instance.player.playerGold += goldReward;
         GoldViewText();
 
 
         DeathCount++;
+        GameManager.instance.player.playerMainStage = DeathCount;
         UpdateEnemyKillText();
         Invoke(nameof(SpawnEnemy), 0.3f);  //적이 소환되는 시간
      }
@@ -104,7 +105,12 @@ public class EnemyManager : MonoBehaviour
     }
     public void GoldViewText()
     {
-        goldText.text = $"<color=yellow>Gold</color> <align=left>{Gold}";
+        goldText.text = $"<color=yellow>Gold</color> <align=left>{GameManager.instance.player.playerGold}";
+    }
+
+    public void SetStageValue()
+    {
+        DeathCount = GameManager.instance.player.playerMainStage;
     }
 }
 

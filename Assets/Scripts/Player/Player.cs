@@ -5,7 +5,6 @@ using UnityEngine;
 public class Player
 {
     public int playerMainStage;
-    public int playerSubStage;
     public int playerGold;
     public int playerAtt;
     public int playerCri;
@@ -28,11 +27,10 @@ public class Player
     public float plTotalCriDamaged { get; private set; }
     public float plTotalGoldBonus { get; private set; }
 
-    public Player(int playermainstage, int playersubstage, int playergold, int playeratt, int playercri)
+    public Player(int playermainstage, int playergold, int playeratt, int playercri)
     {
         //스테이지
         playerMainStage = playermainstage;
-        playerSubStage = playersubstage;
 
         //현재 골드
         playerGold = playergold;
@@ -96,7 +94,8 @@ public class Player
             SaveWeaponData saveData = new SaveWeaponData
             {
                 weaponName = weapondata.weaponName,
-                weaponLevel = data.level
+                weaponLevel = data.level,
+                weaponOpen = data.isUnlocked
             };
             saveWeaponData.Add(saveData);
         }
@@ -112,15 +111,20 @@ public class Player
         {
             weapons[i].weaponData.weaponName = saveWeaponData[i].weaponName;
             weapons[i].level = saveWeaponData[i].weaponLevel;
+            weapons[i].isUnlocked = saveWeaponData[i].weaponOpen;
+
+            if (weapons[i].weaponData.name != "WSword")
+            {
+                weapons[i].unlockedUI.SetActive(true);
+                weapons[i].lockedUI.SetActive(false);
+            }
 
             if (weaponName == weapons[i].weaponData.name)
             {
                 WeaponManager.Instance.level = saveWeaponData[i].weaponLevel;
-                Debug.Log(saveWeaponData[i].weaponLevel);
             }
-            Debug.Log($"이름 : {weapons[i].weaponData.name}, 레벨 : {saveWeaponData[i].weaponLevel}");
+            weapons[i].Refresh();
         }
-
     }
 
 }
@@ -131,4 +135,5 @@ public class SaveWeaponData
 {
     public string weaponName;
     public int weaponLevel;
+    public bool weaponOpen;
 }

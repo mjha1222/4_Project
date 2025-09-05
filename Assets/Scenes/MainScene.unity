@@ -2591,7 +2591,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player:
     playerMainStage: 0
-    playerSubStage: 0
     playerGold: 0
     playerAtt: 0
     playerCri: 0
@@ -3791,7 +3790,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -13727,6 +13726,7 @@ MonoBehaviour:
   upgradeButton: {fileID: 114863431}
   lockedUI: {fileID: 0}
   unlockedUI: {fileID: 1007792246}
+  isUnlocked: 0
   level: 0
 --- !u!1 &1031254253
 GameObject:
@@ -13869,6 +13869,7 @@ MonoBehaviour:
   upgradeButton: {fileID: 628828346}
   lockedUI: {fileID: 823366969}
   unlockedUI: {fileID: 2068532519}
+  isUnlocked: 0
   level: 0
 --- !u!1 &1053611161
 GameObject:
@@ -15985,7 +15986,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -16440,7 +16441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -16530,6 +16531,7 @@ MonoBehaviour:
   upgradeButton: {fileID: 640683397}
   lockedUI: {fileID: 1510250078}
   unlockedUI: {fileID: 793410582}
+  isUnlocked: 0
   level: 0
 --- !u!1 &1345746317
 GameObject:
@@ -16899,6 +16901,7 @@ MonoBehaviour:
   upgradeButton: {fileID: 522946300}
   lockedUI: {fileID: 702519867}
   unlockedUI: {fileID: 1201906638}
+  isUnlocked: 0
   level: 0
 --- !u!1 &1390891707
 GameObject:
@@ -17030,7 +17033,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -17933,7 +17936,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

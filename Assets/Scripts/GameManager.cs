@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
         //player = new Player(1, 1,0, 1, 0);
 
         //test¿ë
-        player = new Player(1, 1, 10000, 1, 0);
+        player = new Player(1, 10000, 1, 0);
     }
 }
 
