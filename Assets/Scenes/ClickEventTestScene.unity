@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 1388018}
   - component: {fileID: 1388017}
   - component: {fileID: 1388016}
+  - component: {fileID: 1388019}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -223,7 +224,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388015}
   serializedVersion: 8
-  lengthInSec: 0.5
+  lengthInSec: 0.3
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -298,7 +299,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.7
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -405,7 +406,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 0, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -469,7 +470,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -793,7 +794,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -933,7 +934,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 4.93
+      value: 1
       mode: 0
       spread: 0
       speed:
@@ -1162,7 +1163,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 30
+        scalar: 40
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -5006,11 +5007,27 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1388019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c7cc384ad74f44c9673e534a1b0875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ignoreUI: 1
+  worldZ: 0
+  cooldown: 0
+  targetCamera: {fileID: 1053713150}
 --- !u!1 &7098524
 GameObject:
   m_ObjectHideFlags: 0
@@ -8715,7 +8732,6 @@ MonoBehaviour:
     levelAuto: 0
     levelGold: 0
     saveWeaponData: []
-  enemyManager: {fileID: 0}
 --- !u!4 &1029193371
 Transform:
   m_ObjectHideFlags: 0

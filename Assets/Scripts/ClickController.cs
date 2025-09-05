@@ -15,7 +15,7 @@ public class ClickController : MonoBehaviour
 
     void OnEnable()
     {
-        RestartAutoAttack();
+        startAutoAttack();
     }
 
     private void OnDisable()
@@ -56,17 +56,17 @@ public class ClickController : MonoBehaviour
     public void SetAutoAttackEnabled(bool enabled)
     {
         autoAttackEnable = enabled;
-        RestartAutoAttack();
+        startAutoAttack();
     }
 
     //초당 공격 횟수 설정
     public void SetAutoAttackRate(float rate)
     {
         attackPerSecond = Mathf.Max(0f, rate);
-        RestartAutoAttack();
+        startAutoAttack();
     }
 
-    private void RestartAutoAttack()
+    private void startAutoAttack()
     {
         StopAutoAttack();
         if(autoAttackEnable && attackPerSecond > 0f)
