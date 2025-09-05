@@ -5,7 +5,7 @@ public class WeaponManager : MonoBehaviour
 {
     public static WeaponManager Instance;
     public WeaponData currentWeapon;
-    public List<WeaponData> weapons;
+    public List<WeaponSlot> weapons;
     public int level = 0;
 
     [Header("UI")]
@@ -32,6 +32,7 @@ public class WeaponManager : MonoBehaviour
         level = newLevel;
 
         UpdateCurrentWeaponUI();
+       
     }
 
     public void UpdateCurrentWeaponUI()

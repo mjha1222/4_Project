@@ -42,7 +42,8 @@ public class GameManager : MonoBehaviour
 
     public void SaveData()
     {
-        player.SetWeaponData(WeaponManager.Instance.weapons);
+        player.GetWeaponData(WeaponManager.Instance.weapons);
+
         string saveJson = JsonUtility.ToJson(player);
 
 
@@ -71,7 +72,10 @@ public class GameManager : MonoBehaviour
 
     public void NewUserSetting()
     {
-        player = new Player(1, 1,0, 1, 0);
+        //player = new Player(1, 1,0, 1, 0);
+
+        //test¿ë
+        player = new Player(1, 1, 100, 1, 0);
     }
 }
 

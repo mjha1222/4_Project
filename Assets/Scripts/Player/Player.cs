@@ -19,7 +19,7 @@ public class Player
     public int levelGold;
 
     //Equip 
-    public WeaponData weaponData;
+
     public List<SaveWeaponData> saveWeaponData = new List<SaveWeaponData>();
 
 
@@ -80,73 +80,52 @@ public class Player
 
     }
 
-    public void SetWeaponData(List<WeaponData> weapons)
+    public void GetWeaponData(List<WeaponSlot> weapons)
     {
-        if (weapons.Count == 0 ) return;
+        if (weapons.Count == 0) return;
 
-        foreach(WeaponData data in weapons)
+        saveWeaponData = new List<SaveWeaponData>();
+
+        foreach (WeaponSlot data in weapons)
         {
+            WeaponData weapondata = data.weaponData;
+
             SaveWeaponData saveData = new SaveWeaponData
             {
-                weaponName = data.weaponName,
-                baseDamage = data.baseDamage,
-                baseCritChance = data.baseCritChance,
-                baseGoldBonus = data.baseGoldBonus,
-                damagePerUpgrade = data.damagePerUpgrade,
-                critPerUpgrade = data.critPerUpgrade,
-                goldPerUpgrade = data.goldPerUpgrade,
-                buyPrice = data.buyPrice,
-                upgradeCost = data.upgradeCost
+                weaponName = weapondata.weaponName,
+                weaponLevel = data.level
             };
             saveWeaponData.Add(saveData);
         }
-       
     }
 
-    public enum SwordItem
+    public void SetWeaponData(List<WeaponSlot> weapons)
     {
-        나무검,
-        돌검,
-        철검,
-        황금검
-    }
+        if (saveWeaponData.Count == 0) return;
 
-    public void LoadWeaponData(SwordItem item)
-    {
-        WeaponData weapon;
+        string weaponName = WeaponManager.Instance.currentWeapon.name;
 
-        switch (item)
+        for (int i = 0; i < weapons.Count; i++)
         {
-            case SwordItem.나무검:
-                weapon = Resources.Load<WeaponData>("WeaponScriptableObject\\WSword");
-                break;
-            case SwordItem.돌검:
-                weapon = Resources.Load<WeaponData>("WeaponScriptableObject\\SSword");
-                break;
-            case SwordItem.철검:
-                weapon = Resources.Load<WeaponData>("WeaponScriptableObject\\ISword");
-                break;
-            case SwordItem.황금검:
-                weapon = Resources.Load<WeaponData>("WeaponScriptableObject\\GSword");
-                break;
+            weapons[i].weaponData.weaponName = saveWeaponData[i].weaponName;
+            weapons[i].level = saveWeaponData[i].weaponLevel;
+
+            if (weaponName == weapons[i].weaponData.name)
+            {
+                WeaponManager.Instance.level = saveWeaponData[i].weaponLevel;
+                Debug.Log(saveWeaponData[i].weaponLevel);
+            }
+            Debug.Log($"이름 : {weapons[i].weaponData.name}, 레벨 : {saveWeaponData[i].weaponLevel}");
         }
-        
 
     }
+
 }
+  
 
 [System.Serializable]
 public class SaveWeaponData
 {
     public string weaponName;
-    public int baseDamage;
-    public float baseCritChance;
-    public int baseGoldBonus;
-
-    public int damagePerUpgrade;
-    public float critPerUpgrade;
-    public int goldPerUpgrade;
-
-    public int buyPrice;
-    public int upgradeCost;
+    public int weaponLevel;
 }

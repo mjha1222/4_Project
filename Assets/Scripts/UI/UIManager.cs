@@ -147,6 +147,8 @@ public class UIManager : MonoBehaviour
         playerUpgrade.autoLevel = GameManager.instance.player.levelAuto;
         playerUpgrade.ApplyAllToPlayer();
 
-        WeaponManager.Instance.currentWeapon = GameManager.instance.player.weaponData;
+        GameManager.instance.player.SetWeaponData(WeaponManager.Instance.weapons);
+        
+        WeaponManager.Instance.weaponUI.UpdateUI();
     }
 }

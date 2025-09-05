@@ -13,13 +13,12 @@ public class WeaponSlot : MonoBehaviour
     public Button buyButton;
     public Button upgradeButton;
 
-
     [Header("Lock/Unlock")]
     public GameObject lockedUI;
     public GameObject unlockedUI;
 
     private bool isUnlocked = false;
-    private int level = 0;
+    public int level = 0;
 
     void Start()
     {

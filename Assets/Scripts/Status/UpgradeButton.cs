@@ -19,7 +19,7 @@ public class UpgradeButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     PlayerUpgrades upgrades;
     GoldWallet W => GoldWallet.Get();
     Player P => GameManager.Instance != null ? GameManager.Instance.player
-                                             : (W != null ? W.player : null);
+                                             : (W != null ? GameManager.instance.player : null);
 
     void Awake()
     {
