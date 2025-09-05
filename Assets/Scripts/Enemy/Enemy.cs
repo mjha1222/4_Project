@@ -11,7 +11,9 @@ public class Enemy : MonoBehaviour
     public int Gold;
 
     private bool isDead = false;
-   
+    public string enemyName = "Enemy";
+
+
 
 
     private void Awake()

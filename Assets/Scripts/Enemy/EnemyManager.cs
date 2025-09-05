@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -15,8 +16,16 @@ public class EnemyManager : MonoBehaviour
     public GameObject TrianglePrefab;
     public GameObject CirclePrefab;
     public Transform spawnPoint;
+    public Text EnemyNameText;
+    public Text DungeonNamText;
+    string enemyDisplayName = "";
 
     private int circleDeathCount = 0;
+    private object StageNum;
+
+
+
+
     private void Awake()
     {
         Instance = this;
@@ -29,35 +38,49 @@ public class EnemyManager : MonoBehaviour
     public void Start()
     {
         SpawnEnemy();
+        UpdateEnemyKillText();
     }
-    public void SpawnEnemy()
+
+    
+
+    public void SpawnEnemy()  // 적을 죽이면 다음 스테이지
     {
         GameObject spawnedEnemy;
 
         if (circleDeathCount <= 10)
         {
             spawnedEnemy = Instantiate(CirclePrefab, spawnPoint.position, spawnPoint.rotation);
-           
+            enemyDisplayName = "동그라미 몬스터";
         }
         else if (circleDeathCount <= 20)
         {
             spawnedEnemy = Instantiate(TrianglePrefab, spawnPoint.position, spawnPoint.rotation);
-            
+            enemyDisplayName = "삼각형 몬스터";
+
         }
         else
         {
             spawnedEnemy = Instantiate(SquarePrefab, spawnPoint.position, spawnPoint.rotation);
+            enemyDisplayName = "삼각형 몬스터";
         }
 
         nowEnemy = spawnedEnemy.GetComponent<Enemy>();
-    
+
+        EnemyNameText.text = $"<color=wheit>{enemyDisplayName}</color>";
+
+
     }
 
      public void OnEnemyDead()
      {
-        Invoke(nameof(SpawnEnemy), 0.5f);
         circleDeathCount++;
+        UpdateEnemyKillText();
+        Invoke(nameof(SpawnEnemy), 0.5f);  //적이 소환되는 시간
      }
-    
+
+    public void UpdateEnemyKillText()
+    {
+      // StageNum.text = $"Enemy Kill{circleDeathCount}";
+    }
 }
 

@@ -1477,7 +1477,7 @@ GameObject:
   - component: {fileID: 402044387}
   - component: {fileID: 402044386}
   m_Layer: 5
-  m_Name: MonsterName
+  m_Name: EnemyNameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1535,7 +1535,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uB3D9\uADF8\uB77C\uBBF8 \uAD34\uBB3C 0"
+  m_Text: "\uB3D9\uADF8\uB77C\uBBF8 \uBAAC\uC2A4\uD130"
 --- !u!222 &402044387
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3347,6 +3347,8 @@ MonoBehaviour:
   TrianglePrefab: {fileID: 4068959887998940839, guid: 486eaf31a436f1b4babfa2d87a0cca44, type: 3}
   CirclePrefab: {fileID: 7746002148432876226, guid: 4581e1e3799b11a4bb91fc4945bdc416, type: 3}
   spawnPoint: {fileID: 2142572130}
+  EnemyNameText: {fileID: 402044386}
+  DungeonNamText: {fileID: 0}
 --- !u!4 &1025640709
 Transform:
   m_ObjectHideFlags: 0
@@ -6466,7 +6468,7 @@ GameObject:
   - component: {fileID: 1805047379}
   - component: {fileID: 1805047378}
   m_Layer: 5
-  m_Name: DungeonName
+  m_Name: DungeonNamText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6524,7 +6526,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uB3D9\uADF8\uB77C\uBBF8 \uAD34\uBB3C 0\uC758 \uC232"
+  m_Text: "\uB3D9\uADF8\uB77C\uBBF8 \uBAAC\uC2A4\uD130\uC758 \uC232"
 --- !u!222 &1805047379
 CanvasRenderer:
   m_ObjectHideFlags: 0
