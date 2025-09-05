@@ -106,6 +106,8 @@ public class WeaponSlot : MonoBehaviour
 
             WeaponManager.Instance?.EquipWeapon(weaponData, level);
 
+            GameManager.instance.player.FinalStatusSet();
+            UIManager.instance.UpdateUpgradeUI();
             Debug.Log($"{weaponData.weaponName} 구매 완료!");
         }
         else
@@ -129,13 +131,15 @@ public class WeaponSlot : MonoBehaviour
                 WeaponManager.Instance.EquipWeapon(weaponData, level);
             }
 
-            Debug.Log($"{weaponData.weaponName} Lv.{level} 강화 성공! (비용 {cost})");
+            GameManager.instance.player.FinalStatusSet();
             UIManager.instance.UpdateUpgradeUI();
+            Debug.Log($"{weaponData.weaponName} Lv.{level} 강화 성공! (비용 {cost})");
         }
         else
         {
             Debug.Log("골드 부족!");
         }
+       
     }
 
     public void Equip()

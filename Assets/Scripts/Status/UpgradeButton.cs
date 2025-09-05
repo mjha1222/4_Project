@@ -57,9 +57,10 @@ public class UpgradeButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         int cost = CurrentCost();
         if (!W.TrySpend(cost)) return;
         upgrades.AddLevel(stat, 1);
+        GameManager.instance.player.FinalStatusSet();
         RefreshUI();
         SyncClickController();
-        GameManager.instance.player.FinalStatusSet();
+        
     }
 
     void SyncClickController()

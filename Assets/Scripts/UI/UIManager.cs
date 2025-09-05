@@ -82,6 +82,8 @@ public class UIManager : MonoBehaviour
 
         sceneChange.SetActive(true);
 
+        EnemyManager.Instance.Init();
+
         Image image = sceneChange.GetComponent<Image>();
         image.DOFillAmount(0, 2).SetEase(Ease.OutQuart);
     }
@@ -103,6 +105,8 @@ public class UIManager : MonoBehaviour
         StartCoroutine(WaitForLoadStatus());
 
         sceneChange.SetActive(true);
+
+        EnemyManager.Instance.Init();
 
         Image image = sceneChange.GetComponent<Image>();
         image.DOFillAmount(0, 2).SetEase(Ease.OutQuart);

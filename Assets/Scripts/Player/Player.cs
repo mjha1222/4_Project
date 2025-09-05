@@ -48,11 +48,6 @@ public class Player
         plTotalCri = playerCri + WeaponManager.Instance.GetCritRate();
         plTotalCriDamaged = 100 + playerCriDamaged;
         plTotalGoldBonus = 100 + playerGoldBonus;
-
-        Debug.Log("데미지 : " + plTotalAtt);
-        Debug.Log("크리율 : " + plTotalCri);
-        Debug.Log("크리티컬 : " + plTotalCriDamaged);
-        Debug.Log("골드보너스 : " + plTotalGoldBonus);
     }
 
     public void UpgradeCritDamage(float newMultiplier)
