@@ -1,6 +1,5 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class WeaponSlot : MonoBehaviour
 {
@@ -10,32 +9,33 @@ public class WeaponSlot : MonoBehaviour
     public Image icon;
     public Text nameText;
     public Text statText;
-    public Button equipButton;
+    public Text costText;
     public Button buyButton;
+    public Button upgradeButton;
 
 
     [Header("Lock/Unlock")]
-    public GameObject lockedUI; // ??? »óÅÂ UI
-    public GameObject unlockedUI; // ¹«±â Á¤º¸ UI
+    public GameObject lockedUI;
+    public GameObject unlockedUI;
 
-    private bool isUnlocked = false; // ±¸¸Å ¿©ºÎ
+    private bool isUnlocked = false;
+    private int level = 0;
 
     void Start()
     {
-        // ¹öÆ° ÀÌº¥Æ® ¿¬°á
-        if (equipButton != null)
-        {
-            equipButton.onClick.RemoveAllListeners();
-            equipButton.onClick.AddListener(Equip);
-        }
-
         if (buyButton != null)
         {
             buyButton.onClick.RemoveAllListeners();
             buyButton.onClick.AddListener(Buy);
         }
 
-        // ±âº» ¹«±â´Â ¹«Á¶°Ç ÇØ±İ
+        if (upgradeButton != null)
+        {
+            upgradeButton.onClick.RemoveAllListeners();
+            upgradeButton.onClick.AddListener(Upgrade);
+            upgradeButton.gameObject.SetActive(false);
+        }
+
         if (weaponData != null && weaponData.isDefaultWeapon)
         {
             isUnlocked = true;
@@ -43,69 +43,109 @@ public class WeaponSlot : MonoBehaviour
         }
         else
         {
-            if (isUnlocked)
-                ShowUnlocked();
-            else
-                ShowLocked();
+            ShowLocked();
         }
     }
-    // ±¸¸Å Àü »óÅÂ UI
-    void ShowLocked()
+
+    public void ShowLocked()
     {
-        if (lockedUI != null) lockedUI.SetActive(true);
-        if (unlockedUI != null) unlockedUI.SetActive(false);
+        lockedUI?.SetActive(true);
+        unlockedUI?.SetActive(false);
+
+        buyButton?.gameObject.SetActive(true);
+        upgradeButton?.gameObject.SetActive(false);
     }
 
-    // ±¸¸Å ÈÄ »óÅÂ UI
-    void ShowUnlocked()
+    public void ShowUnlocked()
     {
         if (lockedUI != null) lockedUI.SetActive(false);
         if (unlockedUI != null) unlockedUI.SetActive(true);
 
-        if (weaponData != null)
+        Refresh();
+
+        // ê¸°ë³¸ ë¬´ê¸°ëŠ” êµ¬ë§¤ ë²„íŠ¼ í•„ìš” ì—†ìŒ
+        if (weaponData != null && weaponData.isDefaultWeapon)
         {
-            if (icon != null) icon.sprite = weaponData.weaponIcon;
-            if (nameText != null) nameText.text = $"{weaponData.weaponName} Lv.0";
-            if (statText != null) statText.text =
-                $"°ø°İ·Â: {weaponData.baseDamage}\nÄ¡¸íÅ¸ È®·ü: {weaponData.baseCritChance}%";
-        }
-    }
-    // ±¸¸Å ·ÎÁ÷
-    void Buy()
-    {
-        int gold = GameManager.instance.player.playerGold;
-
-        if (gold >= weaponData.buyPrice)
-        {
-            GameManager.instance.player.playerGold -= weaponData.buyPrice;
-            isUnlocked = true;
-            ShowUnlocked();
-
-            // °ñµå UI °»½Å
-            UIManager.Instance.GoldViewText();
-
-            Debug.Log($"{weaponData.weaponName} ±¸¸Å ¿Ï·á!");
+            if (buyButton != null) buyButton.gameObject.SetActive(false);
+            if (upgradeButton != null) upgradeButton.gameObject.SetActive(true);
         }
         else
         {
-            Debug.Log("°ñµå ºÎÁ·!");
+            if (buyButton != null) buyButton.gameObject.SetActive(false);
+            if (upgradeButton != null) upgradeButton.gameObject.SetActive(true);
         }
     }
 
-    // ÀåÂø ·ÎÁ÷
+    public void Refresh()
+    {
+        if (weaponData == null) return;
+
+        if (icon != null) icon.sprite = weaponData.weaponIcon;
+        if (nameText != null) nameText.text = $"{weaponData.weaponName} Lv.{level}";
+
+        int atk = weaponData.baseDamage + (level * weaponData.damagePerUpgrade);
+        float crit = weaponData.baseCritChance + (level * weaponData.critPerUpgrade);
+
+        if (statText != null)
+            statText.text = $"ê³µê²©ë ¥: {atk}\nì¹˜ëª…íƒ€ í™•ë¥ : {crit}%";
+
+        if (costText != null)
+        { 
+            int nextCost = weaponData.upgradeCost * (level + 1); // ë¬´ê¸°ë³„ ë¹„ìš© ë°˜ì˜
+            costText.text = nextCost.ToString("N0");
+        }
+    }
+
+    public void Buy()
+    {
+        if (weaponData == null) return;
+
+        if (GoldWallet.Get().TrySpend(weaponData.buyPrice))
+        {
+            isUnlocked = true;
+            ShowUnlocked();
+
+            WeaponManager.Instance?.EquipWeapon(weaponData, level);
+
+            Debug.Log($"{weaponData.weaponName} êµ¬ë§¤ ì™„ë£Œ!");
+        }
+        else
+        {
+            Debug.Log("ê³¨ë“œ ë¶€ì¡±!");
+        }
+    }
+
+    public void Upgrade()
+    {
+        if (!isUnlocked) return;
+
+        int cost = weaponData.upgradeCost * (level + 1);  // ë¬´ê¸°ë³„ ë¹„ìš© ë°˜ì˜
+        if (GoldWallet.Get().TrySpend(cost))
+        {
+            level++;
+            Refresh();
+
+            if (WeaponManager.Instance != null && WeaponManager.Instance.currentWeapon == weaponData)
+            {
+                WeaponManager.Instance.EquipWeapon(weaponData, level);
+            }
+
+            Debug.Log($"{weaponData.weaponName} Lv.{level} ê°•í™” ì„±ê³µ! (ë¹„ìš© {cost})");
+        }
+        else
+        {
+            Debug.Log("ê³¨ë“œ ë¶€ì¡±!");
+        }
+    }
+
     public void Equip()
     {
         if (!isUnlocked)
         {
-            Debug.Log("±¸¸ÅÇÏÁö ¾ÊÀº ¹«±â´Â ÀåÂø ºÒ°¡!");
+            Debug.Log("êµ¬ë§¤í•˜ì§€ ì•Šì€ ë¬´ê¸°ëŠ” ì¥ì°© ë¶ˆê°€!");
             return;
         }
 
-        if (weaponData != null)
-        {
-            WeaponManager.Instance.EquipWeapon(weaponData);
-        }
+        WeaponManager.Instance?.EquipWeapon(weaponData, level);
     }
 }
-
-
