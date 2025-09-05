@@ -44,7 +44,6 @@ public class WeaponManager : MonoBehaviour
             int atk = GetAttackPower();
             float crit = GetCritRate();
             weaponUI.UpdateUI(currentWeapon, level, atk, crit);
-            
         }
     }
 
@@ -81,4 +80,7 @@ public class WeaponManager : MonoBehaviour
 
         Debug.Log("무기 가방 오픈");
     }
+
+
+
 }

@@ -1,10 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -24,7 +20,7 @@ public class EnemyManager : MonoBehaviour
     public int Gold = 0;
     public TextMeshProUGUI goldText;
 
-    private int DeathCount = 0;
+    public int DeathCount {get; private set;}
     
 
 
@@ -98,6 +94,7 @@ public class EnemyManager : MonoBehaviour
 
 
         DeathCount++;
+        GameManager.instance.player.playerMainStage = DeathCount;
         UpdateEnemyKillText();
         Invoke(nameof(SpawnEnemy), 0.3f);  //적이 소환되는 시간
      }
@@ -109,6 +106,11 @@ public class EnemyManager : MonoBehaviour
     public void GoldViewText()
     {
         goldText.text = $"<color=yellow>Gold</color> <align=left>{GameManager.instance.player.playerGold}";
+    }
+
+    public void SetStageValue()
+    {
+        DeathCount = GameManager.instance.player.playerMainStage;
     }
 }
 

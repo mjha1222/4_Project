@@ -82,6 +82,8 @@ public class UIManager : MonoBehaviour
 
         sceneChange.SetActive(true);
 
+        EnemyManager.Instance.Init();
+
         Image image = sceneChange.GetComponent<Image>();
         image.DOFillAmount(0, 2).SetEase(Ease.OutQuart);
     }
@@ -100,9 +102,15 @@ public class UIManager : MonoBehaviour
     public void LoadData()
     {
         GameManager.instance.player = GameManager.instance.LoadData();
+        
         StartCoroutine(WaitForLoadStatus());
 
         sceneChange.SetActive(true);
+
+        EnemyManager.Instance.SetStageValue();
+        EnemyManager.Instance.Init();
+
+
 
         Image image = sceneChange.GetComponent<Image>();
         image.DOFillAmount(0, 2).SetEase(Ease.OutQuart);
@@ -160,7 +168,6 @@ public class UIManager : MonoBehaviour
         playerUpgrade.ApplyAllToPlayer();
         
         GameManager.instance.player.SetWeaponData(WeaponManager.Instance.weapons);
-
         GameManager.instance.player.FinalStatusSet();
 
         UpdateUpgradeUI();

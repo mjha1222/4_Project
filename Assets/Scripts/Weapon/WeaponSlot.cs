@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class WeaponSlot : MonoBehaviour
@@ -17,7 +18,7 @@ public class WeaponSlot : MonoBehaviour
     public GameObject lockedUI;
     public GameObject unlockedUI;
 
-    private bool isUnlocked = false;
+    public bool isUnlocked = false;
     public int level = 0;
 
     void Start()
@@ -40,7 +41,8 @@ public class WeaponSlot : MonoBehaviour
             isUnlocked = true;
             ShowUnlocked();
         }
-        else
+        
+        if(!isUnlocked)
         {
             ShowLocked();
         }
@@ -106,6 +108,8 @@ public class WeaponSlot : MonoBehaviour
 
             WeaponManager.Instance?.EquipWeapon(weaponData, level);
 
+            GameManager.instance.player.FinalStatusSet();
+            UIManager.instance.UpdateUpgradeUI();
             Debug.Log($"{weaponData.weaponName} 구매 완료!");
         }
         else
@@ -129,13 +133,15 @@ public class WeaponSlot : MonoBehaviour
                 WeaponManager.Instance.EquipWeapon(weaponData, level);
             }
 
-            Debug.Log($"{weaponData.weaponName} Lv.{level} 강화 성공! (비용 {cost})");
+            GameManager.instance.player.FinalStatusSet();
             UIManager.instance.UpdateUpgradeUI();
+            Debug.Log($"{weaponData.weaponName} Lv.{level} 강화 성공! (비용 {cost})");
         }
         else
         {
             Debug.Log("골드 부족!");
         }
+       
     }
 
     public void Equip()
@@ -148,4 +154,5 @@ public class WeaponSlot : MonoBehaviour
 
         WeaponManager.Instance?.EquipWeapon(weaponData, level);
     }
+
 }
