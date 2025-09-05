@@ -12,7 +12,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private GameObject sceneChange;
 
-    bool isPlay;
+    PlayerUpgrades playerUpgrade;
+
+    private bool isPlay;
 
     public static UIManager Instance
     {
@@ -31,6 +33,11 @@ public class UIManager : MonoBehaviour
     {
         if (instance == null) instance = this;
         else if (instance != this) { Destroy(gameObject); return; }
+    }
+
+    private void Start()
+    {
+        playerUpgrade = FindObjectOfType<PlayerUpgrades>();
     }
 
     public void ResetUpgradesAndGold()
@@ -65,13 +72,11 @@ public class UIManager : MonoBehaviour
 
     public void NewData()
     {
-        PlayerUpgrades playerUpgrade = FindObjectOfType<PlayerUpgrades>();
-        
         SoundManager.instance.PlayBGM(SoundManager.bgm.InGame);
         GameManager.instance.NewUserSetting();
-        
-        sceneChange.SetActive(true);
         playerUpgrade.ResetLevels();
+
+        sceneChange.SetActive(true);
 
         Image image = sceneChange.GetComponent<Image>();
         image.DOFillAmount(0, 2).SetEase(Ease.OutQuart);
@@ -79,7 +84,7 @@ public class UIManager : MonoBehaviour
 
     public void SaveData()
     {
-        if (isPlay)
+        if (!isPlay)
         {
             GameManager.instance.SaveData(GameManager.instance.player);
 
@@ -91,6 +96,12 @@ public class UIManager : MonoBehaviour
     public void LoadData()
     {
         GameManager.instance.player = GameManager.instance.LoadData();
+        StartCoroutine(WaitForLoadStatus());
+
+        sceneChange.SetActive(true);
+
+        Image image = sceneChange.GetComponent<Image>();
+        image.DOFillAmount(0, 2).SetEase(Ease.OutQuart);
     }
 
     public void DeleteData()
@@ -100,7 +111,7 @@ public class UIManager : MonoBehaviour
 
     private void GoldWarringMessage()
     {
-        if (isPlay)
+        if (!isPlay)
         {
             message.SetActive(true);
             StartCoroutine(WaitForAnimationEnd(message, "Not enough gold"));
@@ -134,5 +145,13 @@ public class UIManager : MonoBehaviour
         sceneChange.SetActive(false);
         isPlay = false;
     }
-    
+
+    IEnumerator WaitForLoadStatus()
+    {
+        yield return new WaitForSeconds(0.5f);
+        playerUpgrade.goldLevel = GameManager.instance.player.levelGold;
+        playerUpgrade.critLevel = GameManager.instance.player.levelCri;
+        playerUpgrade.autoLevel = GameManager.instance.player.levelAuto;
+        playerUpgrade.ApplyAllToPlayer();
+    }
 }

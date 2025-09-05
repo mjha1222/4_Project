@@ -20,7 +20,7 @@ public class UIMenu : MonoBehaviour
         //테스트용 로드씬 실제로 할때 mainScene 수정
         Time.timeScale = 1f;
         SoundManager.instance.PlayBGM(SoundManager.bgm.Main);
-        SceneManager.LoadScene("01");
-        //SceneManager.LoadScene("MainScene");
+        //SceneManager.LoadScene("01");
+        SceneManager.LoadScene("MainScene");
     }
 }
