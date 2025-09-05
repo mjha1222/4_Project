@@ -18,8 +18,8 @@ public class EnemyManager : MonoBehaviour
     public Transform spawnPoint;
     public Text EnemyNameText;
     public Text DungeonNamText;
-    string enemyDisplayName = "";
-    string DungeonDisplayName = "";
+    string enemyName = "";
+    string DungeonName = "";
 
     private int circleDeathCount = 0;
     private object StageNum;
@@ -51,26 +51,27 @@ public class EnemyManager : MonoBehaviour
         if (circleDeathCount <= 10)
         {
             spawnedEnemy = Instantiate(CirclePrefab, spawnPoint.position, spawnPoint.rotation);
-            enemyDisplayName = "동그라미 몬스터";
-            DungeonDisplayName = "동그라미 몬스터의 숲";
+            enemyName = "동그라미 몬스터";
+            DungeonName = "동그라미 몬스터의 숲";
         }
         else if (circleDeathCount <= 20)
         {
             spawnedEnemy = Instantiate(TrianglePrefab, spawnPoint.position, spawnPoint.rotation);
-            enemyDisplayName = "삼각형 몬스터";
-            DungeonDisplayName = "삼각형 몬스터의 숲";
+            enemyName = "삼각형 몬스터";
+            DungeonName = "삼각형 몬스터의 숲";
         }
         else
         {
             spawnedEnemy = Instantiate(SquarePrefab, spawnPoint.position, spawnPoint.rotation);
-            enemyDisplayName = "사각형 몬스터";
-            DungeonDisplayName = "사각형 몬스터의 숲";
+            enemyName = "사각형 몬스터";
+            DungeonName = "사각형 몬스터의 숲";
         }
+        
 
         nowEnemy = spawnedEnemy.GetComponent<Enemy>();
 
-        EnemyNameText.text = $"<color=wheit>{enemyDisplayName}</color>";   //몬스터 이름
-        DungeonNamText.text = $"<color=wheit>{DungeonDisplayName}</color>";  // 던전 이름
+        EnemyNameText.text = $"<color=wheit>{enemyName}</color>";   //몬스터 이름
+        DungeonNamText.text = $"<color=wheit>{DungeonName}</color>";  // 던전 이름
 
     }
 
