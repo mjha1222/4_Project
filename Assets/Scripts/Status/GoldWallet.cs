@@ -5,11 +5,9 @@ public class GoldWallet : MonoBehaviour
 {
     static GoldWallet _inst;
     public static GoldWallet Get() => _inst;
-
-    public Player player;
     public TMP_Text goldText;
     public bool useThousandsSeparator = true;
-    public int debugGold = 0;
+    //public int debugGold = 0;
 
     string goldHex = "#FFD900";
     string valueHex = "#FFFFFF";
@@ -22,18 +20,11 @@ public class GoldWallet : MonoBehaviour
 
     void Start()
     {
-        if (player != null) player.playerGold = debugGold;
+        //if (player != null) player.playerGold = debugGold;
         Broadcast();
     }
 
-    void Update()
-    {
-        if (player != null && player.playerGold != debugGold)
-        {
-            player.playerGold = debugGold;
-            Broadcast();
-        }
-    }
+
 
     void Broadcast()
     {
@@ -43,13 +34,13 @@ public class GoldWallet : MonoBehaviour
         goldText.text = $"<color={goldHex}>Gold</color> <color={valueHex}>{s}</color>";
     }
 
-    public int GetGold() => player != null ? player.playerGold : 0;
+    public int GetGold() => GameManager.instance.player != null ? GameManager.instance.player.playerGold : 0;
 
     public void SetGold(int amount)
     {
-        if (player == null) return;
-        player.playerGold = Mathf.Max(0, amount);
-        debugGold = player.playerGold;
+        if (GameManager.instance.player == null) return;
+        GameManager.instance.player.playerGold = Mathf.Max(0, amount);
+        //debugGold = player.playerGold;
         Broadcast();
     }
 
@@ -57,17 +48,14 @@ public class GoldWallet : MonoBehaviour
 
     public bool TrySpend(int amount)
     {
-        if (GetGold() < amount) return false;
+        if (GetGold() < amount)
+        {
+            UIManager.instance.GoldWarringMessage();
+            return false;
+        }
         SetGold(GetGold() - amount);
         return true;
     }
 
-    void OnValidate()
-    {
-        if (player != null)
-        {
-            player.playerGold = debugGold;
-            Broadcast();
-        }
-    }
+ 
 }

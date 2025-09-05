@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -18,13 +19,14 @@ public class Player
     public int levelGold;
 
     //Equip 
-    //public Equip playerEquip;
+
+    public List<SaveWeaponData> saveWeaponData = new List<SaveWeaponData>();
 
 
-    private int plTotalAtt;
-    private int plTotalCri;
-    private float plTotalCriDamaged;
-    private float plTotalGoldBonus;
+    public int plTotalAtt { get; private set; }
+    public float plTotalCri { get; private set; }
+    public float plTotalCriDamaged { get; private set; }
+    public float plTotalGoldBonus { get; private set; }
 
     public Player(int playermainstage, int playersubstage, int playergold, int playeratt, int playercri)
     {
@@ -38,11 +40,19 @@ public class Player
         //장비장착 관련
         playerAtt = playeratt;
         playerCri = playercri;
+    }
 
-        //업그레이드 관련
-        playerCriDamaged = 1.0f;
-        playerGoldBonus = 1.0f;
-        playerAutoAtt = 0f;
+    public void FinalStatusSet()
+    {
+        plTotalAtt = playerAtt + WeaponManager.Instance.GetAttackPower();
+        plTotalCri = playerCri + WeaponManager.Instance.GetCritRate();
+        plTotalCriDamaged = 100 + playerCriDamaged;
+        plTotalGoldBonus = 100 + playerGoldBonus;
+
+        Debug.Log("데미지 : " + plTotalAtt);
+        Debug.Log("크리율 : " + plTotalCri);
+        Debug.Log("크리티컬 : " + plTotalCriDamaged);
+        Debug.Log("골드보너스 : " + plTotalGoldBonus);
     }
 
     public void UpgradeCritDamage(float newMultiplier)
@@ -78,35 +88,52 @@ public class Player
 
     }
 
-    //장비 장착 생성되고 생각
-    /*
-    public void PlayerEquipItem(Equip equipItem)
+    public void GetWeaponData(List<WeaponSlot> weapons)
     {
-        plTotalAtt = playerAtt;
-        plTotalCri = playerCri;
+        if (weapons.Count == 0) return;
 
-        if (playerEquip != null)
-            UnEquipItem();
+        saveWeaponData = new List<SaveWeaponData>();
 
-        plTotalAtt += playerEquip.att;
-        plTotalCri += playerEquip.cri;
-        playerEquip = equipItem;
+        foreach (WeaponSlot data in weapons)
+        {
+            WeaponData weapondata = data.weaponData;
+
+            SaveWeaponData saveData = new SaveWeaponData
+            {
+                weaponName = weapondata.weaponName,
+                weaponLevel = data.level
+            };
+            saveWeaponData.Add(saveData);
+        }
     }
 
-    public void UnEquipItem()
+    public void SetWeaponData(List<WeaponSlot> weapons)
     {
-        plTotalAtt -= playerEquip.att;
-        plTotalCri -= playerEquip.cri;
-    }
-    */
+        if (saveWeaponData.Count == 0) return;
 
-    //업그레이드 되고 생각
-    /*
-    public void PlayerUpgrade(List<Upgrade> upgrades)
-    {
-        playerCriDamaged += upgrades[0].criticalDamage;
-        playerGoldBonus += upgrades[1].goldBonus;
-        playerAutoAtt += upgrades[2].autoAttack;
+        string weaponName = WeaponManager.Instance.currentWeapon.name;
+
+        for (int i = 0; i < weapons.Count; i++)
+        {
+            weapons[i].weaponData.weaponName = saveWeaponData[i].weaponName;
+            weapons[i].level = saveWeaponData[i].weaponLevel;
+
+            if (weaponName == weapons[i].weaponData.name)
+            {
+                WeaponManager.Instance.level = saveWeaponData[i].weaponLevel;
+                Debug.Log(saveWeaponData[i].weaponLevel);
+            }
+            Debug.Log($"이름 : {weapons[i].weaponData.name}, 레벨 : {saveWeaponData[i].weaponLevel}");
+        }
+
     }
-    */
+
+}
+  
+
+[System.Serializable]
+public class SaveWeaponData
+{
+    public string weaponName;
+    public int weaponLevel;
 }

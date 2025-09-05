@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject message;
     [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private GameObject sceneChange;
+
+    public List<UpgradeButton> upgrades;
 
     PlayerUpgrades playerUpgrade;
 
@@ -75,6 +78,7 @@ public class UIManager : MonoBehaviour
         SoundManager.instance.PlayBGM(SoundManager.bgm.InGame);
         GameManager.instance.NewUserSetting();
         playerUpgrade.ResetLevels();
+        GameManager.instance.player.FinalStatusSet();
 
         sceneChange.SetActive(true);
 
@@ -86,7 +90,7 @@ public class UIManager : MonoBehaviour
     {
         if (!isPlay)
         {
-            GameManager.instance.SaveData(GameManager.instance.player);
+            GameManager.instance.SaveData();
 
             message.SetActive(true);
             StartCoroutine(WaitForAnimationEnd(message, "Complete Save Data"));
@@ -109,7 +113,7 @@ public class UIManager : MonoBehaviour
         GameManager.instance.DeleteAllData();
     }
 
-    private void GoldWarringMessage()
+    public void GoldWarringMessage()
     {
         if (!isPlay)
         {
@@ -118,13 +122,14 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void GoldCheck(int needGold)
+    public void UpdateUpgradeUI()
     {
-        if (GameManager.instance.player.playerGold < needGold)
+        foreach (UpgradeButton ui in upgrades)
         {
-            GoldWarringMessage();
+            ui.RefreshUI();
         }
     }
+
 
     IEnumerator WaitForAnimationEnd(GameObject gameobj, string UGUItext = null)
     {
@@ -148,10 +153,18 @@ public class UIManager : MonoBehaviour
 
     IEnumerator WaitForLoadStatus()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         playerUpgrade.goldLevel = GameManager.instance.player.levelGold;
         playerUpgrade.critLevel = GameManager.instance.player.levelCri;
         playerUpgrade.autoLevel = GameManager.instance.player.levelAuto;
         playerUpgrade.ApplyAllToPlayer();
+        
+        GameManager.instance.player.SetWeaponData(WeaponManager.Instance.weapons);
+
+        GameManager.instance.player.FinalStatusSet();
+
+        UpdateUpgradeUI();
+
+        WeaponManager.Instance.weaponUI.UpdateUI();
     }
 }
