@@ -18,12 +18,8 @@ MonoBehaviour:
   baseDamage: 5
   baseCritChance: 10
   baseGoldBonus: 1
-  damagePerLevel: 01000000
-  critPerLevel:
-  - 1
-  goldPerLevel: 01000000
-  upgradeCosts: 02000000
-  critMultiplier: 2
+  damagePerUpgrade: 3
+  critPerUpgrade: 1.5
+  goldPerUpgrade: 2
   buyPrice: 0
-  baseUpgradeCost: 1
-  maxUpgradeLevel: 10
+  upgradeCost: 10

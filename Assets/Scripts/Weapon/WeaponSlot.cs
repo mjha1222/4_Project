@@ -9,8 +9,10 @@ public class WeaponSlot : MonoBehaviour
     public Image icon;
     public Text nameText;
     public Text statText;
+    public Text costText;
     public Button buyButton;
     public Button upgradeButton;
+
 
     [Header("Lock/Unlock")]
     public GameObject lockedUI;
@@ -19,9 +21,8 @@ public class WeaponSlot : MonoBehaviour
     private bool isUnlocked = false;
     private int level = 0;
 
-    public void Start()
+    void Start()
     {
-        // 버튼 이벤트 연결
         if (buyButton != null)
         {
             buyButton.onClick.RemoveAllListeners();
@@ -32,10 +33,9 @@ public class WeaponSlot : MonoBehaviour
         {
             upgradeButton.onClick.RemoveAllListeners();
             upgradeButton.onClick.AddListener(Upgrade);
-            upgradeButton.gameObject.SetActive(false); // 시작시 비활성화
+            upgradeButton.gameObject.SetActive(false);
         }
 
-        // 기본 무기 처리
         if (weaponData != null && weaponData.isDefaultWeapon)
         {
             isUnlocked = true;
@@ -49,11 +49,11 @@ public class WeaponSlot : MonoBehaviour
 
     public void ShowLocked()
     {
-        if (lockedUI != null) lockedUI.SetActive(true);
-        if (unlockedUI != null) unlockedUI.SetActive(false);
+        lockedUI?.SetActive(true);
+        unlockedUI?.SetActive(false);
 
-        if (buyButton != null) buyButton.gameObject.SetActive(true);
-        if (upgradeButton != null) upgradeButton.gameObject.SetActive(false);
+        buyButton?.gameObject.SetActive(true);
+        upgradeButton?.gameObject.SetActive(false);
     }
 
     public void ShowUnlocked()
@@ -63,8 +63,17 @@ public class WeaponSlot : MonoBehaviour
 
         Refresh();
 
-        if (buyButton != null) buyButton.gameObject.SetActive(false);
-        if (upgradeButton != null) upgradeButton.gameObject.SetActive(true);
+        // 기본 무기는 구매 버튼 필요 없음
+        if (weaponData != null && weaponData.isDefaultWeapon)
+        {
+            if (buyButton != null) buyButton.gameObject.SetActive(false);
+            if (upgradeButton != null) upgradeButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            if (buyButton != null) buyButton.gameObject.SetActive(false);
+            if (upgradeButton != null) upgradeButton.gameObject.SetActive(true);
+        }
     }
 
     public void Refresh()
@@ -74,24 +83,17 @@ public class WeaponSlot : MonoBehaviour
         if (icon != null) icon.sprite = weaponData.weaponIcon;
         if (nameText != null) nameText.text = $"{weaponData.weaponName} Lv.{level}";
 
-        // 강화 수치 합산 계산으로 변경
-        int atk = weaponData.baseDamage;
-        float crit = weaponData.baseCritChance;
-
-        if (weaponData.damagePerLevel != null && weaponData.damagePerLevel.Length > 0)
-        {
-            for (int i = 0; i < level && i < weaponData.damagePerLevel.Length; i++)
-                atk += weaponData.damagePerLevel[i];
-        }
-
-        if (weaponData.critPerLevel != null && weaponData.critPerLevel.Length > 0)
-        {
-            for (int i = 0; i < level && i < weaponData.critPerLevel.Length; i++)
-                crit += weaponData.critPerLevel[i];
-        }
+        int atk = weaponData.baseDamage + (level * weaponData.damagePerUpgrade);
+        float crit = weaponData.baseCritChance + (level * weaponData.critPerUpgrade);
 
         if (statText != null)
             statText.text = $"공격력: {atk}\n치명타 확률: {crit}%";
+
+        if (costText != null)
+        { 
+            int nextCost = weaponData.upgradeCost * (level + 1); // 무기별 비용 반영
+            costText.text = nextCost.ToString("N0");
+        }
     }
 
     public void Buy()
@@ -103,10 +105,8 @@ public class WeaponSlot : MonoBehaviour
             isUnlocked = true;
             ShowUnlocked();
 
-            if (WeaponManager.Instance != null)
-            {
-                WeaponManager.Instance.EquipWeapon(weaponData, level);
-            }
+            WeaponManager.Instance?.EquipWeapon(weaponData, level);
+
             Debug.Log($"{weaponData.weaponName} 구매 완료!");
         }
         else
@@ -119,7 +119,7 @@ public class WeaponSlot : MonoBehaviour
     {
         if (!isUnlocked) return;
 
-        int cost = 10 * (level + 1);
+        int cost = weaponData.upgradeCost * (level + 1);  // 무기별 비용 반영
         if (GoldWallet.Get().TrySpend(cost))
         {
             level++;
@@ -127,10 +127,14 @@ public class WeaponSlot : MonoBehaviour
 
             if (WeaponManager.Instance != null && WeaponManager.Instance.currentWeapon == weaponData)
             {
-                WeaponManager.Instance.level = level;
-                WeaponManager.Instance.EquipWeapon(weaponData, level); //  강화 후 매니저에도 반영
-                Debug.Log($"{weaponData.weaponName} Lv.{level} 강화 성공!");
+                WeaponManager.Instance.EquipWeapon(weaponData, level);
             }
+
+            Debug.Log($"{weaponData.weaponName} Lv.{level} 강화 성공! (비용 {cost})");
+        }
+        else
+        {
+            Debug.Log("골드 부족!");
         }
     }
 
@@ -142,9 +146,6 @@ public class WeaponSlot : MonoBehaviour
             return;
         }
 
-        if (weaponData != null)
-        {
-            WeaponManager.Instance.EquipWeapon(weaponData, level);
-        }
+        WeaponManager.Instance?.EquipWeapon(weaponData, level);
     }
 }

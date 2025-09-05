@@ -4,7 +4,6 @@ public class WeaponManager : MonoBehaviour
 {
     public static WeaponManager Instance;
     public WeaponData currentWeapon;
-    public WeaponData weapon;
     public int level = 0;
 
     [Header("UI")]
@@ -19,37 +18,23 @@ public class WeaponManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
-    public void OpenBag()
-    {
-        if (bagPanel != null)
-            bagPanel.SetActive(true);
 
-        Debug.Log("무기 가방 오픈");
-    }
-
-    public void CloseBag()
-    {
-        if (bagPanel != null)
-            bagPanel.SetActive(false);
-        Debug.Log("무기 가방 닫기");
-    }
-
-    public void EquipWeapon(WeaponData newWeapon, int newLevel = -1)
+    public void EquipWeapon(WeaponData newWeapon, int newLevel = 0)
     {
         if (newWeapon == null) return;
 
         currentWeapon = newWeapon;
+        level = newLevel;
 
-        if (newLevel >= 0)
-            level = newLevel;
+        UpdateCurrentWeaponUI();
+    }
 
-        int atk = GetAttackPower();
-        float crit = GetCritRate();
-
-        Debug.Log($"{newWeapon.weaponName} 장착 완료! (Lv.{level}, 공격력 {atk}, 치명타 {crit}%)");
-
-        if (weaponUI != null)
+    public void UpdateCurrentWeaponUI()
+    {
+        if (weaponUI != null && currentWeapon != null)
         {
+            int atk = GetAttackPower();
+            float crit = GetCritRate();
             weaponUI.UpdateUI(currentWeapon, level, atk, crit);
         }
     }
@@ -57,51 +42,34 @@ public class WeaponManager : MonoBehaviour
     public int GetAttackPower()
     {
         if (currentWeapon == null) return 0;
-
-        int bonus = 0;
-        if (currentWeapon.damagePerLevel != null && level < currentWeapon.damagePerLevel.Length)
-            bonus = currentWeapon.damagePerLevel[level];
-
-        return currentWeapon.baseDamage + bonus;
+        return currentWeapon.baseDamage + (level * currentWeapon.damagePerUpgrade);
     }
 
     public float GetCritRate()
     {
         if (currentWeapon == null) return 0f;
+        return currentWeapon.baseCritChance + (level * currentWeapon.critPerUpgrade);
+    }
 
-        float bonus = 0f;
-        if (currentWeapon.critPerLevel != null && level < currentWeapon.critPerLevel.Length)
-            bonus = currentWeapon.critPerLevel[level];
-
-        return currentWeapon.baseCritChance + bonus;
+    public int GetGoldBonus()
+    {
+        if (currentWeapon == null) return 0;
+        return currentWeapon.baseGoldBonus + (level * currentWeapon.goldPerUpgrade);
     }
 
     public void LevelUp()
     {
         if (currentWeapon == null) return;
 
-        // 강화 가능한지 체크
-        if (level >= currentWeapon.damagePerLevel.Length - 1)
-        {
-            //Debug.Log("더 이상 강화할 수 없습니다");
-            return;
-        }
-
         level++;
-        //Debug.Log($"{currentWeapon.weaponName} +{level} 강화 성공!");
+        UpdateCurrentWeaponUI();
     }
 
-    public int GetGoldBonus()
+        public void OpenBag()
     {
-        if (currentWeapon == null) return 0;
+        if (bagPanel != null)
+            bagPanel.SetActive(true);
 
-        if (currentWeapon.goldPerLevel == null || level >= currentWeapon.goldPerLevel.Length)
-            return currentWeapon.baseGoldBonus;
-
-        return currentWeapon.baseGoldBonus + currentWeapon.goldPerLevel[level];
-    }
-    void Start()
-    {
-    
+        Debug.Log("무기 가방 오픈");
     }
 }

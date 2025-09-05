@@ -8,24 +8,19 @@ public class WeaponData : ScriptableObject
     [Header("무기 기본 정보")]
     public string weaponName;
     public Sprite weaponIcon;
-    public bool isDefaultWeapon = false; // 기본 무기
+    public bool isDefaultWeapon; // 기본 무기 여부
 
     [Header("기본 능력치")]
     public int baseDamage;
     public float baseCritChance;
     public int baseGoldBonus;  // 기본 골드 보너스
 
-    [Header("강화 수치")]
-    public int[] damagePerLevel;
-    public float[] critPerLevel;
-    public int[] goldPerLevel;     // 레벨별 골드 보너스 증가
-    public int[] upgradeCosts;     // 각 레벨 강화 비용
-
-    [Header("치명타 배율")]
-    public float critMultiplier = 2.0f;  // 치명타 배율
+    [Header("강화 증가치 (고정값)")]
+    public int damagePerUpgrade = 1;    // 공격력 고정 증가치
+    public float critPerUpgrade = 0.1f; // 치명타 확률 고정 증가치
+    public int goldPerUpgrade = 1;      // 골드 보너스 고정 증가치
 
     [Header("구매 & 강화 비용")]
-    public int buyPrice; // 구매 비용
-    public int baseUpgradeCost; // 첫 번째 강화 비용
-    public int maxUpgradeLevel = 10; // 최대 강화 레벨 (예: 10)
+    public int buyPrice;         // 무기 최초 구매 비용
+    public int upgradeCost = 10; // 무기별 강화 비용
 }   
