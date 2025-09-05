@@ -46,7 +46,6 @@ public class Enemy : MonoBehaviour
 
         if (isDead) return;
         isDead = true;
-
         EnemyManager.Instance.OnEnemyDead();
         Destroy(gameObject);   //ÆÄ±«
     }
