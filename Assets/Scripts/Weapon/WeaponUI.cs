@@ -13,27 +13,35 @@ public class WeaponUI : MonoBehaviour
     //public Button upgradeBtn;
     //public Text levelText;
 
-    void Start()
-    {
-        UpdateUI();
-
-        //if (upgradeBtn != null)
-        //    upgradeBtn.onClick.AddListener(TryUpgrade);
-    }
-
     public void UpdateUI()
     {
-        if (weaponManager.currentWeapon == null) return;
+        if (weaponManager == null || weaponManager.currentWeapon == null) return;
 
-        WeaponData weapon = WeaponManager.Instance.currentWeapon;
-        weaponImg.sprite = weapon.weaponIcon;
-        nameText.text = weapon.weaponName;
-        statsText.text = $"공격력: {weapon.baseDamage}\n치명타: {weapon.baseCritChance}%";
+        WeaponData weaponData = weaponManager.currentWeapon;
+        int level = weaponManager.level;
+
+        if (weaponImg != null) weaponImg.sprite = weaponData.weaponIcon;
+        if (nameText != null) nameText.text = $"{weaponData.weaponName} Lv.{level}";
+
+        // WeaponManager에서 직접 최종 수치 불러오기
+        int atk = weaponManager.GetAttackPower();
+        float crit = weaponManager.GetCritRate();
+
+        if (statsText != null)
+            statsText.text = $"공격력: {atk}\n치명타 확률: {crit}%";
     }
 
-    void TryUpgrade()
+
+    public void UpdateUI(WeaponData weaponData, int level,int atk, float crit)
     {
-        weaponManager.LevelUp();
-        UpdateUI();
+        if (weaponData == null) return;
+
+        if (weaponImg != null) weaponImg.sprite = weaponData.weaponIcon;
+        if (nameText != null) nameText.text = $"{weaponData.weaponName} Lv.{level}";
+
+        if (weaponManager != null)
+
+        if (statsText != null)
+            statsText.text = $"공격력: {atk}\n치명타 확률: {crit}%";
     }
 }
