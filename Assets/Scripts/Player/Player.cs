@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -18,7 +19,8 @@ public class Player
     public int levelGold;
 
     //Equip 
-    //public Equip playerEquip;
+    public WeaponData weaponData;
+    public List<SaveWeaponData> saveWeaponData = new List<SaveWeaponData>();
 
 
     private int plTotalAtt;
@@ -78,35 +80,73 @@ public class Player
 
     }
 
-    //장비 장착 생성되고 생각
-    /*
-    public void PlayerEquipItem(Equip equipItem)
+    public void SetWeaponData(List<WeaponData> weapons)
     {
-        plTotalAtt = playerAtt;
-        plTotalCri = playerCri;
+        if (weapons.Count == 0 ) return;
 
-        if (playerEquip != null)
-            UnEquipItem();
-
-        plTotalAtt += playerEquip.att;
-        plTotalCri += playerEquip.cri;
-        playerEquip = equipItem;
+        foreach(WeaponData data in weapons)
+        {
+            SaveWeaponData saveData = new SaveWeaponData
+            {
+                weaponName = data.weaponName,
+                baseDamage = data.baseDamage,
+                baseCritChance = data.baseCritChance,
+                baseGoldBonus = data.baseGoldBonus,
+                damagePerUpgrade = data.damagePerUpgrade,
+                critPerUpgrade = data.critPerUpgrade,
+                goldPerUpgrade = data.goldPerUpgrade,
+                buyPrice = data.buyPrice,
+                upgradeCost = data.upgradeCost
+            };
+            saveWeaponData.Add(saveData);
+        }
+       
     }
 
-    public void UnEquipItem()
+    public enum SwordItem
     {
-        plTotalAtt -= playerEquip.att;
-        plTotalCri -= playerEquip.cri;
+        나무검,
+        돌검,
+        철검,
+        황금검
     }
-    */
 
-    //업그레이드 되고 생각
-    /*
-    public void PlayerUpgrade(List<Upgrade> upgrades)
+    public void LoadWeaponData(SwordItem item)
     {
-        playerCriDamaged += upgrades[0].criticalDamage;
-        playerGoldBonus += upgrades[1].goldBonus;
-        playerAutoAtt += upgrades[2].autoAttack;
+        WeaponData weapon;
+
+        switch (item)
+        {
+            case SwordItem.나무검:
+                weapon = Resources.Load<WeaponData>("WeaponScriptableObject\\WSword");
+                break;
+            case SwordItem.돌검:
+                weapon = Resources.Load<WeaponData>("WeaponScriptableObject\\SSword");
+                break;
+            case SwordItem.철검:
+                weapon = Resources.Load<WeaponData>("WeaponScriptableObject\\ISword");
+                break;
+            case SwordItem.황금검:
+                weapon = Resources.Load<WeaponData>("WeaponScriptableObject\\GSword");
+                break;
+        }
+        
+
     }
-    */
+}
+
+[System.Serializable]
+public class SaveWeaponData
+{
+    public string weaponName;
+    public int baseDamage;
+    public float baseCritChance;
+    public int baseGoldBonus;
+
+    public int damagePerUpgrade;
+    public float critPerUpgrade;
+    public int goldPerUpgrade;
+
+    public int buyPrice;
+    public int upgradeCost;
 }

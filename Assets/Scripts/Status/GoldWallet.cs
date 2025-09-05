@@ -57,7 +57,11 @@ public class GoldWallet : MonoBehaviour
 
     public bool TrySpend(int amount)
     {
-        if (GetGold() < amount) return false;
+        if (GetGold() < amount)
+        {
+            UIManager.instance.GoldWarringMessage();
+            return false;
+        }
         SetGold(GetGold() - amount);
         return true;
     }

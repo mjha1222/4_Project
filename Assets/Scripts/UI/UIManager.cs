@@ -86,7 +86,7 @@ public class UIManager : MonoBehaviour
     {
         if (!isPlay)
         {
-            GameManager.instance.SaveData(GameManager.instance.player);
+            GameManager.instance.SaveData();
 
             message.SetActive(true);
             StartCoroutine(WaitForAnimationEnd(message, "Complete Save Data"));
@@ -109,7 +109,7 @@ public class UIManager : MonoBehaviour
         GameManager.instance.DeleteAllData();
     }
 
-    private void GoldWarringMessage()
+    public void GoldWarringMessage()
     {
         if (!isPlay)
         {
@@ -118,13 +118,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void GoldCheck(int needGold)
-    {
-        if (GameManager.instance.player.playerGold < needGold)
-        {
-            GoldWarringMessage();
-        }
-    }
 
     IEnumerator WaitForAnimationEnd(GameObject gameobj, string UGUItext = null)
     {
@@ -153,5 +146,7 @@ public class UIManager : MonoBehaviour
         playerUpgrade.critLevel = GameManager.instance.player.levelCri;
         playerUpgrade.autoLevel = GameManager.instance.player.levelAuto;
         playerUpgrade.ApplyAllToPlayer();
+
+        WeaponManager.Instance.currentWeapon = GameManager.instance.player.weaponData;
     }
 }

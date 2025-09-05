@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -39,12 +40,16 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void SaveData(Player player)
+    public void SaveData()
     {
+        player.SetWeaponData(WeaponManager.Instance.weapons);
         string saveJson = JsonUtility.ToJson(player);
+
 
         File.WriteAllText(filePath, saveJson);
     }
+
+
 
     public Player LoadData()
     {
@@ -69,3 +74,4 @@ public class GameManager : MonoBehaviour
         player = new Player(1, 1,0, 1, 0);
     }
 }
+
