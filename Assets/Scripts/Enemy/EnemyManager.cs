@@ -10,6 +10,11 @@ public class EnemyManager : MonoBehaviour
     public Enemy nowEnemy;
     public Image HPbar;
 
+    public GameObject squarePrefab;
+    public GameObject TrianglePrefab;
+    public GameObject enemyPrefab;
+    public Transform spawnPoint;
+
 
     private void Awake()
     {
@@ -26,11 +31,17 @@ public class EnemyManager : MonoBehaviour
     }
     public void SpawnEnemy()
     {
-        // GameObject spawnedEnemy = Instantiate(
+        if(true)
+        {
+
+        }
+        GameObject spawnedEnemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        nowEnemy=spawnedEnemy.GetComponent<Enemy>();
+
     }
 
      public void OnEnemyDead()
      {
-       
+        Invoke(nameof(SpawnEnemy), 0.5f);
      }
 }
