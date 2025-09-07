@@ -45,7 +45,7 @@ public class ClickController : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Not Founded Dummy");
+                Debug.LogWarning("Not Founded Enemy");
             }
 
             
