@@ -5,8 +5,8 @@ public class WeaponManager : MonoBehaviour
 {
     public static WeaponManager Instance;
     public WeaponData currentWeapon;
-    public List<WeaponData> weapons;
-    public int level = 0;
+    public List<WeaponSlot> weapons;
+    public int level;
 
     [Header("UI")]
     public WeaponUI weaponUI;
@@ -19,6 +19,8 @@ public class WeaponManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+        level = 0;
+        UpdateCurrentWeaponUI();
     }
 
 
@@ -32,6 +34,7 @@ public class WeaponManager : MonoBehaviour
         level = newLevel;
 
         UpdateCurrentWeaponUI();
+        
     }
 
     public void UpdateCurrentWeaponUI()
@@ -77,4 +80,7 @@ public class WeaponManager : MonoBehaviour
 
         Debug.Log("무기 가방 오픈");
     }
+
+
+
 }

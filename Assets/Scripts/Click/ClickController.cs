@@ -15,7 +15,7 @@ public class ClickController : MonoBehaviour
 
     void OnEnable()
     {
-        RestartAutoAttack();
+        startAutoAttack();
     }
 
     private void OnDisable()
@@ -23,12 +23,6 @@ public class ClickController : MonoBehaviour
         StopAutoAttack();
     }
 
-    void Start()
-    {
-        //자동공격 테스트
-        GetComponent<ClickController>().SetAutoAttackEnabled(true);
-        GetComponent<ClickController>().SetAutoAttackRate(2f);
-    }
 
     // Update is called once per frame
     void Update()
@@ -44,13 +38,14 @@ public class ClickController : MonoBehaviour
             
             if(enemyManager != null)
             {
-                int damage = GameManager.Instance.player.playerAtt;
+                int damage = GameManager.Instance.player.plTotalAtt;
                 enemyManager.nowEnemy.TakeDamage(damage);
-                Debug.Log($"damage: {damage}");
+                SoundManager.instance.PlayEffect(SoundManager.effect.click);
+                Debug.Log($"damage: {damage}"); 
             }
             else
             {
-                Debug.LogWarning("Not Founded Dummy");
+                Debug.LogWarning("Not Founded Enemy");
             }
 
             
@@ -61,17 +56,17 @@ public class ClickController : MonoBehaviour
     public void SetAutoAttackEnabled(bool enabled)
     {
         autoAttackEnable = enabled;
-        RestartAutoAttack();
+        startAutoAttack();
     }
 
     //초당 공격 횟수 설정
     public void SetAutoAttackRate(float rate)
     {
         attackPerSecond = Mathf.Max(0f, rate);
-        RestartAutoAttack();
+        startAutoAttack();
     }
 
-    private void RestartAutoAttack()
+    private void startAutoAttack()
     {
         StopAutoAttack();
         if(autoAttackEnable && attackPerSecond > 0f)
@@ -96,7 +91,7 @@ public class ClickController : MonoBehaviour
         {
             if(enemyManager.nowEnemy != null)
             {
-                int damage = GameManager.Instance.player.playerAtt;
+                int damage = GameManager.Instance.player.plTotalAtt;
                 enemyManager.nowEnemy.TakeDamage(damage);
                 Debug.Log($"damage: {damage}");
             }

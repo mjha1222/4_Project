@@ -101,6 +101,7 @@ MonoBehaviour:
   Data: {fileID: 11400000, guid: 1a3d2390612dd5e45a29e14a995dc7f2, type: 2}
   nowHP: 0
   Gold: 30
+  enemyName: Triangle
 --- !u!95 &112437478364256441
 Animator:
   serializedVersion: 5

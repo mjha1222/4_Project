@@ -19,7 +19,7 @@ public class UpgradeButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     PlayerUpgrades upgrades;
     GoldWallet W => GoldWallet.Get();
     Player P => GameManager.Instance != null ? GameManager.Instance.player
-                                             : (W != null ? W.player : null);
+                                             : (W != null ? GameManager.instance.player : null);
 
     void Awake()
     {
@@ -57,8 +57,10 @@ public class UpgradeButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         int cost = CurrentCost();
         if (!W.TrySpend(cost)) return;
         upgrades.AddLevel(stat, 1);
+        GameManager.instance.player.FinalStatusSet();
         RefreshUI();
         SyncClickController();
+        
     }
 
     void SyncClickController()
@@ -70,7 +72,7 @@ public class UpgradeButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         clickController.SetAutoAttackRate(enable ? P.playerAutoAtt : 0f);
     }
 
-    void RefreshUI()
+    public void RefreshUI()
     {
         if (table == null) return;
         int level = GetLevel();
@@ -93,7 +95,7 @@ public class UpgradeButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                     descText.text = "치명타 데미지 +" + P.playerCriDamaged.ToString("0.0") + "%";
                     break;
                 case UpgradeStatType.AutoAttack:
-                    descText.text = P.playerAutoAtt.ToString("0.0") + " 회/초, 공격력 " + P.playerAtt;
+                    descText.text = P.playerAutoAtt.ToString("0.0") + " 회/초, 공격력 " + P.plTotalAtt;
                     break;
                 case UpgradeStatType.GoldBonus:
                     descText.text = "골드 획득량 +" + P.playerGoldBonus.ToString("0.0") + "%";

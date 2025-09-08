@@ -5,7 +5,6 @@ using UnityEngine;
 public class Player
 {
     public int playerMainStage;
-    public int playerSubStage;
     public int playerGold;
     public int playerAtt;
     public int playerCri;
@@ -19,20 +18,19 @@ public class Player
     public int levelGold;
 
     //Equip 
-    public WeaponData weaponData;
+
     public List<SaveWeaponData> saveWeaponData = new List<SaveWeaponData>();
 
 
-    private int plTotalAtt;
-    private int plTotalCri;
-    private float plTotalCriDamaged;
-    private float plTotalGoldBonus;
+    public int plTotalAtt { get; private set; }
+    public float plTotalCri { get; private set; }
+    public float plTotalCriDamaged { get; private set; }
+    public float plTotalGoldBonus { get; private set; }
 
-    public Player(int playermainstage, int playersubstage, int playergold, int playeratt, int playercri)
+    public Player(int playermainstage, int playergold, int playeratt, int playercri)
     {
         //스테이지
         playerMainStage = playermainstage;
-        playerSubStage = playersubstage;
 
         //현재 골드
         playerGold = playergold;
@@ -40,11 +38,14 @@ public class Player
         //장비장착 관련
         playerAtt = playeratt;
         playerCri = playercri;
+    }
 
-        //업그레이드 관련
-        playerCriDamaged = 1.0f;
-        playerGoldBonus = 1.0f;
-        playerAutoAtt = 0f;
+    public void FinalStatusSet()
+    {
+        plTotalAtt = playerAtt + WeaponManager.Instance.GetAttackPower();
+        plTotalCri = playerCri + WeaponManager.Instance.GetCritRate();
+        plTotalCriDamaged = 100 + playerCriDamaged;
+        plTotalGoldBonus = 100 + playerGoldBonus;
     }
 
     public void UpgradeCritDamage(float newMultiplier)
@@ -80,73 +81,59 @@ public class Player
 
     }
 
-    public void SetWeaponData(List<WeaponData> weapons)
+    public void GetWeaponData(List<WeaponSlot> weapons)
     {
-        if (weapons.Count == 0 ) return;
+        if (weapons.Count == 0) return;
 
-        foreach(WeaponData data in weapons)
+        saveWeaponData = new List<SaveWeaponData>();
+
+        foreach (WeaponSlot data in weapons)
         {
+            WeaponData weapondata = data.weaponData;
+
             SaveWeaponData saveData = new SaveWeaponData
             {
-                weaponName = data.weaponName,
-                baseDamage = data.baseDamage,
-                baseCritChance = data.baseCritChance,
-                baseGoldBonus = data.baseGoldBonus,
-                damagePerUpgrade = data.damagePerUpgrade,
-                critPerUpgrade = data.critPerUpgrade,
-                goldPerUpgrade = data.goldPerUpgrade,
-                buyPrice = data.buyPrice,
-                upgradeCost = data.upgradeCost
+                weaponName = weapondata.weaponName,
+                weaponLevel = data.level,
+                weaponOpen = data.isUnlocked
             };
             saveWeaponData.Add(saveData);
         }
-       
     }
 
-    public enum SwordItem
+    public void SetWeaponData(List<WeaponSlot> weapons)
     {
-        나무검,
-        돌검,
-        철검,
-        황금검
-    }
+        if (saveWeaponData.Count == 0) return;
 
-    public void LoadWeaponData(SwordItem item)
-    {
-        WeaponData weapon;
+        string weaponName = WeaponManager.Instance.currentWeapon.name;
 
-        switch (item)
+        for (int i = 0; i < weapons.Count; i++)
         {
-            case SwordItem.나무검:
-                weapon = Resources.Load<WeaponData>("WeaponScriptableObject\\WSword");
-                break;
-            case SwordItem.돌검:
-                weapon = Resources.Load<WeaponData>("WeaponScriptableObject\\SSword");
-                break;
-            case SwordItem.철검:
-                weapon = Resources.Load<WeaponData>("WeaponScriptableObject\\ISword");
-                break;
-            case SwordItem.황금검:
-                weapon = Resources.Load<WeaponData>("WeaponScriptableObject\\GSword");
-                break;
-        }
-        
+            weapons[i].weaponData.weaponName = saveWeaponData[i].weaponName;
+            weapons[i].level = saveWeaponData[i].weaponLevel;
+            weapons[i].isUnlocked = saveWeaponData[i].weaponOpen;
 
+            if (weapons[i].weaponData.name != "WSword")
+            {
+                weapons[i].unlockedUI.SetActive(true);
+                weapons[i].lockedUI.SetActive(false);
+            }
+
+            if (weaponName == weapons[i].weaponData.name)
+            {
+                WeaponManager.Instance.level = saveWeaponData[i].weaponLevel;
+            }
+            weapons[i].Refresh();
+        }
     }
+
 }
+  
 
 [System.Serializable]
 public class SaveWeaponData
 {
     public string weaponName;
-    public int baseDamage;
-    public float baseCritChance;
-    public int baseGoldBonus;
-
-    public int damagePerUpgrade;
-    public float critPerUpgrade;
-    public int goldPerUpgrade;
-
-    public int buyPrice;
-    public int upgradeCost;
+    public int weaponLevel;
+    public bool weaponOpen;
 }

@@ -101,6 +101,7 @@ MonoBehaviour:
   Data: {fileID: 11400000, guid: ff0af2564dd2a8641a68666e86354d71, type: 2}
   nowHP: 0
   Gold: 20
+  enemyName: Square
 --- !u!95 &3939152165541829631
 Animator:
   serializedVersion: 5

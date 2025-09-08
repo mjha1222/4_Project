@@ -101,6 +101,7 @@ MonoBehaviour:
   Data: {fileID: 11400000, guid: d56010ca8d335a2438007bdccb638994, type: 2}
   nowHP: 0
   Gold: 10
+  enemyName: Circle
 --- !u!95 &7217666871013529735
 Animator:
   serializedVersion: 5

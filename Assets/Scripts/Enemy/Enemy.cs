@@ -11,7 +11,9 @@ public class Enemy : MonoBehaviour
     public int Gold;
 
     private bool isDead = false;
-   
+    public string enemyName = "Enemy";
+
+
 
 
     private void Awake()
@@ -26,6 +28,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (isDead) return; 
         nowHP -= damage;
         anim.ResetTrigger(HitTrigger);
         anim.SetTrigger(HitTrigger);
